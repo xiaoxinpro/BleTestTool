@@ -504,6 +504,7 @@
             this.btnSerialWrite.TabIndex = 1;
             this.btnSerialWrite.Text = "发送";
             this.btnSerialWrite.UseVisualStyleBackColor = true;
+            this.btnSerialWrite.Click += new System.EventHandler(this.btnSerialWrite_Click);
             // 
             // txtSerialWrite
             // 

@@ -236,6 +236,7 @@ namespace BleTestTool
                     Console.WriteLine("开启{0}端口成功。", configCom.PortName);
                     GroupEnable(gbSerialWrite, true);
                     btnSerialPortSwitch.Text = "关闭串口";
+                    ClearListViewSerialReceviedValue();
                 }
             }
             else
@@ -273,6 +274,7 @@ namespace BleTestTool
         {
             Console.WriteLine("选择蓝牙命令：" + e.ClickedItem.Text);
             AddSerialWrite(serialBle.GetBleCmd((enumBleCmd) Convert.ToInt32(e.ClickedItem.Tag)));
+            ClearListViewSerialReceviedValue();
         }
 
         /// <summary>
@@ -288,6 +290,30 @@ namespace BleTestTool
             buffer[buffer.Length - 1] = ByteCheakSum(buffer);
             Console.WriteLine(SerialData.ToHexString(buffer));
             AddSerialWrite(buffer);
+        }
+
+        /// <summary>
+        /// 发送按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSerialWrite_Click(object sender, EventArgs e)
+        {
+            if(txtSerialWrite.Text.Length > 0)
+            {
+                if (rioHex.Checked)
+                {
+                    AddSerialWrite(SerialData.ToHexByteArray(txtSerialWrite.Text));
+                }
+                else if (rioString.Checked)
+                {
+                    AddSerialWrite(txtSerialWrite.Text);
+                }
+                else
+                {
+                    MessageBox.Show("未知错误，无法选择发送格式！");
+                }
+            }
         }
         #endregion
 
@@ -417,6 +443,19 @@ namespace BleTestTool
                     listViewSerialReceived.Items[line].SubItems[2].Text = value;
                 }
             }
+        }
+
+        /// <summary>
+        /// 清空串口解析列表
+        /// </summary>
+        private void ClearListViewSerialReceviedValue()
+        {
+            listViewSerialReceived.BeginUpdate();
+            for (int i = 0; i < listViewSerialReceived.Items.Count; i++)
+            {
+                listViewSerialReceived.Items[i].SubItems[2].Text = "";
+            }
+            listViewSerialReceived.EndUpdate();
         }
         #endregion
 
