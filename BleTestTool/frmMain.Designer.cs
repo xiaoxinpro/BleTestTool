@@ -638,6 +638,7 @@
             this.Controls.Add(this.gbConfigCom);
             this.MinimumSize = new System.Drawing.Size(685, 616);
             this.Name = "frmMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "串口蓝牙测试工具";
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.gbConfigCom.ResumeLayout(false);
