@@ -335,108 +335,115 @@ namespace BleTestTool
             int data = 0;
             string str = "";
 
-            if (arrData.Length < 13)
+            if (arrData.Length == 13)
+            {
+                //状态与模式处理
+                data = arrData[4];
+                if (data == 0x00)
+                {
+                    EditListViewSerialReceviedValue(0, "关机");
+                    EditListViewSerialReceviedValue(1, "关机");
+                }
+                else
+                {
+                    //状态处理
+                    if ((data & 0x10) == 0x00)
+                    {
+                        EditListViewSerialReceviedValue(0, "自动");
+                    }
+                    else
+                    {
+                        EditListViewSerialReceviedValue(0, "手动");
+                    }
+
+                    //模式处理
+                    int modeData = data & 0x0F;
+                    string[] arrModeData = { "自动", "加热测试", "电机测试", "制冷测试", "正脉冲测试", "负脉冲测试", "皮肤接触检测", "皮肤水份检测", "关机" };
+                    if (modeData <= 0x07)
+                    {
+                        EditListViewSerialReceviedValue(1, arrModeData[modeData]);
+                    }
+                    else
+                    {
+                        EditListViewSerialReceviedValue(1, "关机");
+                    }
+                }
+
+                //皮肤接触处理
+                data = arrData[5];
+                if (data == 0x00)
+                {
+                    EditListViewSerialReceviedValue(2, "False");
+                }
+                else if (data == 0x01)
+                {
+                    EditListViewSerialReceviedValue(2, "True");
+                }
+                else
+                {
+                    EditListViewSerialReceviedValue(2, "未知:0x" + data.ToString("X2"));
+                }
+
+                //时长处理
+                data = arrData[6];
+                EditListViewSerialReceviedValue(3, data.ToString());
+
+                //加热温度
+                data = arrData[7];
+                EditListViewSerialReceviedValue(4, data.ToString());
+
+                //皮肤检测参数
+                data = (arrData[8] << 8) | arrData[9];
+                EditListViewSerialReceviedValue(5, "0x" + data.ToString("X4"));
+
+                //环温
+                data = arrData[10];
+                EditListViewSerialReceviedValue(6, data.ToString());
+
+                //电池状态
+                data = arrData[11];
+                switch (data)
+                {
+                    case 0x00:
+                        str = "无电量";
+                        break;
+                    case 0x01:
+                        str = "20%电量";
+                        break;
+                    case 0x02:
+                        str = "40%电量";
+                        break;
+                    case 0x03:
+                        str = "60%电量";
+                        break;
+                    case 0x04:
+                        str = "80%电量";
+                        break;
+                    case 0x05:
+                        str = "100%电量";
+                        break;
+                    case 0x06:
+                        str = "充电中";
+                        break;
+                    case 0x07:
+                        str = "充电完成";
+                        break;
+                    default:
+                        str = "未知:0x" + data.ToString("X2");
+                        break;
+                }
+                EditListViewSerialReceviedValue(7, str);
+
+                //发送应答位
+                AddSerialWrite(new byte[] { 0x52, 0x02, 0x02, 0x03, 0x00, 0x5A });
+            }
+            else
             {
                 Console.WriteLine("无法解析数据：" + SerialData.ToHexString(arrData));
                 return;
             }
 
-            //状态与模式处理
-            data = arrData[4];
-            if (data == 0x00)
-            {
-                EditListViewSerialReceviedValue(0, "关机");
-                EditListViewSerialReceviedValue(1, "关机");
-            }
-            else
-            {
-                //状态处理
-                if ((data & 0x10) == 0x00)
-                {
-                    EditListViewSerialReceviedValue(0, "自动");
-                }
-                else
-                {
-                    EditListViewSerialReceviedValue(0, "手动");
-                }
-
-                //模式处理
-                int modeData = data & 0x0F;
-                string[] arrModeData = { "自动", "加热测试", "电机测试", "制冷测试", "正脉冲测试", "负脉冲测试", "皮肤接触检测", "皮肤水份检测", "关机" };
-                if (modeData <= 0x07)
-                {
-                    EditListViewSerialReceviedValue(1, arrModeData[modeData]);
-                }
-                else
-                {
-                    EditListViewSerialReceviedValue(1, "关机");
-                }
-            }
-
-            //皮肤接触处理
-            data = arrData[5];
-            if (data == 0x00) 
-            {
-                EditListViewSerialReceviedValue(2, "False");
-            }
-            else if (data == 0x01)
-            {
-                EditListViewSerialReceviedValue(2, "True");
-            }
-            else
-            {
-                EditListViewSerialReceviedValue(2, "未知:0x" + data.ToString("X2"));
-            }
-
-            //时长处理
-            data = arrData[6];
-            EditListViewSerialReceviedValue(3, data.ToString());
-
-            //加热温度
-            data = arrData[7];
-            EditListViewSerialReceviedValue(4, data.ToString());
-
-            //皮肤检测参数
-            data = (arrData[8] << 8) | arrData[9];
-            EditListViewSerialReceviedValue(5, "0x" + data.ToString("X4"));
-
-            //环温
-            data = arrData[10];
-            EditListViewSerialReceviedValue(6, data.ToString());
-
-            //电池状态
-            data = arrData[11];
-            switch (data)
-            {
-                case 0x00:
-                    str = "无电量";
-                    break;
-                case 0x01:
-                    str = "20%电量";
-                    break;
-                case 0x02:
-                    str = "40%电量";
-                    break;
-                case 0x03:
-                    str = "60%电量";
-                    break;
-                case 0x04:
-                    str = "80%电量";
-                    break;
-                case 0x05:
-                    str = "100%电量";
-                    break;
-                case 0x06:
-                    str = "充电中";
-                    break;
-                case 0x07:
-                    str = "充电完成";
-                    break;
-                default:
-                    str = "未知:0x" + data.ToString("X2");
-                    break;
-            }
-            EditListViewSerialReceviedValue(7, str);
+            
 
         }
 
