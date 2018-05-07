@@ -347,13 +347,17 @@ namespace BleTestTool
                 else
                 {
                     //状态处理
-                    if ((data & 0x10) == 0x00)
+                    if ((data & 0x10) == 0x10)
                     {
-                        EditListViewSerialReceviedValue(0, "自动");
+                        EditListViewSerialReceviedValue(0, "自动测试");
+                    }
+                    else if ((data & 0x20) == 0x20)
+                    {
+                        EditListViewSerialReceviedValue(0, "手动测试");
                     }
                     else
                     {
-                        EditListViewSerialReceviedValue(0, "手动");
+                        EditListViewSerialReceviedValue(0, "非测试模式");
                     }
 
                     //模式处理
