@@ -39,21 +39,23 @@ namespace BleTestTool
         /// </summary>
         /// <param name="cmd">命令枚举</param>
         /// <returns>串口命令字符串</returns>
-        public string GetBleCmd(enumBleCmd cmd)
+        public string[] GetBleCmd(enumBleCmd cmd)
         {
-            string strBleCmd = "";
+            List<string> listBleCmd = new List<string>();
             _serialBleCmd = cmd;
             switch (cmd)
             {
                 case enumBleCmd.Init:
                     setSerialBleStatus(enumBleStatus.Stop);
-                    strBleCmd = "AT";
+                    listBleCmd.Add("AT");
+                    listBleCmd.Add("AT");
                     break;
                 case enumBleCmd.Find:
                     if (SerialBleStatus == enumBleStatus.Ready)
                     {
                         setSerialBleStatus(enumBleStatus.Find);
-                        strBleCmd = "AT+DISC?";
+                        listBleCmd.Add("AT");
+                        listBleCmd.Add("AT+DISC?");
                     }
                     break;
                 case enumBleCmd.Link:
@@ -63,18 +65,19 @@ namespace BleTestTool
                         if (ComboBle.Items.Count > 0 && ComboBle.SelectedIndex >= 0)
                         {
                             setSerialBleStatus(enumBleStatus.Link);
-                            strBleCmd = "AT+CONN" + ComboBle.SelectedIndex;
+                            listBleCmd.Add("AT+CONN" + ComboBle.SelectedIndex);
                         }
                     }
                     break;
                 case enumBleCmd.Reset:
                     setSerialBleStatus(enumBleStatus.Stop);
-                    strBleCmd = "AT+RESET";
+                    listBleCmd.Add("AT");
+                    listBleCmd.Add("AT+RESET");
                     break;
                 default:
                     break;
             }
-            return strBleCmd;
+            return listBleCmd.ToArray();
         }
 
         public void ReceiveSerialBle(string strBleData)

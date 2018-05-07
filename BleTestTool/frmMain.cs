@@ -272,8 +272,12 @@ namespace BleTestTool
         /// <param name="e"></param>
         private void toolBleWrite_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
+            string[] arrBleCmd = serialBle.GetBleCmd((enumBleCmd)Convert.ToInt32(e.ClickedItem.Tag));
             Console.WriteLine("选择蓝牙命令：" + e.ClickedItem.Text);
-            AddSerialWrite(serialBle.GetBleCmd((enumBleCmd) Convert.ToInt32(e.ClickedItem.Tag)));
+            foreach (string item in arrBleCmd)
+            {
+                AddSerialWrite(item);
+            }
             ClearListViewSerialReceviedValue();
         }
 
