@@ -191,7 +191,7 @@ namespace BleTestTool
                 {
                     txtDataReceived.AppendText("[" + DateTime.Now.ToString() + "] ");
                 }
-                if (chkLogHex.Checked)
+                if (chkLogHex.Checked || !SerialData.IsBytesToString(arrData))
                 {
                     txtDataReceived.AppendText(SerialData.ToHexString(arrData) + "\r\n");
                 }
