@@ -54,7 +54,6 @@ namespace BleTestTool
                     if (SerialBleStatus == enumBleStatus.Ready)
                     {
                         setSerialBleStatus(enumBleStatus.Find);
-                        listBleCmd.Add("AT");
                         listBleCmd.Add("AT+DISC?");
                     }
                     break;
@@ -124,21 +123,23 @@ namespace BleTestTool
                     }
                     else if (SerialBleStatus == enumBleStatus.Find)
                     {
-                        Int32 len = ComboBle.Items.Count;
-                        Int32 cnt = strBleData.IndexOf("OK+DIS" + len + ":");
-                        string strMac = "";
-                        if (cnt >= 0)
+                        string[] arrBleData = Regex.Split(strBleData, "\r\n", RegexOptions.IgnoreCase);
+                        for (int i = 0; i < arrBleData.Length; i++)
                         {
-                            strMac = strBleData.Substring(cnt + 8, 12);
-                            cnt = strBleData.IndexOf("OK+NAME:");
+                            Int32 cnt = arrBleData[i].IndexOf("OK+DIS0:");
+                            string strMac = "";
                             if (cnt >= 0)
                             {
-                                strMac = strBleData.Substring(cnt + 8) + ":" + strMac;
-                                Console.WriteLine("搜索蓝牙:" + strMac);
-                                ListBle.Add(strMac);
+                                strMac = arrBleData[i].Substring(cnt + 8, 12);
+                                cnt = arrBleData[i].IndexOf("OK+NAME:");
+                                if (cnt >= 0)
+                                {
+                                    strMac = arrBleData[i].Substring(cnt + 8) + ":" + strMac;
+                                    Console.WriteLine("搜索蓝牙:" + strMac);
+                                    ListBle.Add(strMac);
+                                }
                             }
                         }
-
                     }
                     break;
                 case enumBleCmd.Link:

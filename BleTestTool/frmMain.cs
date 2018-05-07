@@ -101,7 +101,7 @@ namespace BleTestTool
             serialPortHelper.BindSerialPortDataReceivedProcessEvent(new SerialPortHelper.DelegateSerialPortDataReceivedProcessEvent(SerialPortDataReceivedProcess));
             serialPortHelper.BindSerialPortErrorEvent(new SerialPortHelper.DelegateSerialPortErrorEvent(SerialPortErrorProcess));
             serialPortHelper.SerialReceviedTimeInterval = 40;
-            serialPortHelper.SerialWriteTimeInterval = 100;
+            serialPortHelper.SerialWriteTimeInterval = 200;
             serialPortHelper.SerialReceviedLengthMax = 1024;
         }
         #endregion
@@ -134,8 +134,15 @@ namespace BleTestTool
             else
             {
                 string strData = SerialData.ToString(arrData);
-                Console.WriteLine("接收数据：" + SerialData.ToString(arrData));
-                txtDataReceived.AppendText(strData + "\r\n");
+                if (chkLogHex.Checked)
+                {
+                    txtDataReceived.AppendText(SerialData.ToHexString(arrData) + "\r\n");
+                }
+                else
+                {
+                    txtDataReceived.AppendText(strData + "\r\n");
+                }
+                Console.WriteLine("接收数据：" + strData);
                 if (strData.IndexOf("OK") >= 0)
                 {
                     serialBle.ReceiveSerialBle(strData);
