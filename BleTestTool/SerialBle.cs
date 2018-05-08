@@ -93,6 +93,7 @@ namespace BleTestTool
                     else
                     {
                         EventBleLog("搜索失败请重试");
+                        setSerialBleStatus(enumBleStatus.Stop);
                         listBleCmd.Add("AT");
                     }
                     break;
@@ -221,6 +222,7 @@ namespace BleTestTool
                     {
                         //连接成功
                         setSerialBleStatus(enumBleStatus.Run);
+                        ComboBle.Enabled = false;
                         EventBleLog("连接蓝牙成功");
                         Console.WriteLine("连接蓝牙成功" + ComboBle.SelectedText);
                     }
@@ -230,7 +232,12 @@ namespace BleTestTool
                 default:
                     break;
             }
-
+            if (strBleData.IndexOf("OK+LOST") >= 0)
+            {
+                setSerialBleStatus(enumBleStatus.Stop);
+                WriteBleCmd(enumBleCmd.Init);
+                EventBleLog("蓝牙连接断开");
+            }
         }
         #endregion
 
