@@ -25,12 +25,46 @@ namespace BleTestTool
             ComboBle = comboBox;
             ListBle = new List<string> { };
         }
+
+        public SerialBle(ToolStripComboBox comboBox, DelegateBleSerialWrite eventBleSerialWrite) : this(comboBox)
+        {
+            this.EventBleSerialWrite = eventBleSerialWrite;
+        }
+
+        public SerialBle(ToolStripComboBox comboBox, DelegateBleSerialWrite eventBleSerialWrite, DelegateBleLog eventBleLog) : this(comboBox, eventBleSerialWrite)
+        {
+            this.EventBleLog = eventBleLog;
+        }
         #endregion
 
         #region 属性
         public enumBleStatus SerialBleStatus { get => _serialBleStatus;}
         public ToolStripComboBox ComboBle { get => _comboBle; set => _comboBle = value; }
         public List<string> ListBle { get => _listBle; set => _listBle = value; }
+        #endregion
+
+        #region 事件
+        /// <summary>
+        /// 定义发送数据委托
+        /// </summary>
+        /// <param name="arrData">发送数据数组</param>
+        public delegate void DelegateBleSerialWrite(string[] arrData);
+
+        /// <summary>
+        /// 定义蓝牙日志委托
+        /// </summary>
+        /// <param name="strLog"></param>
+        public delegate void DelegateBleLog(string strLog);
+
+        /// <summary>
+        /// 定义发送数据事件
+        /// </summary>
+        public event DelegateBleSerialWrite EventBleSerialWrite;
+
+        /// <summary>
+        /// 定义蓝牙日志事件
+        /// </summary>
+        public event DelegateBleLog EventBleLog;
         #endregion
 
         #region 公共函数
@@ -56,6 +90,11 @@ namespace BleTestTool
                         setSerialBleStatus(enumBleStatus.Find);
                         listBleCmd.Add("AT+DISC?");
                     }
+                    else
+                    {
+                        EventBleLog("搜索失败请重试");
+                        listBleCmd.Add("AT");
+                    }
                     break;
                 case enumBleCmd.Link:
                     if (SerialBleStatus == enumBleStatus.Ready)
@@ -66,6 +105,11 @@ namespace BleTestTool
                             setSerialBleStatus(enumBleStatus.Link);
                             listBleCmd.Add("AT+CONN" + ComboBle.SelectedIndex);
                         }
+                    }
+                    else
+                    {
+                        Console.WriteLine("请先搜索蓝牙设备。");
+                        EventBleLog("请先搜索蓝牙设备");
                     }
                     break;
                 case enumBleCmd.Reset:
@@ -79,6 +123,15 @@ namespace BleTestTool
             return listBleCmd.ToArray();
         }
 
+        public void WriteBleCmd(enumBleCmd cmd)
+        {
+            string[] arrCmdData = this.GetBleCmd(cmd);
+            if (EventBleSerialWrite != null)
+            {
+                EventBleSerialWrite(arrCmdData);
+            }
+        }
+
         public void ReceiveSerialBle(string strBleData)
         {
             //过滤
@@ -89,6 +142,7 @@ namespace BleTestTool
                     if (strBleData == "OK")
                     {
                         setSerialBleStatus(enumBleStatus.Ready);
+                        WriteBleCmd(enumBleCmd.Find);
                     }
                     break;
                 case enumBleCmd.Find:
@@ -100,7 +154,12 @@ namespace BleTestTool
                         ComboBle.Items.Clear();
                         ComboBle.Enabled = false;
                         ComboBle.Text = "搜索中。。。";
+                        EventBleLog("蓝牙搜索中");
                         Console.WriteLine("搜索中。。。");
+                        //测试
+                        //string str = "OK+DIS0:04AC448009BDOK+NAME:Tomozaki02\r\nOK + DIS0:04AC448001F6OK + NAME:Tomozaki01";
+                        //Console.WriteLine("测试：" + str);
+                        //ReceiveSerialBle(str);
                     }
                     else if (strBleData.IndexOf("OK+DISCE") >= 0)
                     {
@@ -112,18 +171,19 @@ namespace BleTestTool
                             ComboBle.Enabled = true;
                             ComboBle.Items.AddRange(ListBle.ToArray());
                             ComboBle.SelectedIndex = 0;
+                            EventBleLog("蓝牙搜索完成");
                         }
                         else
                         {
                             ComboBle.Enabled = false;
-                            ComboBle.Text = "未搜索到蓝牙";
+                            EventBleLog("未搜索到蓝牙");
                             Console.WriteLine("未搜索到蓝牙");
                         }
 
                     }
                     else if (SerialBleStatus == enumBleStatus.Find)
                     {
-                        string[] arrBleData = Regex.Split(strBleData, "OK+DIS0:", RegexOptions.IgnoreCase);
+                        string[] arrBleData = Regex.Split(strBleData, @"OK\+DIS0\:", RegexOptions.IgnoreCase);
                         for (int i = 0; i < arrBleData.Length; i++)
                         {
                             Int32 cnt = arrBleData[i].Length;
@@ -154,12 +214,14 @@ namespace BleTestTool
                     {
                         //正在连接蓝牙
                         setSerialBleStatus(enumBleStatus.Link);
+                        EventBleLog("正在连接蓝牙");
                         Console.WriteLine("正在连接蓝牙:" + ComboBle.SelectedText);
                     }
                     else if (strBleData == "OK+CONN")
                     {
                         //连接成功
                         setSerialBleStatus(enumBleStatus.Run);
+                        EventBleLog("连接蓝牙成功");
                         Console.WriteLine("连接蓝牙成功" + ComboBle.SelectedText);
                     }
                     break;
@@ -180,6 +242,7 @@ namespace BleTestTool
         #endregion
     }
 
+    #region 枚举
     /// <summary>
     /// 蓝牙命令枚举
     /// </summary>
@@ -203,4 +266,5 @@ namespace BleTestTool
         Run,    //蓝牙通信中
         Error   //发生错误
     }
+    #endregion
 }
