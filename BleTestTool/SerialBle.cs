@@ -123,14 +123,21 @@ namespace BleTestTool
                     }
                     else if (SerialBleStatus == enumBleStatus.Find)
                     {
-                        string[] arrBleData = Regex.Split(strBleData, "\r\n", RegexOptions.IgnoreCase);
+                        string[] arrBleData = Regex.Split(strBleData, "OK+DIS0:", RegexOptions.IgnoreCase);
                         for (int i = 0; i < arrBleData.Length; i++)
                         {
-                            Int32 cnt = arrBleData[i].IndexOf("OK+DIS0:");
+                            Int32 cnt = arrBleData[i].Length;
                             string strMac = "";
-                            if (cnt >= 0)
+                            if (cnt >= 12)
                             {
-                                strMac = arrBleData[i].Substring(cnt + 8, 12);
+                                if (arrBleData[i].IndexOf("OK+DIS0:") == 0)
+                                {
+                                    strMac = arrBleData[i].Substring(8, 12);
+                                }
+                                else
+                                {
+                                    strMac = arrBleData[i].Substring(0, 12);
+                                }
                                 cnt = arrBleData[i].IndexOf("OK+NAME:");
                                 if (cnt >= 0)
                                 {
