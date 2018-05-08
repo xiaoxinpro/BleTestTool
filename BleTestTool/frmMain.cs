@@ -89,6 +89,7 @@ namespace BleTestTool
             configCom.BindDataBitsObj(cbDataBits);
             configCom.BindStopBitsObj(cbStop);
             configCom.BindParityObj(cbParity);
+            configCom.BaudRate = 115200;
         }
 
         /// <summary>
@@ -244,6 +245,7 @@ namespace BleTestTool
                     GroupEnable(gbSerialWrite, true);
                     btnSerialPortSwitch.Text = "关闭串口";
                     ClearListViewSerialReceviedValue();
+                    AddSerialWrite("AT");
                 }
             }
             else
