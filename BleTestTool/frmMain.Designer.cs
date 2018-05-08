@@ -76,6 +76,7 @@
             this.txtDataReceived = new System.Windows.Forms.TextBox();
             this.gbSerialReceived = new System.Windows.Forms.GroupBox();
             this.listViewSerialReceived = new System.Windows.Forms.ListView();
+            this.labBleStatus = new System.Windows.Forms.Label();
             this.gbConfigCom.SuspendLayout();
             this.gbSerialWrite.SuspendLayout();
             this.toolBleWrite.SuspendLayout();
@@ -341,7 +342,7 @@
             this.toolBtnBleResite.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnBleResite.Image")));
             this.toolBtnBleResite.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnBleResite.Name = "toolBtnBleResite";
-            this.toolBtnBleResite.Size = new System.Drawing.Size(60, 22);
+            this.toolBtnBleResite.Size = new System.Drawing.Size(60, 21);
             this.toolBtnBleResite.Tag = "3";
             this.toolBtnBleResite.Text = "重启蓝牙";
             // 
@@ -627,11 +628,24 @@
             this.listViewSerialReceived.TabIndex = 0;
             this.listViewSerialReceived.UseCompatibleStateImageBehavior = false;
             // 
+            // labBleStatus
+            // 
+            this.labBleStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labBleStatus.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labBleStatus.ForeColor = System.Drawing.Color.SeaGreen;
+            this.labBleStatus.Location = new System.Drawing.Point(11, 285);
+            this.labBleStatus.Name = "labBleStatus";
+            this.labBleStatus.Size = new System.Drawing.Size(148, 40);
+            this.labBleStatus.TabIndex = 12;
+            this.labBleStatus.Text = "蓝牙状态";
+            this.labBleStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(669, 577);
+            this.Controls.Add(this.labBleStatus);
             this.Controls.Add(this.gbSerialReceived);
             this.Controls.Add(this.gbSerialWrite);
             this.Controls.Add(this.gbSerialLog);
@@ -705,6 +719,7 @@
         private System.Windows.Forms.ToolStripButton toolBtnBleResite;
         private System.Windows.Forms.CheckBox chkLogHex;
         private System.Windows.Forms.ListView listViewSerialReceived;
+        private System.Windows.Forms.Label labBleStatus;
     }
 }
 

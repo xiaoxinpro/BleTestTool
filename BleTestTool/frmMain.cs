@@ -36,7 +36,8 @@ namespace BleTestTool
         {
             //初始化界面
             GroupEnable(gbSerialWrite, false);
-            serialBle = new SerialBle(toolComboBle);
+            serialBle = new SerialBle(toolComboBle, new SerialBle.DelegateBleSerialWrite(AddSerialWrite));
+            serialBle.EventBleLog += OutputBleLog;
             initListView(listViewSerialReceived);
 
             //初始化串口配置控件
@@ -222,6 +223,26 @@ namespace BleTestTool
                 AddSerialWrite(SerialData.ToByteArray(strData));
             }
         }
+
+        /// <summary>
+        /// 添加发送数据
+        /// </summary>
+        /// <param name="arrData">数组数据</param>
+        private void AddSerialWrite(string[] arrData)
+        {
+            foreach (string item in arrData)
+            {
+                AddSerialWrite(item);
+            }
+        }
+        #endregion
+
+        #region 蓝牙事件
+        private void OutputBleLog(string strLog)
+        {
+            Console.WriteLine("蓝牙日志" + strLog);
+            labBleStatus.Text = (strLog);
+        }
         #endregion
 
         #region 控件
@@ -281,12 +302,8 @@ namespace BleTestTool
         /// <param name="e"></param>
         private void toolBleWrite_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            string[] arrBleCmd = serialBle.GetBleCmd((enumBleCmd)Convert.ToInt32(e.ClickedItem.Tag));
             Console.WriteLine("选择蓝牙命令：" + e.ClickedItem.Text);
-            foreach (string item in arrBleCmd)
-            {
-                AddSerialWrite(item);
-            }
+            serialBle.WriteBleCmd((enumBleCmd)Convert.ToInt32(e.ClickedItem.Tag));
             ClearListViewSerialReceviedValue();
         }
 
