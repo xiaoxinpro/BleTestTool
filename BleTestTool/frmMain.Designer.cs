@@ -631,8 +631,8 @@
             // labBleStatus
             // 
             this.labBleStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labBleStatus.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labBleStatus.ForeColor = System.Drawing.Color.SeaGreen;
+            this.labBleStatus.Font = new System.Drawing.Font("微软雅黑", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labBleStatus.ForeColor = System.Drawing.Color.LimeGreen;
             this.labBleStatus.Location = new System.Drawing.Point(11, 285);
             this.labBleStatus.Name = "labBleStatus";
             this.labBleStatus.Size = new System.Drawing.Size(148, 40);
