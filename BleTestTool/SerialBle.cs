@@ -14,6 +14,7 @@ namespace BleTestTool
         private enumBleStatus _serialBleStatus = enumBleStatus.Stop;
         private ToolStripComboBox _comboBle;
         private List<string> _listBle;
+        private System.Timers.Timer _timBleWrite;
         #endregion
 
         #region 构造函数
@@ -24,6 +25,7 @@ namespace BleTestTool
         {
             ComboBle = comboBox;
             ListBle = new List<string> { };
+            initTimBleWrite();
         }
 
         public SerialBle(ToolStripComboBox comboBox, DelegateBleSerialWrite eventBleSerialWrite) : this(comboBox)
@@ -76,7 +78,7 @@ namespace BleTestTool
         public string[] GetBleCmd(enumBleCmd cmd)
         {
             List<string> listBleCmd = new List<string>();
-            _serialBleCmd = cmd;
+            setSerialBleCmd(cmd);
             switch (cmd)
             {
                 case enumBleCmd.Init:
@@ -158,10 +160,9 @@ namespace BleTestTool
             else if (strBleData.IndexOf("OK+DISCE") >= 0)
             {
                 //搜索蓝牙结束
-                setSerialBleStatus(enumBleStatus.Ready);
-                ComboBle.Enabled = true;
                 if (ListBle.Count > 0)
                 {
+                    setSerialBleStatus(enumBleStatus.Ready);
                     ComboBle.Enabled = true;
                     ComboBle.Items.AddRange(ListBle.ToArray());
                     ComboBle.SelectedIndex = 0;
@@ -169,6 +170,7 @@ namespace BleTestTool
                 }
                 else
                 {
+                    setSerialBleStatus(enumBleStatus.Stop);
                     ComboBle.Enabled = false;
                     EventBleLog("未搜索到蓝牙");
                     Console.WriteLine("未搜索到蓝牙");
@@ -235,9 +237,48 @@ namespace BleTestTool
         #endregion
 
         #region 私有函数
+        /// <summary>
+        /// 初始化定时器
+        /// </summary>
+        private void initTimBleWrite()
+        {
+            _timBleWrite = new System.Timers.Timer(1000);
+            _timBleWrite.Elapsed += new System.Timers.ElapsedEventHandler(TimerBleWrite);
+            _timBleWrite.AutoReset = true;
+            _timBleWrite.Enabled = true;
+        }
+
+        /// <summary>
+        /// 设置蓝牙状态
+        /// </summary>
+        /// <param name="status">蓝牙状态枚举</param>
         private void setSerialBleStatus(enumBleStatus status)
         {
             this._serialBleStatus = status;
+        }
+
+        /// <summary>
+        /// 设置蓝牙命令
+        /// </summary>
+        /// <param name="cmd">蓝牙命令枚举</param>
+        private void setSerialBleCmd(enumBleCmd cmd)
+        {
+            this._serialBleCmd = cmd;
+        }
+        #endregion
+
+        #region 定时器函数
+        /// <summary>
+        /// 定时器处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TimerBleWrite(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (SerialBleStatus == enumBleStatus.Stop)
+            {
+                WriteBleCmd(enumBleCmd.Init);
+            }
         }
         #endregion
     }
