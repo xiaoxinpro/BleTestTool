@@ -48,6 +48,17 @@ namespace BleTestTool
         }
 
         /// <summary>
+        /// 关闭窗体
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //关闭串口
+            serialPortHelper.CloseCom(out string strError);
+        }
+
+        /// <summary>
         /// 初始化ListView
         /// </summary>
         private void initListView(ListView listView)
