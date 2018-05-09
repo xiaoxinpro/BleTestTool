@@ -315,11 +315,21 @@ namespace BleTestTool
         private void toolCmdWrite_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             Console.WriteLine("选择快捷命令：" + e.ClickedItem.Name + " - " + e.ClickedItem.Text);
-            byte[] buffer = { 0x52, 0x02, 0x01, 0x10, 0x00, 0x00 };
-            buffer[4] = Convert.ToByte(Convert.ToInt32(e.ClickedItem.Tag));
-            buffer[buffer.Length - 1] = ByteCheakSum(buffer);
-            Console.WriteLine(SerialData.ToHexString(buffer));
-            AddSerialWrite(buffer);
+            if (e.ClickedItem.Name == "toolBtnRh")
+            {
+                byte[] buffer = { 0x52, 0x02, 0x01, 0x02, 0x01, 0x59 };
+                Console.WriteLine(SerialData.ToHexString(buffer));
+                AddSerialWrite(buffer);
+            }
+            else
+            {
+                byte[] buffer = { 0x52, 0x02, 0x01, 0x10, 0x00, 0x00 };
+                buffer[4] = Convert.ToByte(Convert.ToInt32(e.ClickedItem.Tag));
+                buffer[buffer.Length - 1] = ByteCheakSum(buffer);
+                Console.WriteLine(SerialData.ToHexString(buffer));
+                AddSerialWrite(buffer);
+            }
+
         }
 
         /// <summary>
