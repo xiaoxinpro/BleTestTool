@@ -82,7 +82,6 @@ namespace BleTestTool
                 case enumBleCmd.Init:
                     setSerialBleStatus(enumBleStatus.Stop);
                     listBleCmd.Add("AT");
-                    listBleCmd.Add("AT");
                     break;
                 case enumBleCmd.Find:
                     if (SerialBleStatus == enumBleStatus.Ready)
@@ -93,8 +92,7 @@ namespace BleTestTool
                     else
                     {
                         EventBleLog("搜索失败请重试");
-                        setSerialBleStatus(enumBleStatus.Stop);
-                        listBleCmd.Add("AT");
+                        return GetBleCmd(enumBleCmd.Init);
                     }
                     break;
                 case enumBleCmd.Link:
@@ -137,102 +135,97 @@ namespace BleTestTool
         {
             //过滤
             strBleData = Regex.Replace(strBleData, @"\s", "");
-            switch (_serialBleCmd)
+            if (strBleData == "OK")
             {
-                case enumBleCmd.Init:
-                    if (strBleData == "OK")
+                setSerialBleStatus(enumBleStatus.Ready);
+                WriteBleCmd(enumBleCmd.Find);
+            }
+            else if (strBleData.IndexOf("OK+DISCS") >= 0)
+            {
+                //开启搜索蓝牙
+                setSerialBleStatus(enumBleStatus.Find);
+                ListBle.Clear();
+                ComboBle.Items.Clear();
+                ComboBle.Enabled = false;
+                ComboBle.Text = "搜索中。。。";
+                EventBleLog("蓝牙搜索中");
+                Console.WriteLine("搜索中。。。");
+                //测试
+                //string str = "OK+DIS0:04AC448009BDOK+NAME:Tomozaki02\r\nOK + DIS0:04AC448001F6OK + NAME:Tomozaki01";
+                //Console.WriteLine("测试：" + str);
+                //ReceiveSerialBle(str);
+            }
+            else if (strBleData.IndexOf("OK+DISCE") >= 0)
+            {
+                //搜索蓝牙结束
+                setSerialBleStatus(enumBleStatus.Ready);
+                ComboBle.Enabled = true;
+                if (ListBle.Count > 0)
+                {
+                    ComboBle.Enabled = true;
+                    ComboBle.Items.AddRange(ListBle.ToArray());
+                    ComboBle.SelectedIndex = 0;
+                    EventBleLog("蓝牙搜索完成");
+                }
+                else
+                {
+                    ComboBle.Enabled = false;
+                    EventBleLog("未搜索到蓝牙");
+                    Console.WriteLine("未搜索到蓝牙");
+                }
+
+            }
+            else if (strBleData.IndexOf("OK+DIS0") >= 0)
+            {
+                string[] arrBleData = Regex.Split(strBleData, @"OK\+DIS0\:", RegexOptions.IgnoreCase);
+                for (int i = 0; i < arrBleData.Length; i++)
+                {
+                    Int32 cnt = arrBleData[i].Length;
+                    string strMac = "";
+                    if (cnt >= 12)
                     {
-                        setSerialBleStatus(enumBleStatus.Ready);
-                        WriteBleCmd(enumBleCmd.Find);
-                    }
-                    break;
-                case enumBleCmd.Find:
-                    if (strBleData.IndexOf("OK+DISCS") >= 0)
-                    {
-                        //开启搜索蓝牙
-                        setSerialBleStatus(enumBleStatus.Find);
-                        ListBle.Clear();
-                        ComboBle.Items.Clear();
-                        ComboBle.Enabled = false;
-                        ComboBle.Text = "搜索中。。。";
-                        EventBleLog("蓝牙搜索中");
-                        Console.WriteLine("搜索中。。。");
-                        //测试
-                        //string str = "OK+DIS0:04AC448009BDOK+NAME:Tomozaki02\r\nOK + DIS0:04AC448001F6OK + NAME:Tomozaki01";
-                        //Console.WriteLine("测试：" + str);
-                        //ReceiveSerialBle(str);
-                    }
-                    else if (strBleData.IndexOf("OK+DISCE") >= 0)
-                    {
-                        //搜索蓝牙结束
-                        setSerialBleStatus(enumBleStatus.Ready);
-                        ComboBle.Enabled = true;
-                        if (ListBle.Count > 0)
+                        if (arrBleData[i].IndexOf("OK+DIS0:") == 0)
                         {
-                            ComboBle.Enabled = true;
-                            ComboBle.Items.AddRange(ListBle.ToArray());
-                            ComboBle.SelectedIndex = 0;
-                            EventBleLog("蓝牙搜索完成");
+                            strMac = arrBleData[i].Substring(8, 12);
                         }
                         else
                         {
-                            ComboBle.Enabled = false;
-                            EventBleLog("未搜索到蓝牙");
-                            Console.WriteLine("未搜索到蓝牙");
+                            strMac = arrBleData[i].Substring(0, 12);
                         }
-
-                    }
-                    else if (SerialBleStatus == enumBleStatus.Find)
-                    {
-                        string[] arrBleData = Regex.Split(strBleData, @"OK\+DIS0\:", RegexOptions.IgnoreCase);
-                        for (int i = 0; i < arrBleData.Length; i++)
+                        cnt = arrBleData[i].IndexOf("OK+NAME:");
+                        if (cnt >= 0)
                         {
-                            Int32 cnt = arrBleData[i].Length;
-                            string strMac = "";
-                            if (cnt >= 12)
-                            {
-                                if (arrBleData[i].IndexOf("OK+DIS0:") == 0)
-                                {
-                                    strMac = arrBleData[i].Substring(8, 12);
-                                }
-                                else
-                                {
-                                    strMac = arrBleData[i].Substring(0, 12);
-                                }
-                                cnt = arrBleData[i].IndexOf("OK+NAME:");
-                                if (cnt >= 0)
-                                {
-                                    strMac = arrBleData[i].Substring(cnt + 8) + ":" + strMac;
-                                    Console.WriteLine("搜索蓝牙:" + strMac);
-                                    ListBle.Add(strMac);
-                                }
-                            }
+                            strMac = arrBleData[i].Substring(cnt + 8) + ":" + strMac;
+                            Console.WriteLine("搜索蓝牙:" + strMac);
+                            ListBle.Add(strMac);
                         }
                     }
-                    break;
-                case enumBleCmd.Link:
-                    if (strBleData == "OK+CONN" + ComboBle.SelectedIndex)
-                    {
-                        //正在连接蓝牙
-                        setSerialBleStatus(enumBleStatus.Link);
-                        EventBleLog("正在连接蓝牙");
-                        Console.WriteLine("正在连接蓝牙:" + ComboBle.SelectedText);
-                    }
-                    else if (strBleData == "OK+CONN")
-                    {
-                        //连接成功
-                        setSerialBleStatus(enumBleStatus.Run);
-                        ComboBle.Enabled = false;
-                        EventBleLog("连接蓝牙成功");
-                        Console.WriteLine("连接蓝牙成功" + ComboBle.SelectedText);
-                    }
-                    break;
-                case enumBleCmd.Reset:
-                    break;
-                default:
-                    break;
+                }
             }
-            if (strBleData.IndexOf("OK+LOST") >= 0)
+            else if (strBleData == "OK+CONN" + ComboBle.SelectedIndex)
+            {
+                //正在连接蓝牙
+                setSerialBleStatus(enumBleStatus.Link);
+                EventBleLog("正在连接蓝牙");
+                Console.WriteLine("正在连接蓝牙:" + ComboBle.SelectedText);
+            }
+            else if (strBleData == "OK+CONNF")
+            {
+                //连接失败
+                setSerialBleStatus(enumBleStatus.Stop);
+                ComboBle.Enabled = false;
+                EventBleLog("连接蓝牙失败");
+                Console.WriteLine("连接蓝牙失败" + ComboBle.SelectedText);
+            }
+            else if (strBleData == "OK+CONN")
+            {
+                //连接成功
+                setSerialBleStatus(enumBleStatus.Run);
+                ComboBle.Enabled = false;
+                EventBleLog("连接蓝牙成功");
+                Console.WriteLine("连接蓝牙成功" + ComboBle.SelectedText);
+            }
+            else if (strBleData.IndexOf("OK+LOST") >= 0)
             {
                 setSerialBleStatus(enumBleStatus.Stop);
                 WriteBleCmd(enumBleCmd.Init);
