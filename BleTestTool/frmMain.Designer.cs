@@ -528,9 +528,9 @@
             this.gbSerialLog.Controls.Add(this.btnLogClear);
             this.gbSerialLog.Controls.Add(this.txtDataReceived);
             this.gbSerialLog.Font = new System.Drawing.Font("微软雅黑", 11F);
-            this.gbSerialLog.Location = new System.Drawing.Point(171, 389);
+            this.gbSerialLog.Location = new System.Drawing.Point(171, 414);
             this.gbSerialLog.Name = "gbSerialLog";
-            this.gbSerialLog.Size = new System.Drawing.Size(490, 176);
+            this.gbSerialLog.Size = new System.Drawing.Size(490, 156);
             this.gbSerialLog.TabIndex = 9;
             this.gbSerialLog.TabStop = false;
             this.gbSerialLog.Text = "输出日志";
@@ -539,7 +539,7 @@
             // 
             this.chkLogHex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkLogHex.AutoSize = true;
-            this.chkLogHex.Location = new System.Drawing.Point(289, 145);
+            this.chkLogHex.Location = new System.Drawing.Point(289, 125);
             this.chkLogHex.Name = "chkLogHex";
             this.chkLogHex.Size = new System.Drawing.Size(76, 24);
             this.chkLogHex.TabIndex = 5;
@@ -550,7 +550,7 @@
             // 
             this.chkShowError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkShowError.AutoSize = true;
-            this.chkShowError.Location = new System.Drawing.Point(101, 145);
+            this.chkShowError.Location = new System.Drawing.Point(101, 125);
             this.chkShowError.Name = "chkShowError";
             this.chkShowError.Size = new System.Drawing.Size(88, 24);
             this.chkShowError.TabIndex = 4;
@@ -561,7 +561,7 @@
             // 
             this.chkShowTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkShowTime.AutoSize = true;
-            this.chkShowTime.Location = new System.Drawing.Point(195, 145);
+            this.chkShowTime.Location = new System.Drawing.Point(195, 125);
             this.chkShowTime.Name = "chkShowTime";
             this.chkShowTime.Size = new System.Drawing.Size(88, 24);
             this.chkShowTime.TabIndex = 3;
@@ -572,7 +572,7 @@
             // 
             this.chkShowWrite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkShowWrite.AutoSize = true;
-            this.chkShowWrite.Location = new System.Drawing.Point(7, 145);
+            this.chkShowWrite.Location = new System.Drawing.Point(7, 125);
             this.chkShowWrite.Name = "chkShowWrite";
             this.chkShowWrite.Size = new System.Drawing.Size(88, 24);
             this.chkShowWrite.TabIndex = 2;
@@ -582,7 +582,7 @@
             // btnLogClear
             // 
             this.btnLogClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLogClear.Location = new System.Drawing.Point(420, 143);
+            this.btnLogClear.Location = new System.Drawing.Point(420, 123);
             this.btnLogClear.Name = "btnLogClear";
             this.btnLogClear.Size = new System.Drawing.Size(64, 27);
             this.btnLogClear.TabIndex = 1;
@@ -600,7 +600,7 @@
             this.txtDataReceived.Multiline = true;
             this.txtDataReceived.Name = "txtDataReceived";
             this.txtDataReceived.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDataReceived.Size = new System.Drawing.Size(477, 111);
+            this.txtDataReceived.Size = new System.Drawing.Size(477, 91);
             this.txtDataReceived.TabIndex = 0;
             // 
             // gbSerialReceived
@@ -609,9 +609,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbSerialReceived.Controls.Add(this.listViewSerialReceived);
             this.gbSerialReceived.Font = new System.Drawing.Font("微软雅黑", 11F);
-            this.gbSerialReceived.Location = new System.Drawing.Point(171, 144);
+            this.gbSerialReceived.Location = new System.Drawing.Point(171, 172);
             this.gbSerialReceived.Name = "gbSerialReceived";
-            this.gbSerialReceived.Size = new System.Drawing.Size(490, 239);
+            this.gbSerialReceived.Size = new System.Drawing.Size(490, 236);
             this.gbSerialReceived.TabIndex = 11;
             this.gbSerialReceived.TabStop = false;
             this.gbSerialReceived.Text = "接收数据解析";
@@ -624,7 +624,7 @@
             this.listViewSerialReceived.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.listViewSerialReceived.Location = new System.Drawing.Point(7, 26);
             this.listViewSerialReceived.Name = "listViewSerialReceived";
-            this.listViewSerialReceived.Size = new System.Drawing.Size(477, 207);
+            this.listViewSerialReceived.Size = new System.Drawing.Size(477, 204);
             this.listViewSerialReceived.TabIndex = 0;
             this.listViewSerialReceived.UseCompatibleStateImageBehavior = false;
             // 
@@ -633,9 +633,9 @@
             this.labBleStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.labBleStatus.Font = new System.Drawing.Font("微软雅黑", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labBleStatus.ForeColor = System.Drawing.Color.LimeGreen;
-            this.labBleStatus.Location = new System.Drawing.Point(11, 285);
+            this.labBleStatus.Location = new System.Drawing.Point(171, 141);
             this.labBleStatus.Name = "labBleStatus";
-            this.labBleStatus.Size = new System.Drawing.Size(148, 40);
+            this.labBleStatus.Size = new System.Drawing.Size(490, 28);
             this.labBleStatus.TabIndex = 12;
             this.labBleStatus.Text = "蓝牙状态";
             this.labBleStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -644,7 +644,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(669, 577);
+            this.ClientSize = new System.Drawing.Size(669, 582);
             this.Controls.Add(this.labBleStatus);
             this.Controls.Add(this.gbSerialReceived);
             this.Controls.Add(this.gbSerialWrite);
