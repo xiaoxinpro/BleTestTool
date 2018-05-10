@@ -38,7 +38,8 @@ namespace BleTestTool
             GroupEnable(gbSerialWrite, false);
             serialBle = new SerialBle(toolComboBle, new SerialBle.DelegateBleSerialWrite(AddSerialWrite));
             serialBle.EventBleLog += OutputBleLog;
-            initListView(listViewSerialReceived);
+            initListViewSerialReceived(listViewSerialReceived);
+            initListViewBleTest(listViewBleTest);
 
             //初始化串口配置控件
             initSerialConfig();
@@ -61,7 +62,7 @@ namespace BleTestTool
         /// <summary>
         /// 初始化ListView
         /// </summary>
-        private void initListView(ListView listView)
+        private void initListViewSerialReceived(ListView listView)
         {
             string[] arrListName = { "状态", "模式", "皮肤接触", "时长", "加热温度", "皮肤检测参数", "环境温度", "电池状态"};
             string[] arrListMark = { "设备工作状态", "设备当前运行的测试项目", "检测皮肤是否接触电极片", "当前模式运行的时长（秒）", "当前加热片的温度（℃）", "皮肤检测参数", "当前环境温度（℃）", "当前电池电量状态" };
@@ -89,6 +90,40 @@ namespace BleTestTool
                 listView.Items.Add(listViewItem);
             }
             listView.EndUpdate();
+        }
+
+        /// <summary>
+        /// 初始化测试结果列表
+        /// </summary>
+        /// <param name="listView"></param>
+        private void initListViewBleTest(ListView listView)
+        {
+            string[] arrListName = { "加热", "震动", "制冷", "正脉冲", "负脉冲", "皮肤接触" };
+
+            //基本属性设置
+            listView.FullRowSelect = true;
+            listView.GridLines = true;
+            listView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView.View = View.Details;
+            listView.SmallImageList = this.imageListStatus;
+
+            //创建列表头
+            listView.Columns.Add("状态", 60, HorizontalAlignment.Center);
+            listView.Columns.Add("名称", 400, HorizontalAlignment.Left);
+
+            //添加数据
+            listView.BeginUpdate();
+            for (int i = 0; i < arrListName.Length; i++)
+            {
+                ListViewItem listViewItem = new ListViewItem();
+                listViewItem.ImageIndex = 0;
+                listViewItem.Text = " 待测";
+                listViewItem.SubItems.Add(arrListName[i]);
+                listViewItem.SubItems.Add("");
+                listView.Items.Add(listViewItem);
+            }
+            listView.EndUpdate();
+            SetLabelTestStatus(enumLabelStatus.None);
         }
 
         /// <summary>
@@ -369,16 +404,21 @@ namespace BleTestTool
         #endregion
 
         #region 数据列表方法
-
+        /// <summary>
+        /// 接收数据处理
+        /// </summary>
+        /// <param name="arrData">Byte数据</param>
         private void BytesReceviedDataProcess(byte[] arrData)
         {
             int data = 0;
             string str = "";
+            Dictionary<string, string> dicTestData = new Dictionary<string, string>();
 
             if (arrData.Length == 13)
             {
                 //状态与模式处理
                 data = arrData[4];
+                dicTestData.Add("Status", "");
                 if (data == 0x00)
                 {
                     EditListViewSerialReceviedValue(0, "关机");
@@ -390,10 +430,12 @@ namespace BleTestTool
                     if ((data & 0x10) == 0x10)
                     {
                         EditListViewSerialReceviedValue(0, "自动测试");
+                        dicTestData["Status"] = "自动测试";
                     }
                     else if ((data & 0x20) == 0x20)
                     {
                         EditListViewSerialReceviedValue(0, "手动测试");
+                        dicTestData["Status"] = "手动测试";
                     }
                     else
                     {
@@ -405,6 +447,7 @@ namespace BleTestTool
                     string[] arrModeData = { "自动", "加热测试", "电机测试", "制冷测试", "正脉冲测试", "负脉冲测试", "皮肤接触检测", "皮肤水份检测", "关机" };
                     if (modeData <= 0x07)
                     {
+                        dicTestData.Add("Mode", arrModeData[modeData]);
                         EditListViewSerialReceviedValue(1, arrModeData[modeData]);
                     }
                     else
@@ -417,10 +460,12 @@ namespace BleTestTool
                 data = arrData[5];
                 if (data == 0x00)
                 {
+                    dicTestData.Add("L", "False");
                     EditListViewSerialReceviedValue(2, "False");
                 }
                 else if (data == 0x01)
                 {
+                    dicTestData.Add("L", "True");
                     EditListViewSerialReceviedValue(2, "True");
                 }
                 else
@@ -430,22 +475,27 @@ namespace BleTestTool
 
                 //时长处理
                 data = arrData[6];
+                dicTestData.Add("Time", data.ToString());
                 EditListViewSerialReceviedValue(3, data.ToString());
 
                 //加热温度
                 data = arrData[7];
+                dicTestData.Add("HotTemp", data.ToString());
                 EditListViewSerialReceviedValue(4, data.ToString());
 
                 //皮肤检测参数
                 data = (arrData[8] << 8) | arrData[9];
+                dicTestData.Add("RH", "0x" + data.ToString("X4"));
                 EditListViewSerialReceviedValue(5, "0x" + data.ToString("X4"));
 
                 //环温
                 data = arrData[10];
+                dicTestData.Add("RhTemp", data.ToString());
                 EditListViewSerialReceviedValue(6, data.ToString());
 
                 //电池状态
                 data = arrData[11];
+                dicTestData.Add("Battery", Convert.ToInt32(data).ToString());
                 switch (data)
                 {
                     case 0x00:
@@ -480,6 +530,11 @@ namespace BleTestTool
 
                 //发送应答位
                 AddSerialWrite(new byte[] { 0x52, 0x02, 0x02, 0x03, 0x00, 0x5A });
+
+                if (dicTestData["Status"] != "")
+                {
+                    TestDataProcess(dicTestData);
+                }
             }
             else
             {
@@ -518,6 +573,75 @@ namespace BleTestTool
                 listViewSerialReceived.Items[i].SubItems[2].Text = "";
             }
             listViewSerialReceived.EndUpdate();
+        }
+        #endregion
+
+        #region 测试结果列表方法
+        private int bakHotTemp = 0;
+        private void TestDataProcess(Dictionary<string, string> dic)
+        {
+            int RunTime = Convert.ToInt32(dic["Time"]);
+            switch (dic["Mode"])
+            {
+                case "加热测试":
+                    int HotTemp = Convert.ToInt32(dic["HotTemp"]);
+                    if (RunTime <= 1)
+                    {
+                        listViewBleTest.Items[0].ImageIndex = Convert.ToInt32(enumLabelStatus.None);
+                        bakHotTemp = HotTemp;
+                    }
+                    else if (HotTemp - bakHotTemp > 1 || HotTemp > 40)
+                    {
+                        listViewBleTest.Items[0].ImageIndex = Convert.ToInt32(enumLabelStatus.Pass);
+                    }
+                    else if (RunTime >= 5)
+                    {
+                        listViewBleTest.Items[0].ImageIndex = Convert.ToInt32(enumLabelStatus.Fail);
+                    }
+                    break;
+                case "电机测试":
+                    break;
+                case "制冷测试":
+                    break;
+                case "正脉冲测试":
+                    break;
+                case "负脉冲测试":
+                    break;
+                case "皮肤接触检测":
+                    break;
+                case "皮肤水份检测":
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 设置测试状态样式
+        /// </summary>
+        /// <param name="status"></param>
+        private void SetLabelTestStatus(enumLabelStatus status)
+        {
+            labTestStatus.TextAlign = ContentAlignment.MiddleCenter;
+            labTestStatus.ForeColor = Color.White;
+            labTestStatus.Font = new Font("微软雅黑", 21, FontStyle.Regular);
+            switch (status)
+            {
+                case enumLabelStatus.None:
+                    labTestStatus.BackColor = Color.White;
+                    labTestStatus.Text = "";
+                    break;
+                case enumLabelStatus.Pass:
+                    labTestStatus.BackColor = Color.Green;
+                    labTestStatus.Text = "PASS";
+                    break;
+                case enumLabelStatus.Fail:
+                    labTestStatus.BackColor = Color.Red;
+                    labTestStatus.Text = "FAIL";
+                    break;
+                default:
+                    break;
+            }
         }
         #endregion
 
@@ -593,4 +717,13 @@ namespace BleTestTool
         #endregion
 
     }
+
+    #region 枚举
+    public enum enumLabelStatus
+    {
+        None,
+        Pass,
+        Fail
+    }
+    #endregion
 }
