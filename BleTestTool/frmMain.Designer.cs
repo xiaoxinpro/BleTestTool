@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.gbConfigCom = new System.Windows.Forms.GroupBox();
             this.btnSerialPortSwitch = new System.Windows.Forms.Button();
@@ -74,15 +75,22 @@
             this.chkShowWrite = new System.Windows.Forms.CheckBox();
             this.btnLogClear = new System.Windows.Forms.Button();
             this.txtDataReceived = new System.Windows.Forms.TextBox();
-            this.gbSerialReceived = new System.Windows.Forms.GroupBox();
-            this.listViewSerialReceived = new System.Windows.Forms.ListView();
             this.labBleStatus = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabSerialReceived = new System.Windows.Forms.TabPage();
+            this.listViewSerialReceived = new System.Windows.Forms.ListView();
+            this.tabBleTest = new System.Windows.Forms.TabPage();
+            this.labTestStatus = new System.Windows.Forms.Label();
+            this.listViewBleTest = new System.Windows.Forms.ListView();
+            this.imageListStatus = new System.Windows.Forms.ImageList(this.components);
             this.gbConfigCom.SuspendLayout();
             this.gbSerialWrite.SuspendLayout();
             this.toolBleWrite.SuspendLayout();
             this.toolCmdWrite.SuspendLayout();
             this.gbSerialLog.SuspendLayout();
-            this.gbSerialReceived.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabSerialReceived.SuspendLayout();
+            this.tabBleTest.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbConfigCom
@@ -260,7 +268,7 @@
             this.gbSerialWrite.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.gbSerialWrite.Location = new System.Drawing.Point(171, 12);
             this.gbSerialWrite.Name = "gbSerialWrite";
-            this.gbSerialWrite.Size = new System.Drawing.Size(490, 126);
+            this.gbSerialWrite.Size = new System.Drawing.Size(490, 121);
             this.gbSerialWrite.TabIndex = 10;
             this.gbSerialWrite.TabStop = false;
             this.gbSerialWrite.Text = "发送数据";
@@ -362,7 +370,7 @@
             this.toolBtnRh,
             this.toolStripSeparator2,
             this.toolBtnStop});
-            this.toolCmdWrite.Location = new System.Drawing.Point(3, 98);
+            this.toolCmdWrite.Location = new System.Drawing.Point(3, 93);
             this.toolCmdWrite.Name = "toolCmdWrite";
             this.toolCmdWrite.Size = new System.Drawing.Size(484, 25);
             this.toolCmdWrite.TabIndex = 8;
@@ -603,18 +611,43 @@
             this.txtDataReceived.Size = new System.Drawing.Size(477, 91);
             this.txtDataReceived.TabIndex = 0;
             // 
-            // gbSerialReceived
+            // labBleStatus
             // 
-            this.gbSerialReceived.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.labBleStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbSerialReceived.Controls.Add(this.listViewSerialReceived);
-            this.gbSerialReceived.Font = new System.Drawing.Font("微软雅黑", 11F);
-            this.gbSerialReceived.Location = new System.Drawing.Point(171, 172);
-            this.gbSerialReceived.Name = "gbSerialReceived";
-            this.gbSerialReceived.Size = new System.Drawing.Size(490, 236);
-            this.gbSerialReceived.TabIndex = 11;
-            this.gbSerialReceived.TabStop = false;
-            this.gbSerialReceived.Text = "接收数据解析";
+            this.labBleStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labBleStatus.Font = new System.Drawing.Font("微软雅黑", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labBleStatus.ForeColor = System.Drawing.Color.LimeGreen;
+            this.labBleStatus.Location = new System.Drawing.Point(171, 136);
+            this.labBleStatus.Name = "labBleStatus";
+            this.labBleStatus.Size = new System.Drawing.Size(490, 28);
+            this.labBleStatus.TabIndex = 12;
+            this.labBleStatus.Text = "蓝牙状态";
+            this.labBleStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabSerialReceived);
+            this.tabControl1.Controls.Add(this.tabBleTest);
+            this.tabControl1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tabControl1.Location = new System.Drawing.Point(171, 167);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(490, 241);
+            this.tabControl1.TabIndex = 13;
+            // 
+            // tabSerialReceived
+            // 
+            this.tabSerialReceived.Controls.Add(this.listViewSerialReceived);
+            this.tabSerialReceived.Location = new System.Drawing.Point(4, 26);
+            this.tabSerialReceived.Name = "tabSerialReceived";
+            this.tabSerialReceived.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSerialReceived.Size = new System.Drawing.Size(482, 211);
+            this.tabSerialReceived.TabIndex = 0;
+            this.tabSerialReceived.Text = "接收数据解析";
+            this.tabSerialReceived.UseVisualStyleBackColor = true;
             // 
             // listViewSerialReceived
             // 
@@ -622,31 +655,62 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewSerialReceived.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.listViewSerialReceived.Location = new System.Drawing.Point(7, 26);
+            this.listViewSerialReceived.Location = new System.Drawing.Point(6, 6);
             this.listViewSerialReceived.Name = "listViewSerialReceived";
-            this.listViewSerialReceived.Size = new System.Drawing.Size(477, 204);
-            this.listViewSerialReceived.TabIndex = 0;
+            this.listViewSerialReceived.Size = new System.Drawing.Size(470, 199);
+            this.listViewSerialReceived.TabIndex = 1;
             this.listViewSerialReceived.UseCompatibleStateImageBehavior = false;
             // 
-            // labBleStatus
+            // tabBleTest
             // 
-            this.labBleStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labBleStatus.Font = new System.Drawing.Font("微软雅黑", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labBleStatus.ForeColor = System.Drawing.Color.LimeGreen;
-            this.labBleStatus.Location = new System.Drawing.Point(171, 141);
-            this.labBleStatus.Name = "labBleStatus";
-            this.labBleStatus.Size = new System.Drawing.Size(490, 28);
-            this.labBleStatus.TabIndex = 12;
-            this.labBleStatus.Text = "蓝牙状态";
-            this.labBleStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.tabBleTest.Controls.Add(this.labTestStatus);
+            this.tabBleTest.Controls.Add(this.listViewBleTest);
+            this.tabBleTest.Location = new System.Drawing.Point(4, 26);
+            this.tabBleTest.Name = "tabBleTest";
+            this.tabBleTest.Padding = new System.Windows.Forms.Padding(3);
+            this.tabBleTest.Size = new System.Drawing.Size(482, 211);
+            this.tabBleTest.TabIndex = 1;
+            this.tabBleTest.Text = "测试结果";
+            this.tabBleTest.UseVisualStyleBackColor = true;
+            // 
+            // labTestStatus
+            // 
+            this.labTestStatus.BackColor = System.Drawing.Color.Green;
+            this.labTestStatus.Font = new System.Drawing.Font("微软雅黑", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labTestStatus.ForeColor = System.Drawing.Color.White;
+            this.labTestStatus.Location = new System.Drawing.Point(6, 167);
+            this.labTestStatus.Name = "labTestStatus";
+            this.labTestStatus.Size = new System.Drawing.Size(470, 37);
+            this.labTestStatus.TabIndex = 1;
+            this.labTestStatus.Text = "PASS";
+            this.labTestStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // listViewBleTest
+            // 
+            this.listViewBleTest.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewBleTest.Location = new System.Drawing.Point(6, 6);
+            this.listViewBleTest.Name = "listViewBleTest";
+            this.listViewBleTest.Size = new System.Drawing.Size(470, 158);
+            this.listViewBleTest.TabIndex = 0;
+            this.listViewBleTest.UseCompatibleStateImageBehavior = false;
+            // 
+            // imageListStatus
+            // 
+            this.imageListStatus.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListStatus.ImageStream")));
+            this.imageListStatus.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListStatus.Images.SetKeyName(0, "BleTestTool_Status_0.png");
+            this.imageListStatus.Images.SetKeyName(1, "BleTestTool_Status_1.png");
+            this.imageListStatus.Images.SetKeyName(2, "BleTestTool_Status_2.png");
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(669, 582);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.labBleStatus);
-            this.Controls.Add(this.gbSerialReceived);
             this.Controls.Add(this.gbSerialWrite);
             this.Controls.Add(this.gbSerialLog);
             this.Controls.Add(this.gbConfigCom);
@@ -666,7 +730,9 @@
             this.toolCmdWrite.PerformLayout();
             this.gbSerialLog.ResumeLayout(false);
             this.gbSerialLog.PerformLayout();
-            this.gbSerialReceived.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabSerialReceived.ResumeLayout(false);
+            this.tabBleTest.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -692,7 +758,6 @@
         private System.Windows.Forms.TextBox txtSerialWrite;
         private System.Windows.Forms.GroupBox gbSerialLog;
         private System.Windows.Forms.TextBox txtDataReceived;
-        private System.Windows.Forms.GroupBox gbSerialReceived;
         private System.Windows.Forms.CheckBox chkShowError;
         private System.Windows.Forms.CheckBox chkShowTime;
         private System.Windows.Forms.CheckBox chkShowWrite;
@@ -719,8 +784,14 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorBle2;
         private System.Windows.Forms.ToolStripButton toolBtnBleResite;
         private System.Windows.Forms.CheckBox chkLogHex;
-        private System.Windows.Forms.ListView listViewSerialReceived;
         private System.Windows.Forms.Label labBleStatus;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabSerialReceived;
+        private System.Windows.Forms.ListView listViewSerialReceived;
+        private System.Windows.Forms.TabPage tabBleTest;
+        private System.Windows.Forms.ListView listViewBleTest;
+        private System.Windows.Forms.ImageList imageListStatus;
+        private System.Windows.Forms.Label labTestStatus;
     }
 }
 
