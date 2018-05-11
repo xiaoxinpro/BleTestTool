@@ -12,6 +12,9 @@ namespace BleTestTool
 {
     public partial class frmMain : Form
     {
+        //定义AppConfig类
+        private AppConfig appConfig;
+
         //定义ConfigCom类
         private ConfigCom configCom;
 
@@ -40,6 +43,9 @@ namespace BleTestTool
             serialBle.EventBleLog += OutputBleLog;
             initListViewSerialReceived(listViewSerialReceived);
             initListViewBleTest(listViewBleTest);
+
+            //初始化配置
+            appConfig = new AppConfig();
 
             //初始化串口配置控件
             initSerialConfig();
@@ -137,6 +143,12 @@ namespace BleTestTool
             configCom.BindStopBitsObj(cbStop);
             configCom.BindParityObj(cbParity);
             configCom.BaudRate = 115200;
+
+            ConfigComType defConfig = GetSerialConfig();
+            configCom.BaudRate = defConfig.BaudRate;
+            configCom.DataBits = defConfig.DataBits;
+            configCom.StopBits = defConfig.StopBits;
+            configCom.Parity = defConfig.Parity;
         }
 
         /// <summary>
@@ -313,6 +325,7 @@ namespace BleTestTool
                     btnSerialPortSwitch.Text = "关闭串口";
                     ClearListViewSerialReceviedValue();
                     AddSerialWrite("AT");
+                    SaveSerialConfig(configCom.GetConfigComData());
                 }
             }
             else
@@ -714,6 +727,46 @@ namespace BleTestTool
         }
 
 
+        #endregion
+
+        #region 配置方法
+        /// <summary>
+        /// 保存串口配置
+        /// </summary>
+        /// <param name="c">串口配置</param>
+        private void SaveSerialConfig(ConfigComType c)
+        {
+            Dictionary<string, string> dicConfig = new Dictionary<string, string>();
+            dicConfig.Add("PortName", c.PortName);
+            dicConfig.Add("BaudRate", c.BaudRate.ToString());
+            dicConfig.Add("DataBits", c.DataBits.ToString());
+            dicConfig.Add("StopBits", c.StopBits.ToString());
+            dicConfig.Add("Parity", c.Parity.ToString());
+            appConfig.SetConfig(dicConfig);
+        }
+
+        /// <summary>
+        /// 获取串口配置
+        /// </summary>
+        /// <returns>串口配置</returns>
+        private ConfigComType GetSerialConfig()
+        {
+            ConfigComType retConfig;
+            try
+            {
+                retConfig.PortName = appConfig.GetConfig("PortName");
+                retConfig.BaudRate = Convert.ToInt32(appConfig.GetConfig("BaudRate"));
+                retConfig.DataBits = Convert.ToInt32(appConfig.GetConfig("DataBits"));
+                retConfig.StopBits = (StopBits)Enum.Parse(typeof(StopBits), appConfig.GetConfig("StopBits"));
+                retConfig.Parity = (Parity)Enum.Parse(typeof(Parity), appConfig.GetConfig("Parity"));
+                return retConfig;
+            }
+            catch (Exception)
+            {
+                return configCom.GetConfigComData();
+            }
+
+        }
         #endregion
 
     }
