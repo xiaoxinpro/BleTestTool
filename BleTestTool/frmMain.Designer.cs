@@ -114,7 +114,7 @@
             this.gbConfigCom.Size = new System.Drawing.Size(148, 268);
             this.gbConfigCom.TabIndex = 5;
             this.gbConfigCom.TabStop = false;
-            this.gbConfigCom.Text = "串口配置";
+            this.gbConfigCom.Text = "蓝牙配置";
             // 
             // btnSerialPortSwitch
             // 
