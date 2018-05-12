@@ -123,6 +123,10 @@ namespace BleTestTool
         private void ReadFile(string path, Dictionary<string, string> dic)
         {
             dic.Clear();
+            if (!File.Exists(path))
+            {
+                return;
+            }
             using (StreamReader sr = new StreamReader(path, Encoding.Default))
             {
                 while (!sr.EndOfStream)
