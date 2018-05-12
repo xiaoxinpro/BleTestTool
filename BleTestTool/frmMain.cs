@@ -15,6 +15,9 @@ namespace BleTestTool
         //定义AppConfig类
         private AppConfig appConfig;
 
+        //定义BleConfig类
+        private BleConfig bleConfig;
+
         //定义ConfigCom类
         private ConfigCom configCom;
 
@@ -23,6 +26,9 @@ namespace BleTestTool
 
         //定义串口蓝牙类
         private SerialBle serialBle;
+
+        //定义蓝牙配置窗体
+        private Form _frmBleConfig;
 
         #region 初始化页面
         public frmMain()
@@ -46,6 +52,7 @@ namespace BleTestTool
 
             //初始化配置
             appConfig = new AppConfig();
+            bleConfig = new BleConfig();
 
             //初始化串口配置控件
             initSerialConfig();
@@ -342,6 +349,21 @@ namespace BleTestTool
                     btnSerialPortSwitch.Text = "打开串口";
                 }
             }
+        }
+
+        /// <summary>
+        /// 蓝牙高级配置按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnBleConfig_Click(object sender, EventArgs e)
+        {
+            if (_frmBleConfig != null)
+            {
+                _frmBleConfig.Close();
+            }
+            _frmBleConfig = new frmBleConfig(bleConfig);
+            _frmBleConfig.Show();
         }
 
         /// <summary>
@@ -861,7 +883,6 @@ namespace BleTestTool
 
         }
         #endregion
-
     }
 
     #region 枚举
