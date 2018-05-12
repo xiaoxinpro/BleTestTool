@@ -591,6 +591,7 @@ namespace BleTestTool
 
         #region 测试结果列表方法
         private int bakHotTemp = 0;
+        private bool bakIsL = false;
         private void TestDataProcess(Dictionary<string, string> dic)
         {
             int RunTime = Convert.ToInt32(dic["Time"]);
@@ -600,33 +601,125 @@ namespace BleTestTool
                     int HotTemp = Convert.ToInt32(dic["HotTemp"]);
                     if (RunTime <= 1)
                     {
-                        listViewBleTest.Items[0].ImageIndex = Convert.ToInt32(enumLabelStatus.None);
+                        SetListTestStatus(0, enumLabelStatus.None);
                         bakHotTemp = HotTemp;
                     }
-                    else if (HotTemp - bakHotTemp > 1 || HotTemp > 40)
+                    else if (HotTemp - bakHotTemp > 1 || HotTemp > 37)
                     {
-                        listViewBleTest.Items[0].ImageIndex = Convert.ToInt32(enumLabelStatus.Pass);
+                        SetListTestStatus(0, enumLabelStatus.Pass);
                     }
-                    else if (RunTime >= 5)
+                    else if (RunTime >= 5 && GetListTestStatus(0) == enumLabelStatus.None)
                     {
-                        listViewBleTest.Items[0].ImageIndex = Convert.ToInt32(enumLabelStatus.Fail);
+                        SetListTestStatus(0, enumLabelStatus.Fail);
                     }
                     break;
                 case "电机测试":
+                    if (RunTime <= 1)
+                    {
+                        SetListTestStatus(1, enumLabelStatus.None);
+                    }
+                    else if (RunTime >= 5)
+                    {
+                        SetListTestStatus(1, enumLabelStatus.Pass);
+                    }
                     break;
                 case "制冷测试":
+                    if (RunTime <= 1)
+                    {
+                        SetListTestStatus(2, enumLabelStatus.None);
+                    }
+                    else if (RunTime >= 5)
+                    {
+                        SetListTestStatus(2, enumLabelStatus.Pass);
+                    }
                     break;
                 case "正脉冲测试":
+                    if (RunTime <= 1)
+                    {
+                        SetListTestStatus(3, enumLabelStatus.None);
+                    }
+                    else if (RunTime >= 5)
+                    {
+                        SetListTestStatus(3, enumLabelStatus.Pass);
+                    }
                     break;
                 case "负脉冲测试":
+                    if (RunTime <= 1)
+                    {
+                        SetListTestStatus(4, enumLabelStatus.None);
+                    }
+                    else if (RunTime >= 5)
+                    {
+                        SetListTestStatus(4, enumLabelStatus.Pass);
+                    }
                     break;
                 case "皮肤接触检测":
+                    if (RunTime <= 1)
+                    {
+                        SetListTestStatus(5, enumLabelStatus.None);
+                        bakIsL = (dic["L"] == "True");
+                    }
+                    else if ((dic["L"] == "True") != bakIsL)
+                    {
+                        SetListTestStatus(5, enumLabelStatus.Pass);
+                    }
+                    else if (RunTime >= 5 && GetListTestStatus(5) == enumLabelStatus.None)
+                    {
+                        SetListTestStatus(5, enumLabelStatus.Fail);
+                    }
                     break;
                 case "皮肤水份检测":
+                    if (RunTime <= 1)
+                    {
+                        SetListTestStatus(6, enumLabelStatus.None);
+                        bakIsL = (dic["L"] == "True");
+                    }
+                    else if (int.Parse(dic["RH"], System.Globalization.NumberStyles.AllowHexSpecifier) > 0)
+                    {
+                        SetListTestStatus(6, enumLabelStatus.Pass);
+                    }
+                    else if (RunTime >= 10)
+                    {
+                        SetListTestStatus(6, enumLabelStatus.Fail);
+                    }
                     break;
                 default:
                     break;
             }
+        }
+
+        /// <summary>
+        /// 设置测试列表状态
+        /// </summary>
+        /// <param name="index">序号</param>
+        /// <param name="status">状态</param>
+        private void SetListTestStatus(int index, enumLabelStatus status)
+        {
+            listViewBleTest.Items[index].ImageIndex = Convert.ToInt32(status);
+            switch (status)
+            {
+                case enumLabelStatus.None:
+                    listViewBleTest.Items[index].Text = "待测";
+                    break;
+                case enumLabelStatus.Pass:
+                    listViewBleTest.Items[index].Text = "通过";
+                    break;
+                case enumLabelStatus.Fail:
+                    listViewBleTest.Items[index].Text = "失败";
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 获取测试列表状态
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private enumLabelStatus GetListTestStatus(int index)
+        {
+            return (enumLabelStatus)listViewBleTest.Items[index].ImageIndex;
         }
 
         /// <summary>
