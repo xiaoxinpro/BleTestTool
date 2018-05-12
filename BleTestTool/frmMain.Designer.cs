@@ -83,6 +83,7 @@
             this.labTestStatus = new System.Windows.Forms.Label();
             this.listViewBleTest = new System.Windows.Forms.ListView();
             this.imageListStatus = new System.Windows.Forms.ImageList(this.components);
+            this.btnBleConfig = new System.Windows.Forms.Button();
             this.gbConfigCom.SuspendLayout();
             this.gbSerialWrite.SuspendLayout();
             this.toolBleWrite.SuspendLayout();
@@ -95,6 +96,7 @@
             // 
             // gbConfigCom
             // 
+            this.gbConfigCom.Controls.Add(this.btnBleConfig);
             this.gbConfigCom.Controls.Add(this.btnSerialPortSwitch);
             this.gbConfigCom.Controls.Add(this.cbParity);
             this.gbConfigCom.Controls.Add(this.cbStop);
@@ -111,7 +113,7 @@
             this.gbConfigCom.Margin = new System.Windows.Forms.Padding(2);
             this.gbConfigCom.Name = "gbConfigCom";
             this.gbConfigCom.Padding = new System.Windows.Forms.Padding(2);
-            this.gbConfigCom.Size = new System.Drawing.Size(148, 268);
+            this.gbConfigCom.Size = new System.Drawing.Size(148, 301);
             this.gbConfigCom.TabIndex = 5;
             this.gbConfigCom.TabStop = false;
             this.gbConfigCom.Text = "蓝牙配置";
@@ -120,7 +122,7 @@
             // 
             this.btnSerialPortSwitch.Location = new System.Drawing.Point(8, 213);
             this.btnSerialPortSwitch.Name = "btnSerialPortSwitch";
-            this.btnSerialPortSwitch.Size = new System.Drawing.Size(131, 39);
+            this.btnSerialPortSwitch.Size = new System.Drawing.Size(131, 32);
             this.btnSerialPortSwitch.TabIndex = 10;
             this.btnSerialPortSwitch.Text = "打开串口";
             this.btnSerialPortSwitch.UseVisualStyleBackColor = true;
@@ -704,6 +706,16 @@
             this.imageListStatus.Images.SetKeyName(1, "BleTestTool_Status_1.png");
             this.imageListStatus.Images.SetKeyName(2, "BleTestTool_Status_2.png");
             // 
+            // btnBleConfig
+            // 
+            this.btnBleConfig.Location = new System.Drawing.Point(8, 255);
+            this.btnBleConfig.Name = "btnBleConfig";
+            this.btnBleConfig.Size = new System.Drawing.Size(131, 32);
+            this.btnBleConfig.TabIndex = 11;
+            this.btnBleConfig.Text = "高级配置";
+            this.btnBleConfig.UseVisualStyleBackColor = true;
+            this.btnBleConfig.Click += new System.EventHandler(this.btnBleConfig_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -792,6 +804,7 @@
         private System.Windows.Forms.ListView listViewBleTest;
         private System.Windows.Forms.ImageList imageListStatus;
         private System.Windows.Forms.Label labTestStatus;
+        private System.Windows.Forms.Button btnBleConfig;
     }
 }
 
