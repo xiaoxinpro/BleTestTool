@@ -106,7 +106,7 @@ namespace BleTestTool
         /// <param name="dic">数据</param>
         private void WriteFile(string path, Dictionary<string, string> dic)
         {
-            using (StreamWriter sw = new StreamWriter(path, false, Encoding.Default))
+            using (StreamWriter sw = new StreamWriter(path, false, Encoding.UTF8))
             {
                 foreach (KeyValuePair<string,string> item in dic)
                 {
@@ -127,7 +127,7 @@ namespace BleTestTool
             {
                 return;
             }
-            using (StreamReader sr = new StreamReader(path, Encoding.Default))
+            using (StreamReader sr = new StreamReader(path, Encoding.UTF8))
             {
                 while (!sr.EndOfStream)
                 {
