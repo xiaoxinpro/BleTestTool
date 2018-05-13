@@ -15,6 +15,7 @@ namespace BleTestTool
         private ToolStripComboBox _comboBle;
         private List<string> _listBle;
         private System.Timers.Timer _timBleWrite;
+        private Dictionary<string, string> _dicBleNameReplaceConfig;
         #endregion
 
         #region 构造函数
@@ -43,6 +44,7 @@ namespace BleTestTool
         public enumBleStatus SerialBleStatus { get => _serialBleStatus;}
         public ToolStripComboBox ComboBle { get => _comboBle; set => _comboBle = value; }
         public List<string> ListBle { get => _listBle; set => _listBle = value; }
+        public Dictionary<string, string> DicBleNameReplaceConfig { get => _dicBleNameReplaceConfig; set => _dicBleNameReplaceConfig = value; }
         #endregion
 
         #region 事件
@@ -149,7 +151,6 @@ namespace BleTestTool
                 ListBle.Clear();
                 ComboBle.Items.Clear();
                 ComboBle.Enabled = false;
-                ComboBle.Text = "搜索中。。。";
                 EventBleLog("蓝牙搜索中");
                 Console.WriteLine("搜索中。。。");
                 //测试
@@ -197,9 +198,9 @@ namespace BleTestTool
                         cnt = arrBleData[i].IndexOf("OK+NAME:");
                         if (cnt >= 0)
                         {
-                            strMac = arrBleData[i].Substring(cnt + 8) + ":" + strMac;
-                            Console.WriteLine("搜索蓝牙:" + strMac);
-                            ListBle.Add(strMac);
+                            string strName = arrBleData[i].Substring(cnt + 8);
+                            addListBle(strMac, strName);
+                            Console.WriteLine("搜索蓝牙:" + strName + ":" + strMac);
                         }
                     }
                 }
@@ -264,6 +265,23 @@ namespace BleTestTool
         private void setSerialBleCmd(enumBleCmd cmd)
         {
             this._serialBleCmd = cmd;
+        }
+
+        /// <summary>
+        /// 添加蓝牙列表
+        /// </summary>
+        /// <param name="mac">Mac地址</param>
+        /// <param name="name">蓝牙名称</param>
+        private void addListBle(string mac,string name)
+        {
+            if (DicBleNameReplaceConfig.Count > 0)
+            {
+                foreach (KeyValuePair<string,string> item in DicBleNameReplaceConfig)
+                {
+                    name = name.Replace(item.Key, item.Value);
+                }
+            }
+            ListBle.Add(name + ":" + mac);
         }
         #endregion
 

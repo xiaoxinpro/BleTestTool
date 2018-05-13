@@ -54,6 +54,9 @@ namespace BleTestTool
             appConfig = new AppConfig();
             bleConfig = new BleConfig();
 
+            //配置绑定
+            serialBle.DicBleNameReplaceConfig = bleConfig.DicBleNameReplaceConfig;
+
             //初始化串口配置控件
             initSerialConfig();
 
