@@ -366,7 +366,7 @@ namespace BleTestTool
             {
                 _frmBleConfig.Close();
             }
-            _frmBleConfig = new frmBleConfig(bleConfig);
+            _frmBleConfig = new frmBleConfig(bleConfig, serialBle);
             _frmBleConfig.Show();
         }
 

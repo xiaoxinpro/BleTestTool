@@ -82,7 +82,7 @@ namespace BleTestTool
 
         #region 蓝牙名称替换配置
         /// <summary>
-        /// 保存蓝牙黑名单配置
+        /// 保存蓝牙名称替换配置
         /// </summary>
         public void SaveBleNameReplaceConfig()
         {
@@ -90,7 +90,7 @@ namespace BleTestTool
         }
 
         /// <summary>
-        /// 获取蓝牙黑名单配置
+        /// 获取蓝牙名称替换配置
         /// </summary>
         public void GetBleNameReplaceConfig()
         {

@@ -16,12 +16,18 @@ namespace BleTestTool
         /// </summary>
         private BleConfig bleConfig;
 
+        /// <summary>
+        /// 定义SerialBle类
+        /// </summary>
+        private SerialBle serialBle;
+
         #region 加载页面
 
-        public frmBleConfig(BleConfig bc)
+        public frmBleConfig(BleConfig bc, SerialBle sb)
         {
             InitializeComponent();
             bleConfig = bc;
+            serialBle = sb;
         }
 
         private void frmBleConfig_Load(object sender, EventArgs e)
@@ -40,7 +46,7 @@ namespace BleTestTool
 
             //初始化列表
             InitBleNameReplaceList(listViewBleNameReplace);
-            InitBleBlackList();
+            InitBleBlackList(listViewBleBlackList);
         }
 
         private void frmBleConfig_FormClosing(object sender, FormClosingEventArgs e)
@@ -73,9 +79,32 @@ namespace BleTestTool
             listView.EndUpdate();
         }
 
-        private void InitBleBlackList()
+        private void InitBleBlackList(ListView listView)
         {
+            //基本属性设置
+            listView.FullRowSelect = true;
+            listView.GridLines = true;
+            listView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView.View = View.Details;
 
+            //创建列表头
+            listView.Columns.Add("蓝牙地址", 170, HorizontalAlignment.Left);
+            listView.Columns.Add("蓝牙备注", 170, HorizontalAlignment.Left);
+
+            //添加数据
+            listView.BeginUpdate();
+            foreach (KeyValuePair<string, string> item in bleConfig.DicBleBlackListConfig)
+            {
+                ListViewItem listViewItem = new ListViewItem();
+                listViewItem.Text = item.Key;
+                listViewItem.SubItems.Add(item.Value);
+                listView.Items.Add(listViewItem);
+            }
+            listView.EndUpdate();
+
+            //添加下拉列表数据
+            comboBleBlackList.Items.Clear();
+            comboBleBlackList.Items.AddRange(serialBle.DicListBle.Keys.ToArray<string>());
         }
 
         #endregion
@@ -178,6 +207,79 @@ namespace BleTestTool
                 bleConfig.SaveBleNameReplaceConfig();
                 DeleteListData(listView, listView.SelectedItems[0].Index);
                 //listView.SelectedItems[0].Remove();
+            }
+        }
+
+
+        #endregion
+
+        #region 蓝牙黑名单控件
+        private void comboBleBlackList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            if (comboBox.SelectedIndex >= 0)
+            {
+                try
+                {
+                    txtBleBlackList.Text = serialBle.DicListBle[comboBox.SelectedItem.ToString()];
+                }
+                catch (Exception)
+                {
+                    txtBleBlackList.Clear();
+                }
+                
+            }
+        }
+
+        private void btnBleBlackList_Click(object sender, EventArgs e)
+        {
+            string key = txtBleBlackList.Text.Trim();
+            string value = comboBleBlackList.Text.Trim();
+            if (key != "" && value != "")
+            {
+                if (!bleConfig.DicBleBlackListConfig.ContainsKey(key))
+                {
+                    //添加数据
+                    AddListData(listViewBleBlackList, key, value);
+                    bleConfig.DicBleBlackListConfig.Add(key, value);
+                    bleConfig.SaveBleBlackListConfig();
+                }
+                else
+                {
+                    //编辑数据
+                    EditListData(listViewBleBlackList, key, value);
+                    bleConfig.DicBleBlackListConfig[key] = value;
+                    bleConfig.SaveBleBlackListConfig();
+                }
+            }
+            else
+            {
+                MessageBox.Show("内容不可为空！", "添加失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void listViewBleBlackList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (((ListView)sender).SelectedItems.Count > 0)
+            {
+                txtBleBlackList.Text = ((ListView)sender).SelectedItems[0].Text;
+                comboBleBlackList.Text = ((ListView)sender).SelectedItems[0].SubItems[1].Text;
+            }
+            else
+            {
+                txtBleBlackList.Text = "";
+                comboBleBlackList.Text = "";
+            }
+        }
+
+        private void listViewBleBlackList_DoubleClick(object sender, EventArgs e)
+        {
+            ListView listView = (ListView)sender;
+            if (listView.SelectedItems.Count > 0)
+            {
+                bleConfig.DicBleBlackListConfig.Remove(listView.SelectedItems[0].Text);
+                bleConfig.SaveBleBlackListConfig();
+                DeleteListData(listView, listView.SelectedItems[0].Index);
             }
         }
 
