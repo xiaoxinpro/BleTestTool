@@ -13,9 +13,9 @@ namespace BleTestTool
         private enumBleCmd _serialBleCmd;
         private enumBleStatus _serialBleStatus = enumBleStatus.Stop;
         private ToolStripComboBox _comboBle;
-        private List<string> _listBle;
         private System.Timers.Timer _timBleWrite;
         private Dictionary<string, string> _dicBleNameReplaceConfig;
+        private Dictionary<string, string> _dicListBle;
         #endregion
 
         #region 构造函数
@@ -25,7 +25,7 @@ namespace BleTestTool
         public SerialBle(ToolStripComboBox comboBox)
         {
             ComboBle = comboBox;
-            ListBle = new List<string> { };
+            DicListBle = new Dictionary<string, string>();
             initTimBleWrite();
         }
 
@@ -43,8 +43,8 @@ namespace BleTestTool
         #region 属性
         public enumBleStatus SerialBleStatus { get => _serialBleStatus;}
         public ToolStripComboBox ComboBle { get => _comboBle; set => _comboBle = value; }
-        public List<string> ListBle { get => _listBle; set => _listBle = value; }
         public Dictionary<string, string> DicBleNameReplaceConfig { get => _dicBleNameReplaceConfig; set => _dicBleNameReplaceConfig = value; }
+        public Dictionary<string, string> DicListBle { get => _dicListBle; set => _dicListBle = value; }
         #endregion
 
         #region 事件
@@ -106,7 +106,8 @@ namespace BleTestTool
                         if (ComboBle.Items.Count > 0 && ComboBle.SelectedIndex >= 0)
                         {
                             setSerialBleStatus(enumBleStatus.Link);
-                            listBleCmd.Add("AT+CONN" + ComboBle.SelectedIndex);
+                            //listBleCmd.Add("AT+CONN" + ComboBle.SelectedIndex);
+                            listBleCmd.Add("AT+CON" + DicListBle[ComboBle.SelectedItem.ToString()]);
                         }
                     }
                     else
@@ -148,7 +149,7 @@ namespace BleTestTool
             {
                 //开启搜索蓝牙
                 setSerialBleStatus(enumBleStatus.Find);
-                ListBle.Clear();
+                DicListBle.Clear();
                 ComboBle.Items.Clear();
                 ComboBle.Enabled = false;
                 EventBleLog("蓝牙搜索中");
@@ -161,11 +162,11 @@ namespace BleTestTool
             else if (strBleData.IndexOf("OK+DISCE") >= 0)
             {
                 //搜索蓝牙结束
-                if (ListBle.Count > 0)
+                if (DicListBle.Count > 0)
                 {
                     setSerialBleStatus(enumBleStatus.Ready);
                     ComboBle.Enabled = true;
-                    ComboBle.Items.AddRange(ListBle.ToArray());
+                    ComboBle.Items.AddRange(DicListBle.Keys.ToArray<string>());
                     ComboBle.SelectedIndex = 0;
                     EventBleLog("蓝牙搜索完成");
                 }
@@ -205,7 +206,7 @@ namespace BleTestTool
                     }
                 }
             }
-            else if (strBleData == "OK+CONN" + ComboBle.SelectedIndex)
+            else if (strBleData == "OK+CONN" + ComboBle.SelectedIndex || strBleData == "OK+CONNA")
             {
                 //正在连接蓝牙
                 setSerialBleStatus(enumBleStatus.Link);
@@ -281,7 +282,8 @@ namespace BleTestTool
                     name = name.Replace(item.Key, item.Value);
                 }
             }
-            ListBle.Add(name + ":" + mac);
+            string strBleData = name + ":" + mac;
+            DicListBle.Add(strBleData, mac);
         }
         #endregion
 
