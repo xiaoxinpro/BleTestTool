@@ -14,6 +14,7 @@ namespace BleTestTool
         private enumBleStatus _serialBleStatus = enumBleStatus.Stop;
         private ToolStripComboBox _comboBle;
         private System.Timers.Timer _timBleWrite;
+        private Dictionary<string, string> _dicBleBlackListConfig;
         private Dictionary<string, string> _dicBleNameReplaceConfig;
         private Dictionary<string, string> _dicListBle;
         #endregion
@@ -43,6 +44,7 @@ namespace BleTestTool
         #region 属性
         public enumBleStatus SerialBleStatus { get => _serialBleStatus;}
         public ToolStripComboBox ComboBle { get => _comboBle; set => _comboBle = value; }
+        public Dictionary<string, string> DicBleBlackListConfig { get => _dicBleBlackListConfig; set => _dicBleBlackListConfig = value; }
         public Dictionary<string, string> DicBleNameReplaceConfig { get => _dicBleNameReplaceConfig; set => _dicBleNameReplaceConfig = value; }
         public Dictionary<string, string> DicListBle { get => _dicListBle; set => _dicListBle = value; }
         #endregion
@@ -280,6 +282,16 @@ namespace BleTestTool
                 foreach (KeyValuePair<string,string> item in DicBleNameReplaceConfig)
                 {
                     name = name.Replace(item.Key, item.Value);
+                }
+            }
+            if (DicBleBlackListConfig.Count > 0)
+            {
+                foreach (KeyValuePair<string, string> item in DicBleBlackListConfig)
+                {
+                    if (mac == item.Key)
+                    {
+                        return;
+                    }
                 }
             }
             string strBleData = name + ":" + mac;

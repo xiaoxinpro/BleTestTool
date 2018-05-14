@@ -88,8 +88,8 @@ namespace BleTestTool
             listView.View = View.Details;
 
             //创建列表头
-            listView.Columns.Add("蓝牙地址", 170, HorizontalAlignment.Left);
-            listView.Columns.Add("蓝牙备注", 170, HorizontalAlignment.Left);
+            listView.Columns.Add("蓝牙地址", 150, HorizontalAlignment.Left);
+            listView.Columns.Add("蓝牙备注", 200, HorizontalAlignment.Left);
 
             //添加数据
             listView.BeginUpdate();

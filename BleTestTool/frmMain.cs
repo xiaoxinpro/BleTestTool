@@ -55,6 +55,7 @@ namespace BleTestTool
             bleConfig = new BleConfig();
 
             //配置绑定
+            serialBle.DicBleBlackListConfig = bleConfig.DicBleBlackListConfig;
             serialBle.DicBleNameReplaceConfig = bleConfig.DicBleNameReplaceConfig;
 
             //初始化串口配置控件
