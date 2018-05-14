@@ -117,6 +117,7 @@ namespace BleTestTool
             string[] arrListName = { "加热", "震动", "制冷", "正脉冲", "负脉冲", "皮肤接触" };
 
             //基本属性设置
+            listView.Clear();
             listView.FullRowSelect = true;
             listView.GridLines = true;
             listView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
@@ -412,6 +413,10 @@ namespace BleTestTool
                 buffer[buffer.Length - 1] = ByteCheakSum(buffer);
                 Console.WriteLine(SerialData.ToHexString(buffer));
                 AddSerialWrite(buffer);
+                if (e.ClickedItem.Name == "toolBtnAuto")
+                {
+                    initListViewBleTest(listViewBleTest);
+                }
             }
 
         }
@@ -457,6 +462,8 @@ namespace BleTestTool
                 //状态与模式处理
                 data = arrData[4];
                 dicTestData.Add("Status", "");
+                dicTestData.Add("Mode", "");
+                dicTestData.Add("Time", arrData[6].ToString());
                 if (data == 0x00)
                 {
                     EditListViewSerialReceviedValue(0, "关机");
@@ -485,7 +492,7 @@ namespace BleTestTool
                     string[] arrModeData = { "自动", "加热测试", "电机测试", "制冷测试", "正脉冲测试", "负脉冲测试", "皮肤接触检测", "皮肤水份检测", "关机" };
                     if (modeData <= 0x07)
                     {
-                        dicTestData.Add("Mode", arrModeData[modeData]);
+                        dicTestData["Mode"] = arrModeData[modeData];
                         EditListViewSerialReceviedValue(1, arrModeData[modeData]);
                     }
                     else
@@ -513,7 +520,6 @@ namespace BleTestTool
 
                 //时长处理
                 data = arrData[6];
-                dicTestData.Add("Time", data.ToString());
                 EditListViewSerialReceviedValue(3, data.ToString());
 
                 //加热温度
@@ -569,10 +575,7 @@ namespace BleTestTool
                 //发送应答位
                 AddSerialWrite(new byte[] { 0x52, 0x02, 0x02, 0x03, 0x00, 0x5A });
 
-                if (dicTestData["Status"] != "")
-                {
-                    TestDataProcess(dicTestData);
-                }
+                TestDataProcess(dicTestData);
             }
             else
             {
@@ -615,25 +618,30 @@ namespace BleTestTool
         #endregion
 
         #region 测试结果列表方法
-        private int bakHotTemp = 0;
         private bool bakIsL = false;
+        private bool isTestDone = true;
         private void TestDataProcess(Dictionary<string, string> dic)
         {
             int RunTime = Convert.ToInt32(dic["Time"]);
+            if (dic["Mode"] != "")
+            {
+                isTestDone = false;
+                SetLabelTestStatus(enumLabelStatus.None);
+            }
             switch (dic["Mode"])
             {
                 case "加热测试":
                     int HotTemp = Convert.ToInt32(dic["HotTemp"]);
+                    int RhTemp = Convert.ToInt32(dic["RhTemp"]);
                     if (RunTime <= 1)
                     {
                         SetListTestStatus(0, enumLabelStatus.None);
-                        bakHotTemp = HotTemp;
                     }
-                    else if (HotTemp - bakHotTemp > 1 || HotTemp > 37)
+                    else if (HotTemp - RhTemp > 4 || HotTemp > 37)
                     {
                         SetListTestStatus(0, enumLabelStatus.Pass);
                     }
-                    else if (RunTime >= 5 && GetListTestStatus(0) == enumLabelStatus.None)
+                    else if (RunTime >= 10 && GetListTestStatus(0) == enumLabelStatus.None)
                     {
                         SetListTestStatus(0, enumLabelStatus.Fail);
                     }
@@ -643,7 +651,7 @@ namespace BleTestTool
                     {
                         SetListTestStatus(1, enumLabelStatus.None);
                     }
-                    else if (RunTime >= 5)
+                    else if (RunTime >= 2)
                     {
                         SetListTestStatus(1, enumLabelStatus.Pass);
                     }
@@ -653,7 +661,7 @@ namespace BleTestTool
                     {
                         SetListTestStatus(2, enumLabelStatus.None);
                     }
-                    else if (RunTime >= 5)
+                    else if (RunTime >= 2)
                     {
                         SetListTestStatus(2, enumLabelStatus.Pass);
                     }
@@ -663,7 +671,7 @@ namespace BleTestTool
                     {
                         SetListTestStatus(3, enumLabelStatus.None);
                     }
-                    else if (RunTime >= 5)
+                    else if (RunTime >= 2)
                     {
                         SetListTestStatus(3, enumLabelStatus.Pass);
                     }
@@ -673,7 +681,7 @@ namespace BleTestTool
                     {
                         SetListTestStatus(4, enumLabelStatus.None);
                     }
-                    else if (RunTime >= 5)
+                    else if (RunTime >= 2)
                     {
                         SetListTestStatus(4, enumLabelStatus.Pass);
                     }
@@ -688,7 +696,7 @@ namespace BleTestTool
                     {
                         SetListTestStatus(5, enumLabelStatus.Pass);
                     }
-                    else if (RunTime >= 5 && GetListTestStatus(5) == enumLabelStatus.None)
+                    else if (RunTime >= 3 && GetListTestStatus(5) == enumLabelStatus.None)
                     {
                         SetListTestStatus(5, enumLabelStatus.Fail);
                     }
@@ -709,6 +717,27 @@ namespace BleTestTool
                     }
                     break;
                 default:
+                    if (isTestDone == false)
+                    {
+                        isTestDone = true;
+                        foreach (ListViewItem item in listViewBleTest.Items)
+                        {
+                            if (item.ImageIndex == Convert.ToInt32(enumLabelStatus.Fail))
+                            {
+                                SetLabelTestStatus(enumLabelStatus.Fail);
+                                return;
+                            }
+                        }
+                        foreach (ListViewItem item in listViewBleTest.Items)
+                        {
+                            if (item.ImageIndex == Convert.ToInt32(enumLabelStatus.None))
+                            {
+                                SetLabelTestStatus(enumLabelStatus.None);
+                                return;
+                            }
+                        }
+                        SetLabelTestStatus(enumLabelStatus.Pass);
+                    }
                     break;
             }
         }
