@@ -8,6 +8,4 @@ BleTestTool需要引用[SerialPortHelper](https://github.com/xiaoxinpro/SerialPo
 
 下载测试版：[BleTestTool.exe](https://raw.githubusercontent.com/xiaoxinpro/BleTestTool/test/BleTestTool/bin/Debug/BleTestTool.exe)
 
-下载开发版：[BleTestTool.exe](https://raw.githubusercontent.com/xiaoxinpro/BleTestTool/dev/BleTestTool/bin/Debug/BleTestTool.exe)
-
-下载稳定版：[BleTestTool.exe](https://raw.githubusercontent.com/xiaoxinpro/BleTestTool/master/BleTestTool/bin/Debug/BleTestTool.exe)
+下载开发版：[BleTestTool.exe](https://raw.githubusercontent.com/xiaoxinpro/BleTestTool/master/BleTestTool/bin/Debug/BleTestTool.exe)
