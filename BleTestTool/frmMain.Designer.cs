@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.gbConfigCom = new System.Windows.Forms.GroupBox();
+            this.btnBleConfig = new System.Windows.Forms.Button();
             this.btnSerialPortSwitch = new System.Windows.Forms.Button();
             this.cbParity = new System.Windows.Forms.ComboBox();
             this.cbStop = new System.Windows.Forms.ComboBox();
@@ -83,7 +84,6 @@
             this.labTestStatus = new System.Windows.Forms.Label();
             this.listViewBleTest = new System.Windows.Forms.ListView();
             this.imageListStatus = new System.Windows.Forms.ImageList(this.components);
-            this.btnBleConfig = new System.Windows.Forms.Button();
             this.gbConfigCom.SuspendLayout();
             this.gbSerialWrite.SuspendLayout();
             this.toolBleWrite.SuspendLayout();
@@ -117,6 +117,16 @@
             this.gbConfigCom.TabIndex = 5;
             this.gbConfigCom.TabStop = false;
             this.gbConfigCom.Text = "蓝牙配置";
+            // 
+            // btnBleConfig
+            // 
+            this.btnBleConfig.Location = new System.Drawing.Point(8, 255);
+            this.btnBleConfig.Name = "btnBleConfig";
+            this.btnBleConfig.Size = new System.Drawing.Size(131, 32);
+            this.btnBleConfig.TabIndex = 11;
+            this.btnBleConfig.Text = "高级配置";
+            this.btnBleConfig.UseVisualStyleBackColor = true;
+            this.btnBleConfig.Click += new System.EventHandler(this.btnBleConfig_Click);
             // 
             // btnSerialPortSwitch
             // 
@@ -555,6 +565,7 @@
             this.chkLogHex.TabIndex = 5;
             this.chkLogHex.Text = "16进制";
             this.chkLogHex.UseVisualStyleBackColor = true;
+            this.chkLogHex.CheckedChanged += new System.EventHandler(this.SaveSerialLogConfing);
             // 
             // chkShowError
             // 
@@ -566,6 +577,7 @@
             this.chkShowError.TabIndex = 4;
             this.chkShowError.Text = "显示错误";
             this.chkShowError.UseVisualStyleBackColor = true;
+            this.chkShowError.CheckedChanged += new System.EventHandler(this.SaveSerialLogConfing);
             // 
             // chkShowTime
             // 
@@ -577,6 +589,7 @@
             this.chkShowTime.TabIndex = 3;
             this.chkShowTime.Text = "显示时间";
             this.chkShowTime.UseVisualStyleBackColor = true;
+            this.chkShowTime.CheckedChanged += new System.EventHandler(this.SaveSerialLogConfing);
             // 
             // chkShowWrite
             // 
@@ -588,6 +601,7 @@
             this.chkShowWrite.TabIndex = 2;
             this.chkShowWrite.Text = "显示发送";
             this.chkShowWrite.UseVisualStyleBackColor = true;
+            this.chkShowWrite.CheckedChanged += new System.EventHandler(this.SaveSerialLogConfing);
             // 
             // btnLogClear
             // 
@@ -705,16 +719,6 @@
             this.imageListStatus.Images.SetKeyName(0, "BleTestTool_Status_0.png");
             this.imageListStatus.Images.SetKeyName(1, "BleTestTool_Status_1.png");
             this.imageListStatus.Images.SetKeyName(2, "BleTestTool_Status_2.png");
-            // 
-            // btnBleConfig
-            // 
-            this.btnBleConfig.Location = new System.Drawing.Point(8, 255);
-            this.btnBleConfig.Name = "btnBleConfig";
-            this.btnBleConfig.Size = new System.Drawing.Size(131, 32);
-            this.btnBleConfig.TabIndex = 11;
-            this.btnBleConfig.Text = "高级配置";
-            this.btnBleConfig.UseVisualStyleBackColor = true;
-            this.btnBleConfig.Click += new System.EventHandler(this.btnBleConfig_Click);
             // 
             // frmMain
             // 

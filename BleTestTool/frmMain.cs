@@ -60,6 +60,7 @@ namespace BleTestTool
 
             //初始化串口配置控件
             initSerialConfig();
+            GetSerialLogConfig(gbSerialLog);
 
             //初始化串口助手
             initSerialPortHelper();
@@ -894,6 +895,17 @@ namespace BleTestTool
         }
 
         /// <summary>
+        /// 保存串口日志配置事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SaveSerialLogConfing(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            appConfig.SetConfig(checkBox.Name, checkBox.Checked.ToString());
+        }
+
+        /// <summary>
         /// 获取串口配置
         /// </summary>
         /// <returns>串口配置</returns>
@@ -915,6 +927,30 @@ namespace BleTestTool
             }
 
         }
+
+        /// <summary>
+        /// 获取串口日志配置
+        /// </summary>
+        /// <param name="groupBox">串口日志的GroupBox</param>
+        private void GetSerialLogConfig(GroupBox groupBox)
+        {
+            foreach (var item in groupBox.Controls)
+            {
+                if (item is CheckBox)
+                {
+                    CheckBox checkBox = item as CheckBox;
+                    try
+                    {
+                        checkBox.Checked = Convert.ToBoolean(appConfig.GetConfig(checkBox.Name));
+                    }
+                    catch (Exception)
+                    {
+                        checkBox.Checked = false;
+                    }
+                }
+            }
+        }
+
         #endregion
     }
 
