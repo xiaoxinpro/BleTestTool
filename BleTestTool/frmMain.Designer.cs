@@ -271,9 +271,9 @@
             this.gbSerialWrite.Controls.Add(this.btnSerialWrite);
             this.gbSerialWrite.Controls.Add(this.txtSerialWrite);
             this.gbSerialWrite.Font = new System.Drawing.Font("微软雅黑", 11F);
-            this.gbSerialWrite.Location = new System.Drawing.Point(171, 12);
+            this.gbSerialWrite.Location = new System.Drawing.Point(174, 12);
             this.gbSerialWrite.Name = "gbSerialWrite";
-            this.gbSerialWrite.Size = new System.Drawing.Size(509, 121);
+            this.gbSerialWrite.Size = new System.Drawing.Size(503, 121);
             this.gbSerialWrite.TabIndex = 10;
             this.gbSerialWrite.TabStop = false;
             this.gbSerialWrite.Text = "发送数据";
@@ -284,7 +284,7 @@
             this.toolCmdWrite.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolCmdWrite.Location = new System.Drawing.Point(3, 93);
             this.toolCmdWrite.Name = "toolCmdWrite";
-            this.toolCmdWrite.Size = new System.Drawing.Size(503, 25);
+            this.toolCmdWrite.Size = new System.Drawing.Size(497, 25);
             this.toolCmdWrite.TabIndex = 10;
             this.toolCmdWrite.Text = "toolStrip1";
             // 
@@ -302,7 +302,7 @@
             this.toolBtnBleResite});
             this.toolBleWrite.Location = new System.Drawing.Point(3, 23);
             this.toolBleWrite.Name = "toolBleWrite";
-            this.toolBleWrite.Size = new System.Drawing.Size(503, 25);
+            this.toolBleWrite.Size = new System.Drawing.Size(497, 25);
             this.toolBleWrite.TabIndex = 9;
             this.toolBleWrite.Text = "toolStrip1";
             this.toolBleWrite.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolBleWrite_ItemClicked);
@@ -365,7 +365,7 @@
             this.toolBtnBleResite.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnBleResite.Image")));
             this.toolBtnBleResite.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBtnBleResite.Name = "toolBtnBleResite";
-            this.toolBtnBleResite.Size = new System.Drawing.Size(60, 22);
+            this.toolBtnBleResite.Size = new System.Drawing.Size(60, 21);
             this.toolBtnBleResite.Tag = "3";
             this.toolBtnBleResite.Text = "重启蓝牙";
             // 
@@ -374,7 +374,7 @@
             this.rioString.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rioString.AutoSize = true;
             this.rioString.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.rioString.Location = new System.Drawing.Point(371, 61);
+            this.rioString.Location = new System.Drawing.Point(365, 61);
             this.rioString.Name = "rioString";
             this.rioString.Size = new System.Drawing.Size(62, 21);
             this.rioString.TabIndex = 7;
@@ -387,7 +387,7 @@
             this.rioHex.AutoSize = true;
             this.rioHex.Checked = true;
             this.rioHex.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.rioHex.Location = new System.Drawing.Point(317, 61);
+            this.rioHex.Location = new System.Drawing.Point(311, 61);
             this.rioHex.Name = "rioHex";
             this.rioHex.Size = new System.Drawing.Size(48, 21);
             this.rioHex.TabIndex = 6;
@@ -398,7 +398,7 @@
             // btnSerialWrite
             // 
             this.btnSerialWrite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSerialWrite.Location = new System.Drawing.Point(439, 58);
+            this.btnSerialWrite.Location = new System.Drawing.Point(433, 58);
             this.btnSerialWrite.Name = "btnSerialWrite";
             this.btnSerialWrite.Size = new System.Drawing.Size(64, 27);
             this.btnSerialWrite.TabIndex = 1;
@@ -412,7 +412,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSerialWrite.Location = new System.Drawing.Point(7, 58);
             this.txtSerialWrite.Name = "txtSerialWrite";
-            this.txtSerialWrite.Size = new System.Drawing.Size(304, 27);
+            this.txtSerialWrite.Size = new System.Drawing.Size(298, 27);
             this.txtSerialWrite.TabIndex = 0;
             // 
             // labBleStatus
@@ -422,9 +422,9 @@
             this.labBleStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.labBleStatus.Font = new System.Drawing.Font("微软雅黑", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labBleStatus.ForeColor = System.Drawing.Color.Blue;
-            this.labBleStatus.Location = new System.Drawing.Point(171, 136);
+            this.labBleStatus.Location = new System.Drawing.Point(174, 136);
             this.labBleStatus.Name = "labBleStatus";
-            this.labBleStatus.Size = new System.Drawing.Size(509, 28);
+            this.labBleStatus.Size = new System.Drawing.Size(503, 28);
             this.labBleStatus.TabIndex = 12;
             this.labBleStatus.Text = "蓝牙状态";
             this.labBleStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -512,7 +512,7 @@
             this.tabBleTest.Location = new System.Drawing.Point(4, 26);
             this.tabBleTest.Name = "tabBleTest";
             this.tabBleTest.Padding = new System.Windows.Forms.Padding(3);
-            this.tabBleTest.Size = new System.Drawing.Size(482, 211);
+            this.tabBleTest.Size = new System.Drawing.Size(495, 201);
             this.tabBleTest.TabIndex = 1;
             this.tabBleTest.Text = "测试结果";
             this.tabBleTest.UseVisualStyleBackColor = true;
@@ -536,7 +536,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewBleTest.Location = new System.Drawing.Point(6, 6);
             this.listViewBleTest.Name = "listViewBleTest";
-            this.listViewBleTest.Size = new System.Drawing.Size(470, 158);
+            this.listViewBleTest.Size = new System.Drawing.Size(483, 148);
             this.listViewBleTest.TabIndex = 0;
             this.listViewBleTest.UseCompatibleStateImageBehavior = false;
             // 
@@ -554,7 +554,7 @@
             this.gbSerialLog.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.gbSerialLog.Location = new System.Drawing.Point(3, 3);
             this.gbSerialLog.Name = "gbSerialLog";
-            this.gbSerialLog.Size = new System.Drawing.Size(499, 167);
+            this.gbSerialLog.Size = new System.Drawing.Size(503, 167);
             this.gbSerialLog.TabIndex = 10;
             this.gbSerialLog.TabStop = false;
             this.gbSerialLog.Text = "输出日志";
@@ -569,6 +569,7 @@
             this.chkLogHex.TabIndex = 5;
             this.chkLogHex.Text = "16进制";
             this.chkLogHex.UseVisualStyleBackColor = true;
+            this.chkLogHex.CheckedChanged += new System.EventHandler(this.SaveSerialLogConfing);
             // 
             // chkShowError
             // 
@@ -580,6 +581,7 @@
             this.chkShowError.TabIndex = 4;
             this.chkShowError.Text = "显示错误";
             this.chkShowError.UseVisualStyleBackColor = true;
+            this.chkShowError.CheckedChanged += new System.EventHandler(this.SaveSerialLogConfing);
             // 
             // chkShowTime
             // 
@@ -591,6 +593,7 @@
             this.chkShowTime.TabIndex = 3;
             this.chkShowTime.Text = "显示时间";
             this.chkShowTime.UseVisualStyleBackColor = true;
+            this.chkShowTime.CheckedChanged += new System.EventHandler(this.SaveSerialLogConfing);
             // 
             // chkShowWrite
             // 
@@ -602,16 +605,18 @@
             this.chkShowWrite.TabIndex = 2;
             this.chkShowWrite.Text = "显示发送";
             this.chkShowWrite.UseVisualStyleBackColor = true;
+            this.chkShowWrite.CheckedChanged += new System.EventHandler(this.SaveSerialLogConfing);
             // 
             // btnLogClear
             // 
             this.btnLogClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLogClear.Location = new System.Drawing.Point(429, 134);
+            this.btnLogClear.Location = new System.Drawing.Point(433, 134);
             this.btnLogClear.Name = "btnLogClear";
             this.btnLogClear.Size = new System.Drawing.Size(64, 27);
             this.btnLogClear.TabIndex = 1;
             this.btnLogClear.Text = "清空";
             this.btnLogClear.UseVisualStyleBackColor = true;
+            this.btnLogClear.Click += new System.EventHandler(this.btnLogClear_Click);
             // 
             // txtDataReceived
             // 
@@ -623,7 +628,7 @@
             this.txtDataReceived.Multiline = true;
             this.txtDataReceived.Name = "txtDataReceived";
             this.txtDataReceived.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDataReceived.Size = new System.Drawing.Size(486, 102);
+            this.txtDataReceived.Size = new System.Drawing.Size(490, 102);
             this.txtDataReceived.TabIndex = 0;
             // 
             // frmMain
