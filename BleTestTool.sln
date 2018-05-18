@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BleTestTool", "BleTestTool\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialPortHelperLib", "SerialPortHelperLib\SerialPortHelperLib.csproj", "{33045BA2-C192-4A1A-8A96-31500719341B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumidTestLib", "HumidTestLib\HumidTestLib.csproj", "{6405DDE1-B5AB-4F19-A3E1-35F5076CAC57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceTestLib", "DeviceTestLib\DeviceTestLib.csproj", "{268C98EF-4384-4734-A8DD-BD008E85904D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{33045BA2-C192-4A1A-8A96-31500719341B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33045BA2-C192-4A1A-8A96-31500719341B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33045BA2-C192-4A1A-8A96-31500719341B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6405DDE1-B5AB-4F19-A3E1-35F5076CAC57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6405DDE1-B5AB-4F19-A3E1-35F5076CAC57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6405DDE1-B5AB-4F19-A3E1-35F5076CAC57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6405DDE1-B5AB-4F19-A3E1-35F5076CAC57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{268C98EF-4384-4734-A8DD-BD008E85904D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{268C98EF-4384-4734-A8DD-BD008E85904D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{268C98EF-4384-4734-A8DD-BD008E85904D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{268C98EF-4384-4734-A8DD-BD008E85904D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

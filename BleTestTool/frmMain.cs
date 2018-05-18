@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using DeviceTestLib;
 using SerialPortHelperLib;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Reflection;
+using System.Windows.Forms;
 
 namespace BleTestTool
 {
@@ -23,6 +21,9 @@ namespace BleTestTool
 
         //定义SerialPortHelper类
         private SerialPortHelper serialPortHelper;
+
+        //定义DeviceTest类
+        private DeviceTestLib.IDeviceTest deviceTest;
 
         //定义串口蓝牙类
         private SerialBle serialBle;
@@ -47,8 +48,6 @@ namespace BleTestTool
             GroupEnable(gbSerialWrite, false);
             serialBle = new SerialBle(toolComboBle, new SerialBle.DelegateBleSerialWrite(AddSerialWrite));
             serialBle.EventBleLog += OutputBleLog;
-            initListViewSerialReceived(listViewSerialReceived);
-            initListViewBleTest(listViewBleTest);
 
             //初始化配置
             appConfig = new AppConfig();
@@ -75,74 +74,6 @@ namespace BleTestTool
         {
             //关闭串口
             serialPortHelper.CloseCom(out string strError);
-        }
-
-        /// <summary>
-        /// 初始化ListView
-        /// </summary>
-        private void initListViewSerialReceived(ListView listView)
-        {
-            string[] arrListName = { "状态", "模式", "皮肤接触", "时长", "加热温度", "皮肤检测参数", "环境温度", "电池状态"};
-            string[] arrListMark = { "设备工作状态", "设备当前运行的测试项目", "检测皮肤是否接触电极片", "当前模式运行的时长（秒）", "当前加热片的温度（℃）", "皮肤检测参数", "当前环境温度（℃）", "当前电池电量状态" };
-            //基本属性设置
-            listView.FullRowSelect = true;
-            listView.GridLines = true;
-            listView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView.View = View.Details;
-
-            //创建列表头
-            listView.Columns.Add("序号", 50, HorizontalAlignment.Center);
-            listView.Columns.Add("名称", 100, HorizontalAlignment.Center);
-            listView.Columns.Add("值", 100, HorizontalAlignment.Center);
-            listView.Columns.Add("备注", 200, HorizontalAlignment.Left);
-
-            //添加数据
-            listView.BeginUpdate();
-            for (int i = 0; i < arrListName.Length; i++)
-            {
-                ListViewItem listViewItem = new ListViewItem();
-                listViewItem.Text = i.ToString();
-                listViewItem.SubItems.Add(arrListName[i]);
-                listViewItem.SubItems.Add("");
-                listViewItem.SubItems.Add(arrListMark[i]);
-                listView.Items.Add(listViewItem);
-            }
-            listView.EndUpdate();
-        }
-
-        /// <summary>
-        /// 初始化测试结果列表
-        /// </summary>
-        /// <param name="listView"></param>
-        private void initListViewBleTest(ListView listView)
-        {
-            string[] arrListName = { "加热", "震动", "制冷", "正脉冲", "负脉冲", "皮肤接触" };
-
-            //基本属性设置
-            listView.Clear();
-            listView.FullRowSelect = true;
-            listView.GridLines = true;
-            listView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView.View = View.Details;
-            listView.SmallImageList = this.imageListStatus;
-
-            //创建列表头
-            listView.Columns.Add("状态", 60, HorizontalAlignment.Center);
-            listView.Columns.Add("名称", 400, HorizontalAlignment.Left);
-
-            //添加数据
-            listView.BeginUpdate();
-            for (int i = 0; i < arrListName.Length; i++)
-            {
-                ListViewItem listViewItem = new ListViewItem();
-                listViewItem.ImageIndex = 0;
-                listViewItem.Text = " 待测";
-                listViewItem.SubItems.Add(arrListName[i]);
-                listViewItem.SubItems.Add("");
-                listView.Items.Add(listViewItem);
-            }
-            listView.EndUpdate();
-            SetLabelTestStatus(enumLabelStatus.None);
         }
 
         /// <summary>
@@ -199,9 +130,14 @@ namespace BleTestTool
             {
                 Console.WriteLine("接收数据：" + SerialData.ToHexString(arrData));
                 txtDataReceived.AppendText(SerialData.ToHexString(arrData) + "\r\n");
-                if (arrData[0] == 0x52)
+                try
                 {
-                    BytesReceviedDataProcess(arrData);
+                    deviceTest.BytesReceviedDataProcess(arrData);
+                    OutputBleLog("连接蓝牙成功");
+                }
+                catch (Exception)
+                {
+
                 }
             }
             else
@@ -392,35 +328,6 @@ namespace BleTestTool
             Console.WriteLine("选择蓝牙命令：" + e.ClickedItem.Text);
             serialBle.WriteBleCmd((enumBleCmd)Convert.ToInt32(e.ClickedItem.Tag));
             ClearListViewSerialReceviedValue();
-        }
-
-        /// <summary>
-        /// 快捷发送命令工具栏
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void toolCmdWrite_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            Console.WriteLine("选择快捷命令：" + e.ClickedItem.Name + " - " + e.ClickedItem.Text);
-            if (e.ClickedItem.Name == "toolBtnRh")
-            {
-                byte[] buffer = { 0x52, 0x02, 0x01, 0x02, 0x01, 0x59 };
-                Console.WriteLine(SerialData.ToHexString(buffer));
-                AddSerialWrite(buffer);
-            }
-            else
-            {
-                byte[] buffer = { 0x52, 0x02, 0x01, 0x10, 0x00, 0x00 };
-                buffer[4] = Convert.ToByte(Convert.ToInt32(e.ClickedItem.Tag));
-                buffer[buffer.Length - 1] = ByteCheakSum(buffer);
-                Console.WriteLine(SerialData.ToHexString(buffer));
-                AddSerialWrite(buffer);
-                if (e.ClickedItem.Name == "toolBtnAuto")
-                {
-                    initListViewBleTest(listViewBleTest);
-                }
-            }
-
         }
 
         /// <summary>
@@ -952,6 +859,38 @@ namespace BleTestTool
         }
 
         #endregion
+
+        #region 外部驱动
+        private void btnLoadDeviceLib_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "驱动文件|*.dll|所有文件|*.*";
+            openFileDialog.FilterIndex = 1;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string strPath = openFileDialog.FileName;
+                try
+                {
+                    Assembly assembly = Assembly.LoadFile(strPath);
+                    Type type = assembly.GetType("DeviceTestLib.DeviceTestClass");
+                    deviceTest = System.Activator.CreateInstance(type) as DeviceTestLib.IDeviceTest;
+                    //绑定控件并初始化
+                    deviceTest.ToolCmdWrite = this.toolCmdWrite;
+                    deviceTest.ListViewSerialReceived = this.listViewSerialReceived;
+                    deviceTest.ListViewBleTest = this.listViewBleTest;
+                    deviceTest.EventAddCmdWrite += new DelegateAddCmdWrite(AddSerialWrite);
+                    deviceTest.InitDeviceTest();
+                    ((Button)sender).Hide();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show(error.Message, "加载失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+        }
+        #endregion
+
     }
 
     #region 枚举

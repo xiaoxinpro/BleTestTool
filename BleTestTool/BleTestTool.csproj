@@ -86,6 +86,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DeviceTestLib\DeviceTestLib.csproj">
+      <Project>{268c98ef-4384-4734-a8dd-bd008e85904d}</Project>
+      <Name>DeviceTestLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SerialPortHelperLib\SerialPortHelperLib.csproj">
       <Project>{33045BA2-C192-4A1A-8A96-31500719341B}</Project>
       <Name>SerialPortHelperLib</Name>
