@@ -10,7 +10,7 @@ namespace DeviceTestLib
     public class DeviceTestClass : IDeviceTest
     {
         #region 字段
-        private frmHumidTest FrmHumidTest;
+        private frmBeautyTest FrmBeautyTest;
         private ToolStrip _toolCmdWrite;
         private ListView _listViewSerialReceived;
         private ListView _listViewBleTest;
@@ -30,7 +30,7 @@ namespace DeviceTestLib
 
         public void InitDeviceTest()
         {
-            FrmHumidTest = new frmHumidTest();
+            FrmBeautyTest = new frmBeautyTest();
             InitToolCmdWrite();
             InitListViewSerialReceived(ListViewSerialReceived);
             initListViewBleTest(ListViewBleTest);
@@ -121,7 +121,7 @@ namespace DeviceTestLib
             ToolCmdWrite.Dock = DockStyle.Bottom;
             ToolCmdWrite.GripStyle = ToolStripGripStyle.Hidden;
             List<ToolStripItem> listToolStripItem = new List<ToolStripItem>();
-            foreach (ToolStripItem item in FrmHumidTest.toolCmdWrite.Items)
+            foreach (ToolStripItem item in FrmBeautyTest.toolCmdWrite.Items)
             {
                 listToolStripItem.Add(item);
 
@@ -217,8 +217,8 @@ namespace DeviceTestLib
             {
                 Console.WriteLine("选择工具命令：" + e.ClickedItem.Name + " - " + e.ClickedItem.Text);
                 byte[] buffer = { 0x52, 0x01, 0x01, 0x01, 0x00, 0x56 };
-                int valLight = (FrmHumidTest.toolStripComboLight.SelectedIndex + 1) * 10;
-                int valHumid = (FrmHumidTest.toolStripComboHumid.SelectedIndex + 1) * 10;
+                int valLight = (FrmBeautyTest.toolStripComboLight.SelectedIndex + 1) * 10;
+                int valHumid = (FrmBeautyTest.toolStripComboHumid.SelectedIndex + 1) * 10;
                 switch (e.ClickedItem.Name)
                 {
                     case "toolStripBtnChangeLight":
