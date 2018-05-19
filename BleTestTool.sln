@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumidTestLib", "HumidTestLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceTestLib", "DeviceTestLib\DeviceTestLib.csproj", "{268C98EF-4384-4734-A8DD-BD008E85904D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautyTestLib", "BeautyTestLib\BeautyTestLib.csproj", "{54BC4FCC-D1A7-4B57-8E77-9D8D226B451C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{268C98EF-4384-4734-A8DD-BD008E85904D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{268C98EF-4384-4734-A8DD-BD008E85904D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{268C98EF-4384-4734-A8DD-BD008E85904D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54BC4FCC-D1A7-4B57-8E77-9D8D226B451C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54BC4FCC-D1A7-4B57-8E77-9D8D226B451C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54BC4FCC-D1A7-4B57-8E77-9D8D226B451C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54BC4FCC-D1A7-4B57-8E77-9D8D226B451C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
