@@ -258,9 +258,15 @@ namespace DeviceTestLib
                         EventAddCmdWrite(CheckWriteData(buffer));
                         break;
                     case "toolStripBtnCloseHumid":
-                        //发送雾量命令
+                        //发送关闭雾量命令
                         buffer[Convert.ToInt32(enumSerialWriteFormat.Cmd)] = 0x05;
                         buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = 0x00;
+                        EventAddCmdWrite(CheckWriteData(buffer));
+                        break;
+                    case "toolStripBtnOpenErrorBeep":
+                        //发送开启报警音
+                        buffer[Convert.ToInt32(enumSerialWriteFormat.Cmd)] = 0x07;
+                        buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = 0x01;
                         EventAddCmdWrite(CheckWriteData(buffer));
                         break;
                     default:

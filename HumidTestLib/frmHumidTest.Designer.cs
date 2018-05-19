@@ -33,6 +33,7 @@
             this.toolCmdWrite = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboLight = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripBtnChangeLight = new System.Windows.Forms.ToolStripButton();
             this.toolStripBtnOpenWhiteLight = new System.Windows.Forms.ToolStripButton();
             this.toolStripBtnOpenYellowLight = new System.Windows.Forms.ToolStripButton();
             this.toolStripBtnOpenAllLight = new System.Windows.Forms.ToolStripButton();
@@ -45,7 +46,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.listViewBleTest = new System.Windows.Forms.ListView();
             this.listViewSerialReceived = new System.Windows.Forms.ListView();
-            this.toolStripBtnChangeLight = new System.Windows.Forms.ToolStripButton();
+            this.toolStripBtnOpenErrorBeep = new System.Windows.Forms.ToolStripButton();
             this.groupBox1.SuspendLayout();
             this.toolCmdWrite.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -77,7 +78,8 @@
             this.toolStripComboHumid,
             this.toolStripBtnOpenHumid,
             this.toolStripBtnCloseHumid,
-            this.toolStripSeparator2});
+            this.toolStripSeparator2,
+            this.toolStripBtnOpenErrorBeep});
             this.toolCmdWrite.Location = new System.Drawing.Point(3, 72);
             this.toolCmdWrite.Name = "toolCmdWrite";
             this.toolCmdWrite.Size = new System.Drawing.Size(720, 25);
@@ -106,6 +108,15 @@
             "100%亮度"});
             this.toolStripComboLight.Name = "toolStripComboLight";
             this.toolStripComboLight.Size = new System.Drawing.Size(80, 25);
+            // 
+            // toolStripBtnChangeLight
+            // 
+            this.toolStripBtnChangeLight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripBtnChangeLight.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnChangeLight.Image")));
+            this.toolStripBtnChangeLight.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnChangeLight.Name = "toolStripBtnChangeLight";
+            this.toolStripBtnChangeLight.Size = new System.Drawing.Size(60, 22);
+            this.toolStripBtnChangeLight.Text = "改变亮度";
             // 
             // toolStripBtnOpenWhiteLight
             // 
@@ -215,14 +226,14 @@
             this.listViewSerialReceived.TabIndex = 0;
             this.listViewSerialReceived.UseCompatibleStateImageBehavior = false;
             // 
-            // toolStripBtnChangeLight
+            // toolStripBtnOpenErrorBeep
             // 
-            this.toolStripBtnChangeLight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripBtnChangeLight.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnChangeLight.Image")));
-            this.toolStripBtnChangeLight.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripBtnChangeLight.Name = "toolStripBtnChangeLight";
-            this.toolStripBtnChangeLight.Size = new System.Drawing.Size(60, 22);
-            this.toolStripBtnChangeLight.Text = "改变亮度";
+            this.toolStripBtnOpenErrorBeep.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripBtnOpenErrorBeep.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnOpenErrorBeep.Image")));
+            this.toolStripBtnOpenErrorBeep.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnOpenErrorBeep.Name = "toolStripBtnOpenErrorBeep";
+            this.toolStripBtnOpenErrorBeep.Size = new System.Drawing.Size(72, 22);
+            this.toolStripBtnOpenErrorBeep.Text = "开启报警音";
             // 
             // frmHumidTest
             // 
@@ -261,5 +272,6 @@
         public System.Windows.Forms.ToolStripButton toolStripBtnCloseHumid;
         public System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripBtnChangeLight;
+        private System.Windows.Forms.ToolStripButton toolStripBtnOpenErrorBeep;
     }
 }
