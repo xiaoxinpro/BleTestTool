@@ -344,7 +344,7 @@ namespace DeviceTestLib
             {
                 sum += arrData[i];
             }
-            return Convert.ToByte(sum % 0xFF);
+            return Convert.ToByte(sum & 0xFF);
         }
 
         /// <summary>
