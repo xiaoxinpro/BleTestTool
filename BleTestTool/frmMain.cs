@@ -10,6 +10,8 @@ namespace BleTestTool
 {
     public partial class frmMain : Form
     {
+        private const string STR_TITLE = "串口蓝牙测试工具";
+
         //定义AppConfig类
         private AppConfig appConfig;
 
@@ -48,6 +50,7 @@ namespace BleTestTool
             GroupEnable(gbSerialWrite, false);
             serialBle = new SerialBle(toolComboBle, new SerialBle.DelegateBleSerialWrite(AddSerialWrite));
             serialBle.EventBleLog += OutputBleLog;
+            this.Text = STR_TITLE;
 
             //初始化配置
             appConfig = new AppConfig();
@@ -247,8 +250,11 @@ namespace BleTestTool
         #region 蓝牙事件
         private void OutputBleLog(string strLog)
         {
-            Console.WriteLine("蓝牙日志" + strLog);
-            labBleStatus.Text = (strLog);
+            if (labBleStatus.Text != strLog)
+            {
+                Console.WriteLine("蓝牙日志" + strLog);
+                labBleStatus.Text = (strLog);
+            }
         }
         #endregion
 
@@ -882,6 +888,7 @@ namespace BleTestTool
                     deviceTest.EventAddCmdWrite += new DelegateAddCmdWrite(AddSerialWrite);
                     deviceTest.InitDeviceTest();
                     ((Button)sender).Hide();
+                    this.Text = STR_TITLE + " - " + System.IO.Path.GetFileName(openFileDialog.FileName);
                 }
                 catch (Exception error)
                 {

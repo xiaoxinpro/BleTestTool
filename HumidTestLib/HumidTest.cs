@@ -66,7 +66,7 @@ namespace DeviceTestLib
                     EditListViewSerialReceviedValue(3, Convert.ToInt32(arrData[7]).ToString());
 
                     //亮度：百分比，000-100
-                    EditListViewSerialReceviedValue(4, Convert.ToInt32(arrData[8]).ToString(), Convert.ToInt32(arrData[8]) > 50);
+                    EditListViewSerialReceviedValue(4, Convert.ToInt32(arrData[8]).ToString());
 
                     //冷/暖光：0x00关闭，0x01开灯a（冷），0x02开灯b（暖），0x03开灯ab（冷暖）
                     string light;
