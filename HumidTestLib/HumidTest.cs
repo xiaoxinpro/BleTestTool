@@ -1,6 +1,7 @@
 ﻿using DeviceTestLib;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -14,6 +15,7 @@ namespace DeviceTestLib
         private ToolStrip _toolCmdWrite;
         private ListView _listViewSerialReceived;
         private ListView _listViewBleTest;
+        private Label _labelBleTestStatus;
 
         public event DelegateAddCmdWrite EventAddCmdWrite;
 
@@ -23,6 +25,7 @@ namespace DeviceTestLib
         public ToolStrip ToolCmdWrite { get => _toolCmdWrite; set => _toolCmdWrite = value; }
         public ListView ListViewSerialReceived { get => _listViewSerialReceived; set => _listViewSerialReceived = value; }
         public ListView ListViewBleTest { get => _listViewBleTest; set => _listViewBleTest = value; }
+        public Label LabelBleTestStatus { get => _labelBleTestStatus; set => _labelBleTestStatus = value; }
 
         #endregion
 
@@ -33,7 +36,8 @@ namespace DeviceTestLib
             FrmHumidTest = new frmHumidTest();
             InitToolCmdWrite();
             InitListViewSerialReceived(ListViewSerialReceived);
-            initListViewBleTest(ListViewBleTest);
+            InitLabelBleTestStatus();
+            InitListViewBleTest(ListViewBleTest);
         }
 
         public void BytesReceviedDataProcess(byte[] arrData)
@@ -136,10 +140,22 @@ namespace DeviceTestLib
         }
 
         /// <summary>
+        /// 初始蓝牙测试状态栏
+        /// </summary>
+        /// <param name="label"></param>
+        private void InitLabelBleTestStatus()
+        {
+            LabelBleTestStatus.TextAlign = ContentAlignment.MiddleCenter;
+            LabelBleTestStatus.ForeColor = Color.White;
+            LabelBleTestStatus.Font = new Font("微软雅黑", 21, FontStyle.Regular);
+            LabelBleTestStatus.Text = "";
+        }
+
+        /// <summary>
         /// 初始化测试结果列表
         /// </summary>
         /// <param name="listView"></param>
-        private void initListViewBleTest(ListView listView)
+        private void InitListViewBleTest(ListView listView)
         {
             //string[] arrListName = { "加热", "震动", "制冷", "正脉冲", "负脉冲", "皮肤接触" };
 
@@ -168,6 +184,8 @@ namespace DeviceTestLib
             //}
             //listView.EndUpdate();
             //SetLabelTestStatus(enumLabelStatus.None);
+            LabelBleTestStatus.BackColor = Color.White;
+            LabelBleTestStatus.Text = "";
         }
 
         /// <summary>
