@@ -43,10 +43,11 @@
             this.toolStripBtnOpenHumid = new System.Windows.Forms.ToolStripButton();
             this.toolStripBtnCloseHumid = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripBtnOpenErrorBeep = new System.Windows.Forms.ToolStripButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.listViewBleTest = new System.Windows.Forms.ListView();
             this.listViewSerialReceived = new System.Windows.Forms.ListView();
-            this.toolStripBtnOpenErrorBeep = new System.Windows.Forms.ToolStripButton();
+            this.labTestStatus = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.toolCmdWrite.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -199,8 +200,18 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripBtnOpenErrorBeep
+            // 
+            this.toolStripBtnOpenErrorBeep.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripBtnOpenErrorBeep.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnOpenErrorBeep.Image")));
+            this.toolStripBtnOpenErrorBeep.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnOpenErrorBeep.Name = "toolStripBtnOpenErrorBeep";
+            this.toolStripBtnOpenErrorBeep.Size = new System.Drawing.Size(72, 22);
+            this.toolStripBtnOpenErrorBeep.Text = "开启报警音";
+            // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.labTestStatus);
             this.groupBox2.Controls.Add(this.listViewBleTest);
             this.groupBox2.Controls.Add(this.listViewSerialReceived);
             this.groupBox2.Location = new System.Drawing.Point(13, 119);
@@ -214,7 +225,7 @@
             // 
             this.listViewBleTest.Location = new System.Drawing.Point(370, 20);
             this.listViewBleTest.Name = "listViewBleTest";
-            this.listViewBleTest.Size = new System.Drawing.Size(350, 211);
+            this.listViewBleTest.Size = new System.Drawing.Size(350, 167);
             this.listViewBleTest.TabIndex = 1;
             this.listViewBleTest.UseCompatibleStateImageBehavior = false;
             // 
@@ -226,14 +237,19 @@
             this.listViewSerialReceived.TabIndex = 0;
             this.listViewSerialReceived.UseCompatibleStateImageBehavior = false;
             // 
-            // toolStripBtnOpenErrorBeep
+            // labTestStatus
             // 
-            this.toolStripBtnOpenErrorBeep.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripBtnOpenErrorBeep.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnOpenErrorBeep.Image")));
-            this.toolStripBtnOpenErrorBeep.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripBtnOpenErrorBeep.Name = "toolStripBtnOpenErrorBeep";
-            this.toolStripBtnOpenErrorBeep.Size = new System.Drawing.Size(72, 22);
-            this.toolStripBtnOpenErrorBeep.Text = "开启报警音";
+            this.labTestStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labTestStatus.BackColor = System.Drawing.Color.Green;
+            this.labTestStatus.Font = new System.Drawing.Font("微软雅黑", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labTestStatus.ForeColor = System.Drawing.Color.White;
+            this.labTestStatus.Location = new System.Drawing.Point(370, 190);
+            this.labTestStatus.Name = "labTestStatus";
+            this.labTestStatus.Size = new System.Drawing.Size(350, 41);
+            this.labTestStatus.TabIndex = 3;
+            this.labTestStatus.Text = "PASS";
+            this.labTestStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // frmHumidTest
             // 
@@ -273,5 +289,6 @@
         public System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripBtnChangeLight;
         private System.Windows.Forms.ToolStripButton toolStripBtnOpenErrorBeep;
+        public System.Windows.Forms.Label labTestStatus;
     }
 }

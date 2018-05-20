@@ -28,11 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBeautyTest));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.listViewBleTest = new System.Windows.Forms.ListView();
-            this.listViewSerialReceived = new System.Windows.Forms.ListView();
             this.toolCmdWrite = new System.Windows.Forms.ToolStrip();
             this.toolBtnAuto = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -45,9 +43,14 @@
             this.toolBtnRh = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolBtnStop = new System.Windows.Forms.ToolStripButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.listViewBleTest = new System.Windows.Forms.ListView();
+            this.listViewSerialReceived = new System.Windows.Forms.ListView();
+            this.labTestStatus = new System.Windows.Forms.Label();
+            this.imageListStatus = new System.Windows.Forms.ImageList(this.components);
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.toolCmdWrite.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -59,33 +62,6 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "发送命令";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.listViewBleTest);
-            this.groupBox2.Controls.Add(this.listViewSerialReceived);
-            this.groupBox2.Location = new System.Drawing.Point(13, 91);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(726, 237);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "接收命令";
-            // 
-            // listViewBleTest
-            // 
-            this.listViewBleTest.Location = new System.Drawing.Point(370, 20);
-            this.listViewBleTest.Name = "listViewBleTest";
-            this.listViewBleTest.Size = new System.Drawing.Size(350, 211);
-            this.listViewBleTest.TabIndex = 1;
-            this.listViewBleTest.UseCompatibleStateImageBehavior = false;
-            // 
-            // listViewSerialReceived
-            // 
-            this.listViewSerialReceived.Location = new System.Drawing.Point(6, 20);
-            this.listViewSerialReceived.Name = "listViewSerialReceived";
-            this.listViewSerialReceived.Size = new System.Drawing.Size(358, 211);
-            this.listViewSerialReceived.TabIndex = 0;
-            this.listViewSerialReceived.UseCompatibleStateImageBehavior = false;
             // 
             // toolCmdWrite
             // 
@@ -210,6 +186,56 @@
             this.toolBtnStop.Tag = "8";
             this.toolBtnStop.Text = "停止测试";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.labTestStatus);
+            this.groupBox2.Controls.Add(this.listViewBleTest);
+            this.groupBox2.Controls.Add(this.listViewSerialReceived);
+            this.groupBox2.Location = new System.Drawing.Point(13, 91);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(726, 237);
+            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "接收命令";
+            // 
+            // listViewBleTest
+            // 
+            this.listViewBleTest.Location = new System.Drawing.Point(370, 20);
+            this.listViewBleTest.Name = "listViewBleTest";
+            this.listViewBleTest.Size = new System.Drawing.Size(350, 167);
+            this.listViewBleTest.TabIndex = 1;
+            this.listViewBleTest.UseCompatibleStateImageBehavior = false;
+            // 
+            // listViewSerialReceived
+            // 
+            this.listViewSerialReceived.Location = new System.Drawing.Point(6, 20);
+            this.listViewSerialReceived.Name = "listViewSerialReceived";
+            this.listViewSerialReceived.Size = new System.Drawing.Size(358, 211);
+            this.listViewSerialReceived.TabIndex = 0;
+            this.listViewSerialReceived.UseCompatibleStateImageBehavior = false;
+            // 
+            // labTestStatus
+            // 
+            this.labTestStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labTestStatus.BackColor = System.Drawing.Color.Green;
+            this.labTestStatus.Font = new System.Drawing.Font("微软雅黑", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labTestStatus.ForeColor = System.Drawing.Color.White;
+            this.labTestStatus.Location = new System.Drawing.Point(370, 190);
+            this.labTestStatus.Name = "labTestStatus";
+            this.labTestStatus.Size = new System.Drawing.Size(350, 41);
+            this.labTestStatus.TabIndex = 2;
+            this.labTestStatus.Text = "PASS";
+            this.labTestStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // imageListStatus
+            // 
+            this.imageListStatus.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListStatus.ImageStream")));
+            this.imageListStatus.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListStatus.Images.SetKeyName(0, "BleTestTool_Status_0.png");
+            this.imageListStatus.Images.SetKeyName(1, "BleTestTool_Status_1.png");
+            this.imageListStatus.Images.SetKeyName(2, "BleTestTool_Status_2.png");
+            // 
             // frmBeautyTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -221,9 +247,9 @@
             this.Text = "frmBeautyTest";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
             this.toolCmdWrite.ResumeLayout(false);
             this.toolCmdWrite.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -246,5 +272,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolBtnStop;
         public System.Windows.Forms.ToolStrip toolCmdWrite;
+        public System.Windows.Forms.Label labTestStatus;
+        public System.Windows.Forms.ImageList imageListStatus;
     }
 }

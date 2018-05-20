@@ -35,6 +35,15 @@ namespace DeviceTestLib
             get;
             set;
         }
+
+        /// <summary>
+        /// 蓝牙测试状态显示
+        /// </summary>
+        Label LabelBleTestStatus
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region 接口方法
