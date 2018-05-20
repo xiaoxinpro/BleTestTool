@@ -38,74 +38,129 @@ namespace DeviceTestLib
 
         public void BytesReceviedDataProcess(byte[] arrData)
         {
-            if (arrData.Length == 16 && arrData[0] == 0x52 && arrData[1] == 0x01 && CheckReceiveData(arrData))
+            int data = 0;
+            string str = "";
+            Dictionary<string, string> dicTestData = new Dictionary<string, string>();
+
+            if (arrData.Length == 13)
             {
-                //上报数据
-                if (arrData[2] == 0x00 && arrData[3] == 0x05)
+                //状态与模式处理
+                data = arrData[4];
+                dicTestData.Add("Status", "");
+                dicTestData.Add("Mode", "");
+                dicTestData.Add("Time", arrData[6].ToString());
+                if (data == 0x00)
                 {
-                    //湿度
-                    EditListViewSerialReceviedValue(0, Convert.ToInt32(arrData[4]).ToString());
-
-                    //温度，Bit7为温度正负位，Bit6-Bit0表示温度值；
-                    int temp = Convert.ToInt32(arrData[5]);
-                    if ((temp & 0x80) == 0x80)
-                    {
-                        temp = -1 * temp;
-                    }
-                    EditListViewSerialReceviedValue(1, temp.ToString());
-
-                    //加湿：0x00雾量控制(手动)，0x01湿度控制(自动)
-                    bool isAuto = Convert.ToBoolean(arrData[6] == 0x01);
-                    EditListViewSerialReceviedValue(2, isAuto ? "湿度控制" : "雾量控制");
-
-                    //雾量/湿度调节：百分比，000-100
-                    EditListViewSerialReceviedValue(3, Convert.ToInt32(arrData[7]).ToString());
-
-                    //亮度：百分比，000-100
-                    EditListViewSerialReceviedValue(4, Convert.ToInt32(arrData[8]).ToString(), Convert.ToInt32(arrData[8]) > 50);
-
-                    //冷/暖光：0x00关闭，0x01开灯a（冷），0x02开灯b（暖），0x03开灯ab（冷暖）
-                    string light;
-                    switch (arrData[9])
-                    {
-                        case 0x01:
-                            light = "白光";
-                            break;
-                        case 0x02:
-                            light = "黄光";
-                            break;
-                        case 0x03:
-                            light = "白黄光";
-                            break;
-                        default:
-                            light = "关闭";
-                            break;
-                    }
-                    EditListViewSerialReceviedValue(5, light);
-
-                    //报警音开关：0x00 断水报警音关，0x01 断水报警音开
-                    bool isBeep = Convert.ToBoolean(arrData[10] == 0x01);
-                    EditListViewSerialReceviedValue(6, isBeep ? "开" : "关");
-
-                    //报警状态：0x00 正常状态  0x01 断水报警  0x02 风机故障报警
-                    bool isError = Convert.ToBoolean(arrData[11] == 0x01);
-                    EditListViewSerialReceviedValue(7, isError ? "断水报警" : "正常状态");
-
-                    //加湿定时：0/1/2/3/4 分别为 关闭/30min/60min/120min/180min
-                    string[] strTime = { "关闭", "30min", "60min", "120min", "180min" };
-                    EditListViewSerialReceviedValue(8, strTime[Convert.ToInt32(arrData[12])]);
-
-                    //灯光定时：0/1/2/3/4分别为 关闭/30min/60min/120min/180min
-                    EditListViewSerialReceviedValue(9, strTime[Convert.ToInt32(arrData[13])]);
-
-                    //小夜灯： 0x00：小夜灯关    0x01:小夜灯开
-                    bool isNightLight = Convert.ToBoolean(arrData[14] == 0x01);
-                    EditListViewSerialReceviedValue(10, isNightLight ? "开" : "关");
-
-                    //发送应答位
-                    byte[] buffer = { 0x52, 0x01, 0x02, 0x05, 0x00, 0x5B };
-                    EventAddCmdWrite(CheckWriteData(buffer));
+                    EditListViewSerialReceviedValue(0, "关机");
+                    EditListViewSerialReceviedValue(1, "关机");
                 }
+                else
+                {
+                    //状态处理
+                    if ((data & 0x10) == 0x10)
+                    {
+                        EditListViewSerialReceviedValue(0, "自动测试");
+                        dicTestData["Status"] = "自动测试";
+                    }
+                    else if ((data & 0x20) == 0x20)
+                    {
+                        EditListViewSerialReceviedValue(0, "手动测试");
+                        dicTestData["Status"] = "手动测试";
+                    }
+                    else
+                    {
+                        EditListViewSerialReceviedValue(0, "非测试模式");
+                    }
+
+                    //模式处理
+                    int modeData = data & 0x0F;
+                    string[] arrModeData = { "自动", "加热测试", "电机测试", "制冷测试", "正脉冲测试", "负脉冲测试", "皮肤接触检测", "皮肤水份检测", "关机" };
+                    if (modeData <= 0x07)
+                    {
+                        dicTestData["Mode"] = arrModeData[modeData];
+                        EditListViewSerialReceviedValue(1, arrModeData[modeData]);
+                    }
+                    else
+                    {
+                        EditListViewSerialReceviedValue(1, "关机");
+                    }
+                }
+
+                //皮肤接触处理
+                data = arrData[5];
+                if (data == 0x00)
+                {
+                    dicTestData.Add("L", "False");
+                    EditListViewSerialReceviedValue(2, "False");
+                }
+                else if (data == 0x01)
+                {
+                    dicTestData.Add("L", "True");
+                    EditListViewSerialReceviedValue(2, "True");
+                }
+                else
+                {
+                    EditListViewSerialReceviedValue(2, "未知:0x" + data.ToString("X2"));
+                }
+
+                //时长处理
+                data = arrData[6];
+                EditListViewSerialReceviedValue(3, data.ToString());
+
+                //加热温度
+                data = arrData[7];
+                dicTestData.Add("HotTemp", data.ToString());
+                EditListViewSerialReceviedValue(4, data.ToString());
+
+                //皮肤检测参数
+                data = (arrData[8] << 8) | arrData[9];
+                dicTestData.Add("RH", "0x" + data.ToString("X4"));
+                EditListViewSerialReceviedValue(5, "0x" + data.ToString("X4"));
+
+                //环温
+                data = arrData[10];
+                dicTestData.Add("RhTemp", data.ToString());
+                EditListViewSerialReceviedValue(6, data.ToString());
+
+                //电池状态
+                data = arrData[11];
+                dicTestData.Add("Battery", Convert.ToInt32(data).ToString());
+                switch (data)
+                {
+                    case 0x00:
+                        str = "无电量";
+                        break;
+                    case 0x01:
+                        str = "20%电量";
+                        break;
+                    case 0x02:
+                        str = "40%电量";
+                        break;
+                    case 0x03:
+                        str = "60%电量";
+                        break;
+                    case 0x04:
+                        str = "80%电量";
+                        break;
+                    case 0x05:
+                        str = "100%电量";
+                        break;
+                    case 0x06:
+                        str = "充电中";
+                        break;
+                    case 0x07:
+                        str = "充电完成";
+                        break;
+                    default:
+                        str = "未知:0x" + data.ToString("X2");
+                        break;
+                }
+                EditListViewSerialReceviedValue(7, str);
+
+                //发送应答位
+                EventAddCmdWrite(new byte[] { 0x52, 0x02, 0x02, 0x03, 0x00, 0x5A });
+
+                //TestDataProcess(dicTestData);
             }
         }
 
@@ -141,32 +196,32 @@ namespace DeviceTestLib
         /// <param name="listView"></param>
         private void initListViewBleTest(ListView listView)
         {
-            //string[] arrListName = { "加热", "震动", "制冷", "正脉冲", "负脉冲", "皮肤接触" };
+            string[] arrListName = { "加热", "震动", "制冷", "正脉冲", "负脉冲", "皮肤接触" };
 
-            ////基本属性设置
-            //listView.Clear();
-            //listView.FullRowSelect = true;
-            //listView.GridLines = true;
-            //listView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            //listView.View = View.Details;
+            //基本属性设置
+            listView.Clear();
+            listView.FullRowSelect = true;
+            listView.GridLines = true;
+            listView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView.View = View.Details;
             //listView.SmallImageList = this.imageListStatus;
 
-            ////创建列表头
-            //listView.Columns.Add("状态", 60, HorizontalAlignment.Center);
-            //listView.Columns.Add("名称", 400, HorizontalAlignment.Left);
+            //创建列表头
+            listView.Columns.Add("状态", 60, HorizontalAlignment.Center);
+            listView.Columns.Add("名称", 400, HorizontalAlignment.Left);
 
-            ////添加数据
-            //listView.BeginUpdate();
-            //for (int i = 0; i < arrListName.Length; i++)
-            //{
-            //    ListViewItem listViewItem = new ListViewItem();
-            //    listViewItem.ImageIndex = 0;
-            //    listViewItem.Text = " 待测";
-            //    listViewItem.SubItems.Add(arrListName[i]);
-            //    listViewItem.SubItems.Add("");
-            //    listView.Items.Add(listViewItem);
-            //}
-            //listView.EndUpdate();
+            //添加数据
+            listView.BeginUpdate();
+            for (int i = 0; i < arrListName.Length; i++)
+            {
+                ListViewItem listViewItem = new ListViewItem();
+                //listViewItem.ImageIndex = 0;
+                listViewItem.Text = " 待测";
+                listViewItem.SubItems.Add(arrListName[i]);
+                listViewItem.SubItems.Add("");
+                listView.Items.Add(listViewItem);
+            }
+            listView.EndUpdate();
             //SetLabelTestStatus(enumLabelStatus.None);
         }
 
@@ -175,8 +230,8 @@ namespace DeviceTestLib
         /// </summary>
         private void InitListViewSerialReceived(ListView listView)
         {
-            string[] arrListName = { "温度", "湿度", "加湿方式", "雾量/湿度", "亮度", "色温", "报警音开关", "加湿定时", "灯光定时", "小夜灯" };
-            string[] arrListMark = { "℃", "%", "雾量控制/湿度控制", "%", "%", "白光、黄光、白黄光", "报警音开关", "分钟", "分钟", "小夜灯开关" };
+            string[] arrListName = { "状态", "模式", "皮肤接触", "时长", "加热温度", "皮肤检测参数", "环境温度", "电池状态" };
+            string[] arrListMark = { "设备工作状态", "设备当前运行的测试项目", "检测皮肤是否接触电极片", "当前模式运行的时长（秒）", "当前加热片的温度（℃）", "皮肤检测参数", "当前环境温度（℃）", "当前电池电量状态" };
             //基本属性设置
             listView.FullRowSelect = true;
             listView.GridLines = true;
@@ -184,10 +239,10 @@ namespace DeviceTestLib
             listView.View = View.Details;
 
             //创建列表头
-            listView.Columns.Add("序号", 40, HorizontalAlignment.Center);
-            listView.Columns.Add("名称", 90, HorizontalAlignment.Center);
-            listView.Columns.Add("值", 90, HorizontalAlignment.Center);
-            listView.Columns.Add("备注", 190, HorizontalAlignment.Left);
+            listView.Columns.Add("序号", 50, HorizontalAlignment.Center);
+            listView.Columns.Add("名称", 100, HorizontalAlignment.Center);
+            listView.Columns.Add("值", 100, HorizontalAlignment.Center);
+            listView.Columns.Add("备注", 200, HorizontalAlignment.Left);
 
             //添加数据
             listView.BeginUpdate();
@@ -212,65 +267,21 @@ namespace DeviceTestLib
         /// <param name="e"></param>
         private void toolCmdWrite_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            ToolStrip toolStrip = (ToolStrip)sender;
-            if (e.ClickedItem is ToolStripButton)
+            Console.WriteLine("选择快捷命令：" + e.ClickedItem.Name + " - " + e.ClickedItem.Text);
+            if (e.ClickedItem.Name == "toolBtnRh")
             {
-                Console.WriteLine("选择工具命令：" + e.ClickedItem.Name + " - " + e.ClickedItem.Text);
-                byte[] buffer = { 0x52, 0x01, 0x01, 0x01, 0x00, 0x56 };
-                int valLight = (FrmBeautyTest.toolStripComboLight.SelectedIndex + 1) * 10;
-                int valHumid = (FrmBeautyTest.toolStripComboHumid.SelectedIndex + 1) * 10;
-                switch (e.ClickedItem.Name)
+                byte[] buffer = { 0x52, 0x02, 0x01, 0x02, 0x01, 0x59 };
+                EventAddCmdWrite(buffer);
+            }
+            else
+            {
+                byte[] buffer = { 0x52, 0x02, 0x01, 0x10, 0x00, 0x00 };
+                buffer[4] = Convert.ToByte(Convert.ToInt32(e.ClickedItem.Tag));
+                buffer[buffer.Length - 1] = CheckDataSum(buffer);
+                EventAddCmdWrite(buffer);
+                if (e.ClickedItem.Name == "toolBtnAuto")
                 {
-                    case "toolStripBtnChangeLight":
-                        //发送亮度命令
-                        buffer[Convert.ToInt32(enumSerialWriteFormat.Cmd)] = 0x02;
-                        buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = Convert.ToByte(valLight);
-                        EventAddCmdWrite(CheckWriteData(buffer));
-                        break;
-                    case "toolStripBtnOpenWhiteLight":
-                        //发送色温命令
-                        buffer[Convert.ToInt32(enumSerialWriteFormat.Cmd)] = 0x01;
-                        buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = 0x01;
-                        EventAddCmdWrite(CheckWriteData(buffer));
-                        break;
-                    case "toolStripBtnOpenYellowLight":
-                        //发送色温命令
-                        buffer[Convert.ToInt32(enumSerialWriteFormat.Cmd)] = 0x01;
-                        buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = 0x02;
-                        EventAddCmdWrite(CheckWriteData(buffer));
-                        break;
-                    case "toolStripBtnOpenAllLight":
-                        //发送色温命令
-                        buffer[Convert.ToInt32(enumSerialWriteFormat.Cmd)] = 0x01;
-                        buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = 0x03;
-                        EventAddCmdWrite(CheckWriteData(buffer));
-                        break;
-                    case "toolStripBtnCloseLight":
-                        //发送色温命令
-                        buffer[Convert.ToInt32(enumSerialWriteFormat.Cmd)] = 0x01;
-                        buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = 0x00;
-                        EventAddCmdWrite(CheckWriteData(buffer));
-                        break;
-                    case "toolStripBtnOpenHumid":
-                        //发送雾量命令
-                        buffer[Convert.ToInt32(enumSerialWriteFormat.Cmd)] = 0x05;
-                        buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = Convert.ToByte(valHumid);
-                        EventAddCmdWrite(CheckWriteData(buffer));
-                        break;
-                    case "toolStripBtnCloseHumid":
-                        //发送关闭雾量命令
-                        buffer[Convert.ToInt32(enumSerialWriteFormat.Cmd)] = 0x05;
-                        buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = 0x00;
-                        EventAddCmdWrite(CheckWriteData(buffer));
-                        break;
-                    case "toolStripBtnOpenErrorBeep":
-                        //发送开启报警音
-                        buffer[Convert.ToInt32(enumSerialWriteFormat.Cmd)] = 0x07;
-                        buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = 0x01;
-                        EventAddCmdWrite(CheckWriteData(buffer));
-                        break;
-                    default:
-                        break;
+                    initListViewBleTest(FrmBeautyTest.listViewBleTest);
                 }
             }
         }
