@@ -519,12 +519,14 @@
             // 
             // labTestStatus
             // 
+            this.labTestStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labTestStatus.BackColor = System.Drawing.Color.Green;
             this.labTestStatus.Font = new System.Drawing.Font("微软雅黑", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labTestStatus.ForeColor = System.Drawing.Color.White;
-            this.labTestStatus.Location = new System.Drawing.Point(6, 167);
+            this.labTestStatus.Location = new System.Drawing.Point(6, 157);
             this.labTestStatus.Name = "labTestStatus";
-            this.labTestStatus.Size = new System.Drawing.Size(470, 37);
+            this.labTestStatus.Size = new System.Drawing.Size(483, 41);
             this.labTestStatus.TabIndex = 1;
             this.labTestStatus.Text = "PASS";
             this.labTestStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;

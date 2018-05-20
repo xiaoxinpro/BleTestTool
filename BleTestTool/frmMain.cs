@@ -878,6 +878,7 @@ namespace BleTestTool
                     deviceTest.ToolCmdWrite = this.toolCmdWrite;
                     deviceTest.ListViewSerialReceived = this.listViewSerialReceived;
                     deviceTest.ListViewBleTest = this.listViewBleTest;
+                    deviceTest.LabelBleTestStatus = this.labTestStatus;
                     deviceTest.EventAddCmdWrite += new DelegateAddCmdWrite(AddSerialWrite);
                     deviceTest.InitDeviceTest();
                     ((Button)sender).Hide();
