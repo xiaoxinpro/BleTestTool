@@ -1,6 +1,7 @@
 ﻿using DeviceTestLib;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -9,11 +10,17 @@ namespace DeviceTestLib
 {
     public class DeviceTestClass : IDeviceTest
     {
+        #region 测试常量
+        private const int VAL_RH_MAX = 0x0395;
+        private const int VAL_RH_MIN = 0x010A;
+        #endregion
+
         #region 字段
         private frmBeautyTest FrmBeautyTest;
         private ToolStrip _toolCmdWrite;
         private ListView _listViewSerialReceived;
         private ListView _listViewBleTest;
+        private Label _labelBleTestStatus;
 
         public event DelegateAddCmdWrite EventAddCmdWrite;
 
@@ -23,6 +30,7 @@ namespace DeviceTestLib
         public ToolStrip ToolCmdWrite { get => _toolCmdWrite; set => _toolCmdWrite = value; }
         public ListView ListViewSerialReceived { get => _listViewSerialReceived; set => _listViewSerialReceived = value; }
         public ListView ListViewBleTest { get => _listViewBleTest; set => _listViewBleTest = value; }
+        public Label LabelBleTestStatus { get => _labelBleTestStatus; set => _labelBleTestStatus = value; }
 
         #endregion
 
@@ -33,7 +41,8 @@ namespace DeviceTestLib
             FrmBeautyTest = new frmBeautyTest();
             InitToolCmdWrite();
             InitListViewSerialReceived(ListViewSerialReceived);
-            initListViewBleTest(ListViewBleTest);
+            InitLabelBleTestStatus();
+            InitListViewBleTest(ListViewBleTest);
         }
 
         public void BytesReceviedDataProcess(byte[] arrData)
@@ -115,7 +124,14 @@ namespace DeviceTestLib
                 //皮肤检测参数
                 data = (arrData[8] << 8) | arrData[9];
                 dicTestData.Add("RH", "0x" + data.ToString("X4"));
-                EditListViewSerialReceviedValue(5, "0x" + data.ToString("X4"));
+                if (data >= VAL_RH_MIN && data <= VAL_RH_MAX)
+                {
+                    EditListViewSerialReceviedValue(5, "0x" + data.ToString("X4"), true);
+                }
+                else
+                {
+                    EditListViewSerialReceviedValue(5, "0x" + data.ToString("X4"));
+                }
 
                 //环温
                 data = arrData[10];
@@ -160,7 +176,10 @@ namespace DeviceTestLib
                 //发送应答位
                 EventAddCmdWrite(new byte[] { 0x52, 0x02, 0x02, 0x03, 0x00, 0x5A });
 
-                //TestDataProcess(dicTestData);
+                if (dicTestData["Status"] != "")
+                {
+                    TestDataProcess(dicTestData);
+                }
             }
         }
 
@@ -194,7 +213,7 @@ namespace DeviceTestLib
         /// 初始化测试结果列表
         /// </summary>
         /// <param name="listView"></param>
-        private void initListViewBleTest(ListView listView)
+        private void InitListViewBleTest(ListView listView)
         {
             string[] arrListName = { "加热", "震动", "制冷", "正脉冲", "负脉冲", "皮肤接触" };
 
@@ -204,7 +223,7 @@ namespace DeviceTestLib
             listView.GridLines = true;
             listView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
             listView.View = View.Details;
-            //listView.SmallImageList = this.imageListStatus;
+            listView.SmallImageList = FrmBeautyTest.imageListStatus;
 
             //创建列表头
             listView.Columns.Add("状态", 60, HorizontalAlignment.Center);
@@ -215,14 +234,25 @@ namespace DeviceTestLib
             for (int i = 0; i < arrListName.Length; i++)
             {
                 ListViewItem listViewItem = new ListViewItem();
-                //listViewItem.ImageIndex = 0;
+                listViewItem.ImageIndex = 0;
                 listViewItem.Text = " 待测";
                 listViewItem.SubItems.Add(arrListName[i]);
                 listViewItem.SubItems.Add("");
                 listView.Items.Add(listViewItem);
             }
             listView.EndUpdate();
-            //SetLabelTestStatus(enumLabelStatus.None);
+            SetLabelTestStatus(enumLabelStatus.None);
+        }
+
+        /// <summary>
+        /// 初始蓝牙测试状态栏
+        /// </summary>
+        private void InitLabelBleTestStatus()
+        {
+            LabelBleTestStatus.TextAlign = ContentAlignment.MiddleCenter;
+            LabelBleTestStatus.ForeColor = Color.White;
+            LabelBleTestStatus.Font = new Font("微软雅黑", 21, FontStyle.Regular);
+            LabelBleTestStatus.Text = "";
         }
 
         /// <summary>
@@ -281,7 +311,7 @@ namespace DeviceTestLib
                 EventAddCmdWrite(buffer);
                 if (e.ClickedItem.Name == "toolBtnAuto")
                 {
-                    initListViewBleTest(FrmBeautyTest.listViewBleTest);
+                    InitListViewBleTest(FrmBeautyTest.listViewBleTest);
                 }
             }
         }
@@ -301,7 +331,7 @@ namespace DeviceTestLib
                 if (ListViewSerialReceived.Items[line].SubItems[2].Text != value)
                 {
                     ListViewSerialReceived.Items[line].SubItems[2].Text = value;
-                    ListViewSerialReceived.Items[line].BackColor = flag ? System.Drawing.Color.Red : System.Drawing.Color.White;
+                    ListViewSerialReceived.Items[line].BackColor = flag ? System.Drawing.Color.LightGreen : System.Drawing.Color.White;
                 }
             }
         }
@@ -317,6 +347,188 @@ namespace DeviceTestLib
                 ListViewSerialReceived.Items[i].SubItems[2].Text = "";
             }
             ListViewSerialReceived.EndUpdate();
+        }
+        #endregion
+
+        #region 测试结果列表方法
+        private bool bakIsL = false;
+        private void TestDataProcess(Dictionary<string, string> dic)
+        {
+            int RunTime = Convert.ToInt32(dic["Time"]);
+
+            switch (dic["Mode"])
+            {
+                case "加热测试":
+                    int HotTemp = Convert.ToInt32(dic["HotTemp"]);
+                    int RhTemp = Convert.ToInt32(dic["RhTemp"]);
+                    if (RunTime <= 1)
+                    {
+                        SetListTestStatus(0, enumLabelStatus.None);
+                    }
+                    else if (HotTemp - RhTemp > 4 || HotTemp > 37)
+                    {
+                        SetListTestStatus(0, enumLabelStatus.Pass);
+                    }
+                    else if (RunTime >= 10 && GetListTestStatus(0) == enumLabelStatus.None)
+                    {
+                        SetListTestStatus(0, enumLabelStatus.Fail);
+                    }
+                    break;
+                case "电机测试":
+                    if (RunTime <= 1)
+                    {
+                        SetListTestStatus(1, enumLabelStatus.None);
+                    }
+                    else if (RunTime >= 2)
+                    {
+                        SetListTestStatus(1, enumLabelStatus.Pass);
+                    }
+                    break;
+                case "制冷测试":
+                    if (RunTime <= 1)
+                    {
+                        SetListTestStatus(2, enumLabelStatus.None);
+                    }
+                    else if (RunTime >= 2)
+                    {
+                        SetListTestStatus(2, enumLabelStatus.Pass);
+                    }
+                    break;
+                case "正脉冲测试":
+                    if (RunTime <= 1)
+                    {
+                        SetListTestStatus(3, enumLabelStatus.None);
+                    }
+                    else if (RunTime >= 2)
+                    {
+                        SetListTestStatus(3, enumLabelStatus.Pass);
+                    }
+                    break;
+                case "负脉冲测试":
+                    if (RunTime <= 1)
+                    {
+                        SetListTestStatus(4, enumLabelStatus.None);
+                    }
+                    else if (RunTime >= 2)
+                    {
+                        SetListTestStatus(4, enumLabelStatus.Pass);
+                    }
+                    break;
+                case "皮肤接触检测":
+                    if (RunTime <= 1)
+                    {
+                        SetListTestStatus(5, enumLabelStatus.None);
+                        bakIsL = (dic["L"] == "True");
+                    }
+                    else if ((dic["L"] == "True") != bakIsL)
+                    {
+                        SetListTestStatus(5, enumLabelStatus.Pass);
+                    }
+                    else if (RunTime >= 3 && GetListTestStatus(5) == enumLabelStatus.None)
+                    {
+                        SetListTestStatus(5, enumLabelStatus.Fail);
+                    }
+                    break;
+                case "皮肤水份检测":
+                    if (RunTime <= 1)
+                    {
+                        SetListTestStatus(6, enumLabelStatus.None);
+                        bakIsL = (dic["L"] == "True");
+                    }
+                    else if (int.Parse(dic["RH"], System.Globalization.NumberStyles.AllowHexSpecifier) > 0)
+                    {
+                        SetListTestStatus(6, enumLabelStatus.Pass);
+                    }
+                    else if (RunTime >= 10)
+                    {
+                        SetListTestStatus(6, enumLabelStatus.Fail);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            //检测状态
+            foreach (ListViewItem item in ListViewBleTest.Items)
+            {
+                if (item.ImageIndex == Convert.ToInt32(enumLabelStatus.None))
+                {
+                    SetLabelTestStatus(enumLabelStatus.None);
+                    return;
+                }
+            }
+            foreach (ListViewItem item in ListViewBleTest.Items)
+            {
+                if (item.ImageIndex == Convert.ToInt32(enumLabelStatus.Fail))
+                {
+                    SetLabelTestStatus(enumLabelStatus.Fail);
+                    return;
+                }
+            }
+            SetLabelTestStatus(enumLabelStatus.Pass);
+        }
+
+        /// <summary>
+        /// 设置测试列表状态
+        /// </summary>
+        /// <param name="index">序号</param>
+        /// <param name="status">状态</param>
+        private void SetListTestStatus(int index, enumLabelStatus status)
+        {
+            ListViewBleTest.Items[index].ImageIndex = Convert.ToInt32(status);
+            switch (status)
+            {
+                case enumLabelStatus.None:
+                    ListViewBleTest.Items[index].Text = "待测";
+                    break;
+                case enumLabelStatus.Pass:
+                    ListViewBleTest.Items[index].Text = "通过";
+                    break;
+                case enumLabelStatus.Fail:
+                    ListViewBleTest.Items[index].Text = "失败";
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        /// <summary>
+        /// 获取测试列表状态
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private enumLabelStatus GetListTestStatus(int index)
+        {
+            return (enumLabelStatus)ListViewBleTest.Items[index].ImageIndex;
+        }
+
+        /// <summary>
+        /// 设置测试状态样式
+        /// </summary>
+        /// <param name="status"></param>
+        private void SetLabelTestStatus(enumLabelStatus status)
+        {
+            LabelBleTestStatus.TextAlign = ContentAlignment.MiddleCenter;
+            LabelBleTestStatus.ForeColor = Color.White;
+            LabelBleTestStatus.Font = new Font("微软雅黑", 21, FontStyle.Regular);
+            switch (status)
+            {
+                case enumLabelStatus.None:
+                    LabelBleTestStatus.BackColor = Color.White;
+                    LabelBleTestStatus.Text = "";
+                    break;
+                case enumLabelStatus.Pass:
+                    LabelBleTestStatus.BackColor = Color.Green;
+                    LabelBleTestStatus.Text = "PASS";
+                    break;
+                case enumLabelStatus.Fail:
+                    LabelBleTestStatus.BackColor = Color.Red;
+                    LabelBleTestStatus.Text = "FAIL";
+                    break;
+                default:
+                    break;
+            }
         }
         #endregion
 
@@ -360,6 +572,7 @@ namespace DeviceTestLib
         {
             return CheckDataSum(arrData) == arrData[arrData.Length - 1];
         }
+
         #endregion
 
     }
@@ -373,6 +586,13 @@ namespace DeviceTestLib
         Cmd = 3,    //命令字节
         Data = 4,   //数据字节
         Check = 5   //校验字节
+    }
+
+    public enum enumLabelStatus
+    {
+        None,
+        Pass,
+        Fail
     }
     #endregion
 }

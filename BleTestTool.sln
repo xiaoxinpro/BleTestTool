@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BleTestTool", "BleTestTool\BleTestTool.csproj", "{4C078CBB-C1AF-4A90-9CC2-21D3632DC33B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{54BC4FCC-D1A7-4B57-8E77-9D8D226B451C} = {54BC4FCC-D1A7-4B57-8E77-9D8D226B451C}
+		{6405DDE1-B5AB-4F19-A3E1-35F5076CAC57} = {6405DDE1-B5AB-4F19-A3E1-35F5076CAC57}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialPortHelperLib", "SerialPortHelperLib\SerialPortHelperLib.csproj", "{33045BA2-C192-4A1A-8A96-31500719341B}"
 EndProject
