@@ -30,19 +30,20 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabBleNameReplace = new System.Windows.Forms.TabPage();
-            this.tabBleBlackList = new System.Windows.Forms.TabPage();
             this.btnBleNameReplace = new System.Windows.Forms.Button();
             this.txtBleReplace = new System.Windows.Forms.TextBox();
             this.txtBleName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.listViewBleNameReplace = new System.Windows.Forms.ListView();
+            this.tabBleBlackList = new System.Windows.Forms.TabPage();
+            this.comboBleBlackList = new System.Windows.Forms.ComboBox();
             this.btnBleBlackList = new System.Windows.Forms.Button();
             this.txtBleBlackList = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.listViewBleBlackList = new System.Windows.Forms.ListView();
-            this.comboBleBlackList = new System.Windows.Forms.ComboBox();
+            this.btnBleBlackListAll = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabBleNameReplace.SuspendLayout();
             this.tabBleBlackList.SuspendLayout();
@@ -73,22 +74,6 @@
             this.tabBleNameReplace.TabIndex = 0;
             this.tabBleNameReplace.Text = "蓝牙名称替换";
             this.tabBleNameReplace.UseVisualStyleBackColor = true;
-            // 
-            // tabBleBlackList
-            // 
-            this.tabBleBlackList.Controls.Add(this.comboBleBlackList);
-            this.tabBleBlackList.Controls.Add(this.btnBleBlackList);
-            this.tabBleBlackList.Controls.Add(this.txtBleBlackList);
-            this.tabBleBlackList.Controls.Add(this.label3);
-            this.tabBleBlackList.Controls.Add(this.label4);
-            this.tabBleBlackList.Controls.Add(this.listViewBleBlackList);
-            this.tabBleBlackList.Location = new System.Drawing.Point(4, 30);
-            this.tabBleBlackList.Name = "tabBleBlackList";
-            this.tabBleBlackList.Padding = new System.Windows.Forms.Padding(3);
-            this.tabBleBlackList.Size = new System.Drawing.Size(365, 351);
-            this.tabBleBlackList.TabIndex = 1;
-            this.tabBleBlackList.Text = "蓝牙黑名单";
-            this.tabBleBlackList.UseVisualStyleBackColor = true;
             // 
             // btnBleNameReplace
             // 
@@ -145,11 +130,39 @@
             this.listViewBleNameReplace.SelectedIndexChanged += new System.EventHandler(this.listViewBleNameReplace_SelectedIndexChanged);
             this.listViewBleNameReplace.DoubleClick += new System.EventHandler(this.listViewBleNameReplace_DoubleClick);
             // 
+            // tabBleBlackList
+            // 
+            this.tabBleBlackList.Controls.Add(this.btnBleBlackListAll);
+            this.tabBleBlackList.Controls.Add(this.comboBleBlackList);
+            this.tabBleBlackList.Controls.Add(this.btnBleBlackList);
+            this.tabBleBlackList.Controls.Add(this.txtBleBlackList);
+            this.tabBleBlackList.Controls.Add(this.label3);
+            this.tabBleBlackList.Controls.Add(this.label4);
+            this.tabBleBlackList.Controls.Add(this.listViewBleBlackList);
+            this.tabBleBlackList.Location = new System.Drawing.Point(4, 30);
+            this.tabBleBlackList.Name = "tabBleBlackList";
+            this.tabBleBlackList.Padding = new System.Windows.Forms.Padding(3);
+            this.tabBleBlackList.Size = new System.Drawing.Size(365, 351);
+            this.tabBleBlackList.TabIndex = 1;
+            this.tabBleBlackList.Text = "蓝牙黑名单";
+            this.tabBleBlackList.UseVisualStyleBackColor = true;
+            // 
+            // comboBleBlackList
+            // 
+            this.comboBleBlackList.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.comboBleBlackList.FormattingEnabled = true;
+            this.comboBleBlackList.Location = new System.Drawing.Point(89, 13);
+            this.comboBleBlackList.Name = "comboBleBlackList";
+            this.comboBleBlackList.Size = new System.Drawing.Size(182, 25);
+            this.comboBleBlackList.TabIndex = 18;
+            this.comboBleBlackList.SelectedIndexChanged += new System.EventHandler(this.comboBleBlackList_SelectedIndexChanged);
+            // 
             // btnBleBlackList
             // 
-            this.btnBleBlackList.Location = new System.Drawing.Point(277, 13);
+            this.btnBleBlackList.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.btnBleBlackList.Location = new System.Drawing.Point(277, 44);
             this.btnBleBlackList.Name = "btnBleBlackList";
-            this.btnBleBlackList.Size = new System.Drawing.Size(84, 56);
+            this.btnBleBlackList.Size = new System.Drawing.Size(84, 25);
             this.btnBleBlackList.TabIndex = 17;
             this.btnBleBlackList.Text = "添加";
             this.btnBleBlackList.UseVisualStyleBackColor = true;
@@ -192,15 +205,16 @@
             this.listViewBleBlackList.SelectedIndexChanged += new System.EventHandler(this.listViewBleBlackList_SelectedIndexChanged);
             this.listViewBleBlackList.DoubleClick += new System.EventHandler(this.listViewBleBlackList_DoubleClick);
             // 
-            // comboBleBlackList
+            // btnBleBlackListAll
             // 
-            this.comboBleBlackList.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.comboBleBlackList.FormattingEnabled = true;
-            this.comboBleBlackList.Location = new System.Drawing.Point(89, 13);
-            this.comboBleBlackList.Name = "comboBleBlackList";
-            this.comboBleBlackList.Size = new System.Drawing.Size(182, 25);
-            this.comboBleBlackList.TabIndex = 18;
-            this.comboBleBlackList.SelectedIndexChanged += new System.EventHandler(this.comboBleBlackList_SelectedIndexChanged);
+            this.btnBleBlackListAll.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.btnBleBlackListAll.Location = new System.Drawing.Point(277, 13);
+            this.btnBleBlackListAll.Name = "btnBleBlackListAll";
+            this.btnBleBlackListAll.Size = new System.Drawing.Size(84, 25);
+            this.btnBleBlackListAll.TabIndex = 19;
+            this.btnBleBlackListAll.Text = "全部添加";
+            this.btnBleBlackListAll.UseVisualStyleBackColor = true;
+            this.btnBleBlackListAll.Click += new System.EventHandler(this.btnBleBlackListAll_Click);
             // 
             // frmBleConfig
             // 
@@ -243,5 +257,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ListView listViewBleBlackList;
+        private System.Windows.Forms.Button btnBleBlackListAll;
     }
 }
