@@ -24,12 +24,12 @@ namespace BleTestTool
 
         #region 加载页面
 
-        public frmBleConfig(BleConfig bc, SerialBle sb)
+        public frmBleConfig(AppConfig ac, BleConfig bc, SerialBle sb)
         {
             InitializeComponent();
+            appConfig = ac;
             bleConfig = bc;
             serialBle = sb;
-            appConfig = new AppConfig();
         }
 
         private void frmBleConfig_Load(object sender, EventArgs e)
@@ -241,7 +241,6 @@ namespace BleTestTool
                 bleConfig.DicBleNameReplaceConfig.Remove(listView.SelectedItems[0].Text);
                 bleConfig.SaveBleNameReplaceConfig();
                 DeleteListData(listView, listView.SelectedItems[0].Index);
-                //listView.SelectedItems[0].Remove();
             }
         }
 

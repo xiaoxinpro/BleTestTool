@@ -16,6 +16,7 @@ namespace BleTestTool
         private System.Timers.Timer _timBleWrite;
         private Dictionary<string, string> _dicBleBlackListConfig;
         private Dictionary<string, string> _dicBleNameReplaceConfig;
+        private Dictionary<string, string> _dicBleNameFilterConfig;
         private Dictionary<string, string> _dicListBle;
         #endregion
 
@@ -46,6 +47,7 @@ namespace BleTestTool
         public ToolStripComboBox ComboBle { get => _comboBle; set => _comboBle = value; }
         public Dictionary<string, string> DicBleBlackListConfig { get => _dicBleBlackListConfig; set => _dicBleBlackListConfig = value; }
         public Dictionary<string, string> DicBleNameReplaceConfig { get => _dicBleNameReplaceConfig; set => _dicBleNameReplaceConfig = value; }
+        public Dictionary<string, string> DicBleNameFilterConfig { get => _dicBleNameFilterConfig; set => _dicBleNameFilterConfig = value; }
         public Dictionary<string, string> DicListBle { get => _dicListBle; set => _dicListBle = value; }
         #endregion
 
@@ -277,6 +279,21 @@ namespace BleTestTool
         /// <param name="name">蓝牙名称</param>
         private void addListBle(string mac,string name)
         {
+            AppConfig appConfig = new AppConfig();
+            if (appConfig.GetConfig("BleNameFilter") == "True" && DicBleNameFilterConfig.Count > 0)
+            {
+                try
+                {
+                    if (DicBleNameFilterConfig[name] == "False")
+                    {
+                        return;
+                    }
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+            }
             if (DicBleNameReplaceConfig.Count > 0)
             {
                 foreach (KeyValuePair<string,string> item in DicBleNameReplaceConfig)

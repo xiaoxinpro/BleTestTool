@@ -59,6 +59,7 @@ namespace BleTestTool
             //配置绑定
             serialBle.DicBleBlackListConfig = bleConfig.DicBleBlackListConfig;
             serialBle.DicBleNameReplaceConfig = bleConfig.DicBleNameReplaceConfig;
+            serialBle.DicBleNameFilterConfig = bleConfig.DicBleNameFilterConfig;
 
             //初始化串口配置控件
             initSerialConfig();
@@ -310,7 +311,7 @@ namespace BleTestTool
             {
                 _frmBleConfig.Close();
             }
-            _frmBleConfig = new frmBleConfig(bleConfig, serialBle);
+            _frmBleConfig = new frmBleConfig(appConfig, bleConfig, serialBle);
             _frmBleConfig.Show();
         }
 
