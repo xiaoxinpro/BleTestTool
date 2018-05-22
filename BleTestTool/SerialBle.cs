@@ -186,7 +186,7 @@ namespace BleTestTool
                     string strMac = "";
                     if (cnt >= 12)
                     {
-                        if (arrBleData[i].IndexOf("OK+DIS0:") == 0)
+                        if (arrBleData[i].IndexOf("OK+DIS") == 0)
                         {
                             strMac = arrBleData[i].Substring(8, 12);
                         }
