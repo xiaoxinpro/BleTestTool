@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("串口蓝牙测试工具")]
-[assembly: AssemblyDescription("基于串口与AT指令集的蓝牙模块搭建的蓝牙透传测试工具")]
+[assembly: AssemblyTitle("DeviceTestLib")]
+[assembly: AssemblyDescription("驱动接口库")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Chishin")]
 [assembly: AssemblyProduct("BleTestTool")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("4c078cbb-c1af-4a90-9cc2-21d3632dc33b")]
+[assembly: Guid("268c98ef-4384-4734-a8dd-bd008e85904d")]
 
 // 程序集的版本信息由下列四个值组成: 
 //
@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 //      修订号
 //
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
-// 方法是按如下所示使用“*”: :
+//通过使用 "*"，如下所示:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

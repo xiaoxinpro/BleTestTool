@@ -4,8 +4,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BleTestTool", "BleTestTool\BleTestTool.csproj", "{4C078CBB-C1AF-4A90-9CC2-21D3632DC33B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{54BC4FCC-D1A7-4B57-8E77-9D8D226B451C} = {54BC4FCC-D1A7-4B57-8E77-9D8D226B451C}
+		{6405DDE1-B5AB-4F19-A3E1-35F5076CAC57} = {6405DDE1-B5AB-4F19-A3E1-35F5076CAC57}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialPortHelperLib", "SerialPortHelperLib\SerialPortHelperLib.csproj", "{33045BA2-C192-4A1A-8A96-31500719341B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumidTestLib", "HumidTestLib\HumidTestLib.csproj", "{6405DDE1-B5AB-4F19-A3E1-35F5076CAC57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceTestLib", "DeviceTestLib\DeviceTestLib.csproj", "{268C98EF-4384-4734-A8DD-BD008E85904D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautyTestLib", "BeautyTestLib\BeautyTestLib.csproj", "{54BC4FCC-D1A7-4B57-8E77-9D8D226B451C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreastTestLib", "BreastTestLib\BreastTestLib.csproj", "{2D43C2BA-0150-4E65-A73A-B172268D92E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +33,22 @@ Global
 		{33045BA2-C192-4A1A-8A96-31500719341B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33045BA2-C192-4A1A-8A96-31500719341B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33045BA2-C192-4A1A-8A96-31500719341B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6405DDE1-B5AB-4F19-A3E1-35F5076CAC57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6405DDE1-B5AB-4F19-A3E1-35F5076CAC57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6405DDE1-B5AB-4F19-A3E1-35F5076CAC57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6405DDE1-B5AB-4F19-A3E1-35F5076CAC57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{268C98EF-4384-4734-A8DD-BD008E85904D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{268C98EF-4384-4734-A8DD-BD008E85904D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{268C98EF-4384-4734-A8DD-BD008E85904D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{268C98EF-4384-4734-A8DD-BD008E85904D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54BC4FCC-D1A7-4B57-8E77-9D8D226B451C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54BC4FCC-D1A7-4B57-8E77-9D8D226B451C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54BC4FCC-D1A7-4B57-8E77-9D8D226B451C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54BC4FCC-D1A7-4B57-8E77-9D8D226B451C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D43C2BA-0150-4E65-A73A-B172268D92E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D43C2BA-0150-4E65-A73A-B172268D92E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D43C2BA-0150-4E65-A73A-B172268D92E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D43C2BA-0150-4E65-A73A-B172268D92E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

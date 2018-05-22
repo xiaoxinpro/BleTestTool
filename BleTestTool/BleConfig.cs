@@ -13,18 +13,21 @@ namespace BleTestTool
         private const string FILE_FIX = ".ble";
         private const string FILE_NAME_BLACK_LIST = "BlackList";
         private const string FILE_NAME_BLE_NAME_REPLACE = "BleNameReplace";
+        private const string FILE_NAME_BLE_NAME_FILTER = "BleNameFilter";
         #endregion
 
         #region 字段
         private string _bleConfigFilePath;
         private Dictionary<string, string> _dicBleBlackListConfig = new Dictionary<string, string>();
         private Dictionary<string, string> _dicBleNameReplaceConfig = new Dictionary<string, string>();
+        private Dictionary<string, string> _dicBleNameFilterConfig = new Dictionary<string, string>();
         #endregion
 
         #region 属性
         public string BleConfigFilePath { get => _bleConfigFilePath; set => _bleConfigFilePath = value; }
         public Dictionary<string, string> DicBleBlackListConfig { get => _dicBleBlackListConfig; set => _dicBleBlackListConfig = value; }
         public Dictionary<string, string> DicBleNameReplaceConfig { get => _dicBleNameReplaceConfig; set => _dicBleNameReplaceConfig = value; }
+        public Dictionary<string, string> DicBleNameFilterConfig { get => _dicBleNameFilterConfig; set => _dicBleNameFilterConfig = value; }
         #endregion
 
         #region 构造函数
@@ -59,6 +62,7 @@ namespace BleTestTool
         {
             GetBleBlackListConfig();
             GetBleNameReplaceConfig();
+            GetBleNameFilterConfig();
         }
         #endregion
 
@@ -95,6 +99,24 @@ namespace BleTestTool
         public void GetBleNameReplaceConfig()
         {
             ReadFile(BleConfigFilePath + FILE_NAME_BLE_NAME_REPLACE + FILE_FIX, DicBleNameReplaceConfig);
+        }
+        #endregion
+
+        #region 蓝牙名称过滤配置
+        /// <summary>
+        /// 保存蓝牙名称过滤配置
+        /// </summary>
+        public void SaveBleNameFilterConfig()
+        {
+            WriteFile(BleConfigFilePath + FILE_NAME_BLE_NAME_FILTER + FILE_FIX, DicBleNameFilterConfig);
+        }
+
+        /// <summary>
+        /// 获取蓝牙名称过滤配置
+        /// </summary>
+        public void GetBleNameFilterConfig()
+        {
+            ReadFile(BleConfigFilePath + FILE_NAME_BLE_NAME_FILTER + FILE_FIX, DicBleNameFilterConfig);
         }
         #endregion
 
