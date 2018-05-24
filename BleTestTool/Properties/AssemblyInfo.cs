@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("BleTestTool")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("串口蓝牙测试工具")]
+[assembly: AssemblyDescription("基于串口与AT指令集的蓝牙模块搭建的蓝牙透传测试工具")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("Chishin")]
 [assembly: AssemblyProduct("BleTestTool")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2018")]
+[assembly: AssemblyCopyright("Copyright © Chishin 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

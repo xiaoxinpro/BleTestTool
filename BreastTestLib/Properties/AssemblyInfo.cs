@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("BreastTestLib")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("丰胸仪驱动库")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("BreastTestLib")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2018")]
+[assembly: AssemblyCompany("Chishin")]
+[assembly: AssemblyProduct("BleTestTool")]
+[assembly: AssemblyCopyright("Copyright © Chishin 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
