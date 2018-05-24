@@ -45,9 +45,11 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripBtnOpenErrorBeep = new System.Windows.Forms.ToolStripButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.labTestStatus = new System.Windows.Forms.Label();
             this.listViewBleTest = new System.Windows.Forms.ListView();
             this.listViewSerialReceived = new System.Windows.Forms.ListView();
-            this.labTestStatus = new System.Windows.Forms.Label();
+            this.toolStripBtnLightTime = new System.Windows.Forms.ToolStripButton();
+            this.toolStripBtnHumidTime = new System.Windows.Forms.ToolStripButton();
             this.groupBox1.SuspendLayout();
             this.toolCmdWrite.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -55,10 +57,12 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.toolCmdWrite);
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(726, 100);
+            this.groupBox1.Size = new System.Drawing.Size(918, 100);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "发送命令";
@@ -74,16 +78,18 @@
             this.toolStripBtnOpenWhiteLight,
             this.toolStripBtnOpenYellowLight,
             this.toolStripBtnOpenAllLight,
+            this.toolStripBtnLightTime,
             this.toolStripBtnCloseLight,
             this.toolStripSeparator1,
             this.toolStripComboHumid,
             this.toolStripBtnOpenHumid,
+            this.toolStripBtnHumidTime,
             this.toolStripBtnCloseHumid,
             this.toolStripSeparator2,
             this.toolStripBtnOpenErrorBeep});
             this.toolCmdWrite.Location = new System.Drawing.Point(3, 72);
             this.toolCmdWrite.Name = "toolCmdWrite";
-            this.toolCmdWrite.Size = new System.Drawing.Size(720, 25);
+            this.toolCmdWrite.Size = new System.Drawing.Size(912, 25);
             this.toolCmdWrite.TabIndex = 0;
             this.toolCmdWrite.Text = "toolStrip1";
             // 
@@ -221,6 +227,20 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "接收命令";
             // 
+            // labTestStatus
+            // 
+            this.labTestStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labTestStatus.BackColor = System.Drawing.Color.Green;
+            this.labTestStatus.Font = new System.Drawing.Font("微软雅黑", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labTestStatus.ForeColor = System.Drawing.Color.White;
+            this.labTestStatus.Location = new System.Drawing.Point(370, 190);
+            this.labTestStatus.Name = "labTestStatus";
+            this.labTestStatus.Size = new System.Drawing.Size(350, 41);
+            this.labTestStatus.TabIndex = 3;
+            this.labTestStatus.Text = "PASS";
+            this.labTestStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // listViewBleTest
             // 
             this.listViewBleTest.Location = new System.Drawing.Point(370, 20);
@@ -237,25 +257,29 @@
             this.listViewSerialReceived.TabIndex = 0;
             this.listViewSerialReceived.UseCompatibleStateImageBehavior = false;
             // 
-            // labTestStatus
+            // toolStripBtnLightTime
             // 
-            this.labTestStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labTestStatus.BackColor = System.Drawing.Color.Green;
-            this.labTestStatus.Font = new System.Drawing.Font("微软雅黑", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labTestStatus.ForeColor = System.Drawing.Color.White;
-            this.labTestStatus.Location = new System.Drawing.Point(370, 190);
-            this.labTestStatus.Name = "labTestStatus";
-            this.labTestStatus.Size = new System.Drawing.Size(350, 41);
-            this.labTestStatus.TabIndex = 3;
-            this.labTestStatus.Text = "PASS";
-            this.labTestStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toolStripBtnLightTime.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripBtnLightTime.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnLightTime.Image")));
+            this.toolStripBtnLightTime.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnLightTime.Name = "toolStripBtnLightTime";
+            this.toolStripBtnLightTime.Size = new System.Drawing.Size(60, 22);
+            this.toolStripBtnLightTime.Text = "灯光定时";
+            // 
+            // toolStripBtnHumidTime
+            // 
+            this.toolStripBtnHumidTime.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripBtnHumidTime.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnHumidTime.Image")));
+            this.toolStripBtnHumidTime.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnHumidTime.Name = "toolStripBtnHumidTime";
+            this.toolStripBtnHumidTime.Size = new System.Drawing.Size(60, 22);
+            this.toolStripBtnHumidTime.Text = "雾化定时";
             // 
             // frmHumidTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(751, 368);
+            this.ClientSize = new System.Drawing.Size(943, 368);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "frmHumidTest";
@@ -290,5 +314,7 @@
         private System.Windows.Forms.ToolStripButton toolStripBtnChangeLight;
         private System.Windows.Forms.ToolStripButton toolStripBtnOpenErrorBeep;
         public System.Windows.Forms.Label labTestStatus;
+        private System.Windows.Forms.ToolStripButton toolStripBtnLightTime;
+        private System.Windows.Forms.ToolStripButton toolStripBtnHumidTime;
     }
 }

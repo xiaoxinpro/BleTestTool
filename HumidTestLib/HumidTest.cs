@@ -97,10 +97,12 @@ namespace DeviceTestLib
 
                     //加湿定时：0/1/2/3/4 分别为 关闭/30min/60min/120min/180min
                     string[] strTime = { "关闭", "30min", "60min", "120min", "180min" };
-                    EditListViewSerialReceviedValue(8, strTime[Convert.ToInt32(arrData[12])]);
+                    byteNowHumidTime = arrData[12];
+                    EditListViewSerialReceviedValue(8, strTime[Convert.ToInt32(byteNowHumidTime)]);
 
                     //灯光定时：0/1/2/3/4分别为 关闭/30min/60min/120min/180min
-                    EditListViewSerialReceviedValue(9, strTime[Convert.ToInt32(arrData[13])]);
+                    byteNowLightTime = arrData[13];
+                    EditListViewSerialReceviedValue(9, strTime[Convert.ToInt32(byteNowLightTime)]);
 
                     //小夜灯： 0x00：小夜灯关    0x01:小夜灯开
                     bool isNightLight = Convert.ToBoolean(arrData[14] == 0x01);
@@ -193,8 +195,8 @@ namespace DeviceTestLib
         /// </summary>
         private void InitListViewSerialReceived(ListView listView)
         {
-            string[] arrListName = { "温度", "湿度", "加湿方式", "雾量/湿度", "亮度", "色温", "报警音开关", "加湿定时", "灯光定时", "小夜灯" };
-            string[] arrListMark = { "℃", "%", "雾量控制/湿度控制", "%", "%", "白光、黄光、白黄光", "报警音开关", "分钟", "分钟", "小夜灯开关" };
+            string[] arrListName = { "温度", "湿度", "加湿方式", "雾量/湿度", "亮度", "色温", "报警音开关", "报警状态", "加湿定时", "灯光定时", "小夜灯" };
+            string[] arrListMark = { "℃", "%", "雾量控制/湿度控制", "%", "%", "白光、黄光、白黄光", "报警音开关", "正常状态、断水报警、风机故障报警", "分钟", "分钟", "小夜灯开关" };
             //基本属性设置
             listView.FullRowSelect = true;
             listView.GridLines = true;
@@ -223,6 +225,8 @@ namespace DeviceTestLib
         #endregion
 
         #region 事件函数
+        private byte byteNowLightTime = 0x00;
+        private byte byteNowHumidTime = 0x00;
         /// <summary>
         /// 快捷发送命令工具栏
         /// </summary>
@@ -263,6 +267,12 @@ namespace DeviceTestLib
                         buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = 0x03;
                         EventAddCmdWrite(CheckWriteData(buffer));
                         break;
+                    case "toolStripBtnLightTime":
+                        //灯光定时
+                        buffer[Convert.ToInt32(enumSerialWriteFormat.Cmd)] = 0x03;
+                        buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = Convert.ToByte((byteNowLightTime % 4) + 1);
+                        EventAddCmdWrite(CheckWriteData(buffer));
+                        break;
                     case "toolStripBtnCloseLight":
                         //发送色温命令
                         buffer[Convert.ToInt32(enumSerialWriteFormat.Cmd)] = 0x01;
@@ -273,6 +283,12 @@ namespace DeviceTestLib
                         //发送雾量命令
                         buffer[Convert.ToInt32(enumSerialWriteFormat.Cmd)] = 0x05;
                         buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = Convert.ToByte(valHumid);
+                        EventAddCmdWrite(CheckWriteData(buffer));
+                        break;
+                    case "toolStripBtnHumidTime":
+                        //雾化定时
+                        buffer[Convert.ToInt32(enumSerialWriteFormat.Cmd)] = 0x06;
+                        buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = Convert.ToByte((byteNowHumidTime % 4) + 1);
                         EventAddCmdWrite(CheckWriteData(buffer));
                         break;
                     case "toolStripBtnCloseHumid":
