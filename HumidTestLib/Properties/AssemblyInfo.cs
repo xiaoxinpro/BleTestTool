@@ -9,11 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("加湿器驱动库")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Chishin")]
-<<<<<<< HEAD
-[assembly: AssemblyProduct("HumidTestLib")]
-=======
 [assembly: AssemblyProduct("BleTestTool")]
->>>>>>> 8597e3010813e8e0d1d6b27b9cf8b10f9acad189
 [assembly: AssemblyCopyright("Copyright © Chishin 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
