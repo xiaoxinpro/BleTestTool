@@ -67,6 +67,18 @@ namespace BleTestTool
 
             //初始化串口助手
             initSerialPortHelper();
+
+        }
+
+        /// <summary>
+        /// 窗体第一次显示
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void frmMain_Shown(object sender, EventArgs e)
+        {
+            //加载Dll文件
+            CallOnClick(btnLoadDeviceLib);
         }
 
         /// <summary>
@@ -781,6 +793,11 @@ namespace BleTestTool
             }
         }
 
+        /// <summary>
+        /// GroupBox开关
+        /// </summary>
+        /// <param name="groupBox">GroupBox名称</param>
+        /// <param name="isEnable">开/关</param>
         private void GroupEnable(GroupBox groupBox, bool isEnable)
         {
             foreach (Control obj in groupBox.Controls)
@@ -789,6 +806,24 @@ namespace BleTestTool
             }
         }
 
+        /// <summary>
+        /// 调用按钮事件
+        /// </summary>
+        /// <param name="btn">按钮名称</param>
+        private void CallOnClick(Button btn)
+        {
+            //建立一个类型  
+            Type t = typeof(Button);
+            //参数对象  
+            object[] p = new object[1];
+            //产生方法  
+            MethodInfo m = t.GetMethod("OnClick", BindingFlags.NonPublic | BindingFlags.Instance);
+            //参数赋值。传入函数  
+            p[0] = EventArgs.Empty;
+            //调用  
+            m.Invoke(btn, p);
+            return;
+        }
 
         #endregion
 
