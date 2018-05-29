@@ -93,7 +93,7 @@ namespace DeviceTestLib
 
                     //报警状态：0x00 正常状态  0x01 断水报警  0x02 风机故障报警
                     bool isError = Convert.ToBoolean(arrData[11] == 0x01);
-                    EditListViewSerialReceviedValue(7, isError ? "断水报警" : "正常状态");
+                    EditListViewSerialReceviedValue(7, isError ? "断水报警" : "正常状态", isError);
 
                     //加湿定时：0/1/2/3/4 分别为 关闭/30min/60min/120min/180min
                     string[] strTime = { "关闭", "30min", "60min", "120min", "180min" };
@@ -196,7 +196,7 @@ namespace DeviceTestLib
         private void InitListViewSerialReceived(ListView listView)
         {
             string[] arrListName = { "温度", "湿度", "加湿方式", "雾量/湿度", "亮度", "色温", "报警音开关", "报警状态", "加湿定时", "灯光定时", "小夜灯" };
-            string[] arrListMark = { "℃", "%", "雾量控制/湿度控制", "%", "%", "白光、黄光、白黄光", "报警音开关", "正常状态、断水报警、风机故障报警", "分钟", "分钟", "小夜灯开关" };
+            string[] arrListMark = { "℃", "%", "雾量控制/湿度控制", "%", "%", "白光、黄光、白黄光", "报警音开关", "正常状态、断水报警", "分钟", "分钟", "小夜灯开关" };
             //基本属性设置
             listView.FullRowSelect = true;
             listView.GridLines = true;
