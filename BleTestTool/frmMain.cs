@@ -34,9 +34,16 @@ namespace BleTestTool
         private Form _frmBleConfig;
 
         #region 初始化页面
-        public frmMain()
+        public frmMain(string[] args)
         {
             InitializeComponent();
+            if (args.Length == 1)
+            {
+                if (LoadDeviceLib(args[0]))
+                {
+                    btnLoadDeviceLib.Hide();
+                }
+            }
         }
 
         /// <summary>
@@ -78,7 +85,10 @@ namespace BleTestTool
         private void frmMain_Shown(object sender, EventArgs e)
         {
             //加载Dll文件
-            CallOnClick(btnLoadDeviceLib);
+            if (btnLoadDeviceLib.Visible)
+            {
+                CallOnClick(btnLoadDeviceLib);
+            }
         }
 
         /// <summary>
@@ -903,6 +913,16 @@ namespace BleTestTool
         #endregion
 
         #region 外部驱动
+        /// <summary>
+        /// 加载驱动库错误
+        /// </summary>
+        private Exception errorLoadDeviceLib;
+
+        /// <summary>
+        /// 加载驱动库按钮事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnLoadDeviceLib_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -911,26 +931,43 @@ namespace BleTestTool
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string strPath = openFileDialog.FileName;
-                try
+                if (LoadDeviceLib(strPath))
                 {
-                    Assembly assembly = Assembly.LoadFile(strPath);
-                    Type type = assembly.GetType("DeviceTestLib.DeviceTestClass");
-                    deviceTest = System.Activator.CreateInstance(type) as DeviceTestLib.IDeviceTest;
-                    //绑定控件并初始化
-                    deviceTest.ToolCmdWrite = this.toolCmdWrite;
-                    deviceTest.ListViewSerialReceived = this.listViewSerialReceived;
-                    deviceTest.ListViewBleTest = this.listViewBleTest;
-                    deviceTest.LabelBleTestStatus = this.labTestStatus;
-                    deviceTest.EventAddCmdWrite += new DelegateAddCmdWrite(AddSerialWrite);
-                    deviceTest.InitDeviceTest();
                     ((Button)sender).Hide();
-                    this.Text = STR_TITLE + " - " + System.IO.Path.GetFileName(openFileDialog.FileName);
                 }
-                catch (Exception error)
+                else
                 {
-                    MessageBox.Show(error.Message, "加载失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(errorLoadDeviceLib.Message, "加载失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
 
+        /// <summary>
+        /// 加载驱动库方法
+        /// </summary>
+        /// <param name="strPath">驱动库路径</param>
+        /// <returns>返回是否加载成功</returns>
+        private bool LoadDeviceLib(string strPath)
+        {
+            try
+            {
+                Assembly assembly = Assembly.LoadFile(strPath);
+                Type type = assembly.GetType("DeviceTestLib.DeviceTestClass");
+                deviceTest = System.Activator.CreateInstance(type) as DeviceTestLib.IDeviceTest;
+                //绑定控件并初始化
+                deviceTest.ToolCmdWrite = this.toolCmdWrite;
+                deviceTest.ListViewSerialReceived = this.listViewSerialReceived;
+                deviceTest.ListViewBleTest = this.listViewBleTest;
+                deviceTest.LabelBleTestStatus = this.labTestStatus;
+                deviceTest.EventAddCmdWrite += new DelegateAddCmdWrite(AddSerialWrite);
+                deviceTest.InitDeviceTest();
+                this.Text = STR_TITLE + " - " + System.IO.Path.GetFileName(strPath.Replace(".dll",""));
+                return true;
+            }
+            catch (Exception error)
+            {
+                errorLoadDeviceLib = error;
+                return false;
             }
         }
         #endregion
