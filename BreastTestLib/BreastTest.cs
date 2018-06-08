@@ -81,6 +81,7 @@ namespace DeviceTestLib
                     //加热
                     index = arrData[9];
                     string strTmp;
+                    bool isFlag = false;
                     switch (index)
                     {
                         case 0x00:
@@ -94,15 +95,17 @@ namespace DeviceTestLib
                             break;
                         case 0x11:
                             strTmp = "低档加热温度到达";
+                            isFlag = true;
                             break;
                         case 0x21:
                             strTmp = "高档加热温度到达";
+                            isFlag = true;
                             break;
                         default:
                             strTmp = "未知：0x" + index.ToString("x2");
                             break;
                     }
-                    EditListViewSerialReceviedValue(4, strTmp);
+                    EditListViewSerialReceviedValue(4, strTmp, isFlag);
 
                     //电量
                     index = arrData[10];
@@ -308,7 +311,6 @@ namespace DeviceTestLib
         }
 
         #endregion
-
 
         #region 串口列表函数
         /// <summary>
