@@ -43,6 +43,10 @@ namespace BleTestTool
                 {
                     btnLoadDeviceLib.Hide();
                 }
+                else
+                {
+                    this.Text = STR_TITLE;
+                }
             }
         }
 
@@ -57,7 +61,6 @@ namespace BleTestTool
             GroupEnable(gbSerialWrite, false);
             serialBle = new SerialBle(toolComboBle, new SerialBle.DelegateBleSerialWrite(AddSerialWrite));
             serialBle.EventBleLog += OutputBleLog;
-            this.Text = STR_TITLE;
 
             //初始化配置
             appConfig = new AppConfig();
