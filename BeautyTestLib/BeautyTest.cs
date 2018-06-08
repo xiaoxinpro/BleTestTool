@@ -105,7 +105,7 @@ namespace DeviceTestLib
                 else if (data == 0x01)
                 {
                     dicTestData.Add("L", "True");
-                    EditListViewSerialReceviedValue(2, "True");
+                    EditListViewSerialReceviedValue(2, "True", true, "LightBlue");
                 }
                 else
                 {
@@ -324,14 +324,15 @@ namespace DeviceTestLib
         /// </summary>
         /// <param name="line">行号</param>
         /// <param name="value">值</param>
-        private void EditListViewSerialReceviedValue(int line, string value, bool flag = false)
+        private void EditListViewSerialReceviedValue(int line, string value, bool flag = false, string color = "LightGreen")
         {
+            Color flagColor = Color.FromName(color);
             if (line >= 0 && line < ListViewSerialReceived.Items.Count)
             {
                 if (ListViewSerialReceived.Items[line].SubItems[2].Text != value)
                 {
                     ListViewSerialReceived.Items[line].SubItems[2].Text = value;
-                    ListViewSerialReceived.Items[line].BackColor = flag ? System.Drawing.Color.LightGreen : System.Drawing.Color.White;
+                    ListViewSerialReceived.Items[line].BackColor = flag ? flagColor : Color.White;
                 }
             }
         }
