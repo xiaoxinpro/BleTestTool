@@ -110,6 +110,7 @@ namespace BleTestTool
         /// </summary>
         private void initSerialConfig()
         {
+            //实例化串口配置
             configCom = new ConfigCom(cbSerial);
             configCom.BindBaudRateObj(cbBaudRate);
             configCom.BindDataBitsObj(cbDataBits);
@@ -117,11 +118,15 @@ namespace BleTestTool
             configCom.BindParityObj(cbParity);
             configCom.BaudRate = 115200;
 
+            //初始化串口配置
             ConfigComType defConfig = GetSerialConfig();
             configCom.BaudRate = defConfig.BaudRate;
             configCom.DataBits = defConfig.DataBits;
             configCom.StopBits = defConfig.StopBits;
             configCom.Parity = defConfig.Parity;
+
+            //设置串口搜索默认值
+            configCom.SetSerialPortDefaultInfo("TI CC2540 USB CDC Serial Port");
         }
 
         /// <summary>
