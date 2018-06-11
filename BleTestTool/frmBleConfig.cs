@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace BleTestTool
@@ -69,8 +70,11 @@ namespace BleTestTool
             listView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
             listView.View = View.Details;
 
+            //绑定菜单
+            listView.ContextMenuStrip = contextMenuListView;
+
             //创建列表头
-            listView.Columns.Add("蓝牙名称", 170, HorizontalAlignment.Left);
+            listView.Columns.Add("蓝牙名称", 165, HorizontalAlignment.Left);
             listView.Columns.Add("替换内容", 170, HorizontalAlignment.Left);
 
             //添加数据
@@ -101,9 +105,12 @@ namespace BleTestTool
             listView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
             listView.View = View.Details;
 
+            //绑定菜单
+            listView.ContextMenuStrip = contextMenuListView;
+
             //创建列表头
-            listView.Columns.Add("蓝牙地址", 150, HorizontalAlignment.Left);
-            listView.Columns.Add("蓝牙备注", 200, HorizontalAlignment.Left);
+            listView.Columns.Add("蓝牙地址", 130, HorizontalAlignment.Left);
+            listView.Columns.Add("蓝牙备注", 205, HorizontalAlignment.Left);
 
             //添加数据
             listView.BeginUpdate();
@@ -187,6 +194,195 @@ namespace BleTestTool
             if (listView.Items.Count > index)
             {
                 listView.Items[index].Remove();
+            }
+        }
+
+        /// <summary>
+        /// 删除指定范围的List数据
+        /// </summary>
+        /// <param name="listView">表格</param>
+        /// <param name="startIndex">起始标号</param>
+        /// <param name="endIndex">结束标号</param>
+        private void DeleteListData(ListView listView, int startIndex, int endIndex)
+        {
+            if (listView.Items.Count > startIndex && listView.Items.Count > endIndex)
+            {
+                if (startIndex < endIndex)
+                {
+                    for (int index = endIndex; index >= startIndex; index--)
+                    {
+                        listView.Items[index].Remove();
+                    }
+                }
+                else if (startIndex > endIndex) 
+                {
+                    for (int index = listView.Items.Count-1; index >= startIndex; index--)
+                    {
+                        listView.Items[index].Remove();
+                    }
+                    for (int index = endIndex; index >= 0; index++)
+                    {
+                        listView.Items[index].Remove();
+                    }
+                }
+                else
+                {
+                    listView.Items[startIndex].Remove();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 清空List数据
+        /// </summary>
+        /// <param name="listView">表格</param>
+        private void ClearListData(ListView listView)
+        {
+            if (listView != null)
+            {
+                listView.Items.Clear();
+            }
+        }
+        #endregion
+
+        #region 列表右键菜单
+        /// <summary>
+        /// 列表右键菜单列表备份
+        /// </summary>
+        private ListView listViewMenu;
+
+        /// <summary>
+        /// 右键菜单显示前处理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void contextMenuListView_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ContextMenuStrip menuStrip = (ContextMenuStrip)sender;
+            ListView listView = (ListView)menuStrip.SourceControl;
+            listViewMenu = listView;
+            if (listView.SelectedItems.Count != 1)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        /// <summary>
+        /// 输出ListView数据
+        /// </summary>
+        /// <param name="listView">表格</param>
+        /// <param name="startIndex">起始行</param>
+        /// <param name="endIndex">结束行</param>
+        /// <returns>返回输出字符串</returns>
+        private string OutputListViewData(ListView listView, int startIndex = 0, int endIndex = 10)
+        {
+            StringBuilder strData = new StringBuilder();
+            int length = 0;
+            if (listView.Items.Count > startIndex && listView.Items.Count > endIndex)
+            {
+                if (startIndex < endIndex)
+                {
+                    for (int i = startIndex; i <= endIndex; i++)
+                    {
+                        if (length++ > 10)
+                        {
+                            strData.AppendLine("\t......");
+                            break;
+                        }
+                        strData.AppendLine("    " + listView.Items[i].SubItems[0].Text + "：" + listView.Items[i].SubItems[1].Text);
+                    }
+                }
+                else if (startIndex > endIndex)
+                {
+                    for (int i = startIndex; i < listView.Items.Count; i++)
+                    {
+                        if (length++ > 10)
+                        {
+                            strData.AppendLine("\t......");
+                            break;
+                        }
+                        strData.AppendLine("    " + listView.Items[i].SubItems[0].Text + "：" + listView.Items[i].SubItems[1].Text);
+                    }
+                    for (int i = 0; i <= endIndex; i++)
+                    {
+                        if (length++ > 10)
+                        {
+                            strData.AppendLine("\t......");
+                            break;
+                        }
+                        strData.AppendLine("    " + listView.Items[i].SubItems[0].Text + "：" + listView.Items[i].SubItems[1].Text);
+                    }
+                }
+                else
+                {
+                    strData.AppendLine("    " + listView.Items[startIndex].SubItems[0].Text + "：" + listView.Items[startIndex].SubItems[1].Text);
+                }
+
+            }
+            return strData.ToString();
+        }
+
+        /// <summary>
+        /// 删除选中ListView项
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuDelete_Click(object sender, EventArgs e)
+        {
+            if (listViewMenu != null && listViewMenu.SelectedItems.Count == 1)
+            {
+                DeleteListData(listViewMenu, listViewMenu.SelectedItems[0].Index);
+            }
+        }
+
+        /// <summary>
+        /// 删除所有ListView项
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuDeleteAll_Click(object sender, EventArgs e)
+        {
+            if (listViewMenu != null)
+            {
+                string strMessage = "请确认是否要删除下列所有内容？\r\n" + OutputListViewData(listViewMenu, 0, listViewMenu.Items.Count - 1) + "请谨慎选择，删除后不可恢复！！！";
+                if (MessageBox.Show(strMessage, "确认删除", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    ClearListData(listViewMenu);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 删除以上所有内容
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuDeleteUpAll_Click(object sender, EventArgs e)
+        {
+            if (listViewMenu != null && listViewMenu.SelectedItems.Count == 1)
+            {
+                int index = listViewMenu.SelectedItems[0].Index;
+                string strMessage = "请确认是否要删除下列所有内容？\r\n" + OutputListViewData(listViewMenu, 0, index) + "请谨慎选择，删除后不可恢复！！！";
+                if (MessageBox.Show(strMessage, "确认删除", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    DeleteListData(listViewMenu, 0, index);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 删除以下所有内容
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuDeleteDownAll_Click(object sender, EventArgs e)
+        {
+            int startIndex = listViewMenu.SelectedItems[0].Index;
+            int endIndex = listViewMenu.Items.Count - 1;
+            string strMessage = "请确认是否要删除下列所有内容？\r\n" + OutputListViewData(listViewMenu, startIndex, endIndex) + "请谨慎选择，删除后不可恢复！！！";
+            if (MessageBox.Show(strMessage, "确认删除", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            {
+                DeleteListData(listViewMenu, startIndex, endIndex);
             }
         }
         #endregion
@@ -370,7 +566,9 @@ namespace BleTestTool
         }
 
 
+
         #endregion
 
+        
     }
 }

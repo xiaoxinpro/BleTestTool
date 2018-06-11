@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabBleNameReplace = new System.Windows.Forms.TabPage();
+            this.checkBleNameFilter = new System.Windows.Forms.CheckBox();
             this.btnBleNameReplace = new System.Windows.Forms.Button();
             this.txtBleReplace = new System.Windows.Forms.TextBox();
             this.txtBleName = new System.Windows.Forms.TextBox();
@@ -44,10 +46,16 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.listViewBleBlackList = new System.Windows.Forms.ListView();
-            this.checkBleNameFilter = new System.Windows.Forms.CheckBox();
+            this.contextMenuListView = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuDeleteUpAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuDeleteAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuDeleteDownAll = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabBleNameReplace.SuspendLayout();
             this.tabBleBlackList.SuspendLayout();
+            this.contextMenuListView.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -76,6 +84,18 @@
             this.tabBleNameReplace.TabIndex = 0;
             this.tabBleNameReplace.Text = "蓝牙名称";
             this.tabBleNameReplace.UseVisualStyleBackColor = true;
+            // 
+            // checkBleNameFilter
+            // 
+            this.checkBleNameFilter.AutoSize = true;
+            this.checkBleNameFilter.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.checkBleNameFilter.Location = new System.Drawing.Point(277, 13);
+            this.checkBleNameFilter.Name = "checkBleNameFilter";
+            this.checkBleNameFilter.Size = new System.Drawing.Size(84, 24);
+            this.checkBleNameFilter.TabIndex = 12;
+            this.checkBleNameFilter.Text = "开启过滤";
+            this.checkBleNameFilter.UseVisualStyleBackColor = true;
+            this.checkBleNameFilter.CheckedChanged += new System.EventHandler(this.checkBleNameFilter_CheckedChanged);
             // 
             // btnBleNameReplace
             // 
@@ -220,17 +240,51 @@
             this.listViewBleBlackList.SelectedIndexChanged += new System.EventHandler(this.listViewBleBlackList_SelectedIndexChanged);
             this.listViewBleBlackList.DoubleClick += new System.EventHandler(this.listViewBleBlackList_DoubleClick);
             // 
-            // checkBleNameFilter
+            // contextMenuListView
             // 
-            this.checkBleNameFilter.AutoSize = true;
-            this.checkBleNameFilter.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.checkBleNameFilter.Location = new System.Drawing.Point(277, 13);
-            this.checkBleNameFilter.Name = "checkBleNameFilter";
-            this.checkBleNameFilter.Size = new System.Drawing.Size(84, 24);
-            this.checkBleNameFilter.TabIndex = 12;
-            this.checkBleNameFilter.Text = "开启过滤";
-            this.checkBleNameFilter.UseVisualStyleBackColor = true;
-            this.checkBleNameFilter.CheckedChanged += new System.EventHandler(this.checkBleNameFilter_CheckedChanged);
+            this.contextMenuListView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuDelete,
+            this.toolStripSeparator1,
+            this.toolStripMenuDeleteUpAll,
+            this.toolStripMenuDeleteAll,
+            this.toolStripMenuDeleteDownAll});
+            this.contextMenuListView.Name = "contextMenuListView";
+            this.contextMenuListView.Size = new System.Drawing.Size(181, 120);
+            this.contextMenuListView.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuListView_Opening);
+            // 
+            // toolStripMenuDelete
+            // 
+            this.toolStripMenuDelete.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.toolStripMenuDelete.Name = "toolStripMenuDelete";
+            this.toolStripMenuDelete.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuDelete.Text = "删除选择";
+            this.toolStripMenuDelete.Click += new System.EventHandler(this.toolStripMenuDelete_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(145, 6);
+            // 
+            // toolStripMenuDeleteUpAll
+            // 
+            this.toolStripMenuDeleteUpAll.Name = "toolStripMenuDeleteUpAll";
+            this.toolStripMenuDeleteUpAll.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuDeleteUpAll.Text = "删除以上所有";
+            this.toolStripMenuDeleteUpAll.Click += new System.EventHandler(this.toolStripMenuDeleteUpAll_Click);
+            // 
+            // toolStripMenuDeleteAll
+            // 
+            this.toolStripMenuDeleteAll.Name = "toolStripMenuDeleteAll";
+            this.toolStripMenuDeleteAll.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuDeleteAll.Text = "删除所有";
+            this.toolStripMenuDeleteAll.Click += new System.EventHandler(this.toolStripMenuDeleteAll_Click);
+            // 
+            // toolStripMenuDeleteDownAll
+            // 
+            this.toolStripMenuDeleteDownAll.Name = "toolStripMenuDeleteDownAll";
+            this.toolStripMenuDeleteDownAll.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuDeleteDownAll.Text = "删除以下所有";
+            this.toolStripMenuDeleteDownAll.Click += new System.EventHandler(this.toolStripMenuDeleteDownAll_Click);
             // 
             // frmBleConfig
             // 
@@ -252,6 +306,7 @@
             this.tabBleNameReplace.PerformLayout();
             this.tabBleBlackList.ResumeLayout(false);
             this.tabBleBlackList.PerformLayout();
+            this.contextMenuListView.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -275,5 +330,11 @@
         private System.Windows.Forms.ListView listViewBleBlackList;
         private System.Windows.Forms.Button btnBleBlackListAll;
         private System.Windows.Forms.CheckBox checkBleNameFilter;
+        private System.Windows.Forms.ContextMenuStrip contextMenuListView;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuDelete;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuDeleteUpAll;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuDeleteAll;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuDeleteDownAll;
     }
 }
