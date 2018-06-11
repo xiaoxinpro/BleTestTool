@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControlBleConfig = new System.Windows.Forms.TabControl();
             this.tabBleNameReplace = new System.Windows.Forms.TabPage();
             this.checkBleNameFilter = new System.Windows.Forms.CheckBox();
             this.btnBleNameReplace = new System.Windows.Forms.Button();
@@ -52,21 +52,22 @@
             this.toolStripMenuDeleteUpAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuDeleteAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuDeleteDownAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabControl1.SuspendLayout();
+            this.tabControlBleConfig.SuspendLayout();
             this.tabBleNameReplace.SuspendLayout();
             this.tabBleBlackList.SuspendLayout();
             this.contextMenuListView.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // tabControlBleConfig
             // 
-            this.tabControl1.Controls.Add(this.tabBleNameReplace);
-            this.tabControl1.Controls.Add(this.tabBleBlackList);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(373, 385);
-            this.tabControl1.TabIndex = 2;
+            this.tabControlBleConfig.Controls.Add(this.tabBleNameReplace);
+            this.tabControlBleConfig.Controls.Add(this.tabBleBlackList);
+            this.tabControlBleConfig.Location = new System.Drawing.Point(12, 12);
+            this.tabControlBleConfig.Name = "tabControlBleConfig";
+            this.tabControlBleConfig.SelectedIndex = 0;
+            this.tabControlBleConfig.Size = new System.Drawing.Size(373, 385);
+            this.tabControlBleConfig.TabIndex = 2;
+            this.tabControlBleConfig.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlBleConfig_Selected);
             // 
             // tabBleNameReplace
             // 
@@ -249,14 +250,14 @@
             this.toolStripMenuDeleteAll,
             this.toolStripMenuDeleteDownAll});
             this.contextMenuListView.Name = "contextMenuListView";
-            this.contextMenuListView.Size = new System.Drawing.Size(181, 120);
+            this.contextMenuListView.Size = new System.Drawing.Size(149, 98);
             this.contextMenuListView.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuListView_Opening);
             // 
             // toolStripMenuDelete
             // 
             this.toolStripMenuDelete.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.toolStripMenuDelete.Name = "toolStripMenuDelete";
-            this.toolStripMenuDelete.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuDelete.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuDelete.Text = "删除选择";
             this.toolStripMenuDelete.Click += new System.EventHandler(this.toolStripMenuDelete_Click);
             // 
@@ -268,21 +269,21 @@
             // toolStripMenuDeleteUpAll
             // 
             this.toolStripMenuDeleteUpAll.Name = "toolStripMenuDeleteUpAll";
-            this.toolStripMenuDeleteUpAll.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuDeleteUpAll.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuDeleteUpAll.Text = "删除以上所有";
             this.toolStripMenuDeleteUpAll.Click += new System.EventHandler(this.toolStripMenuDeleteUpAll_Click);
             // 
             // toolStripMenuDeleteAll
             // 
             this.toolStripMenuDeleteAll.Name = "toolStripMenuDeleteAll";
-            this.toolStripMenuDeleteAll.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuDeleteAll.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuDeleteAll.Text = "删除所有";
             this.toolStripMenuDeleteAll.Click += new System.EventHandler(this.toolStripMenuDeleteAll_Click);
             // 
             // toolStripMenuDeleteDownAll
             // 
             this.toolStripMenuDeleteDownAll.Name = "toolStripMenuDeleteDownAll";
-            this.toolStripMenuDeleteDownAll.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuDeleteDownAll.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuDeleteDownAll.Text = "删除以下所有";
             this.toolStripMenuDeleteDownAll.Click += new System.EventHandler(this.toolStripMenuDeleteDownAll_Click);
             // 
@@ -291,7 +292,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(398, 405);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControlBleConfig);
             this.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(5);
@@ -301,7 +302,7 @@
             this.Text = "蓝牙高级配置";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmBleConfig_FormClosing);
             this.Load += new System.EventHandler(this.frmBleConfig_Load);
-            this.tabControl1.ResumeLayout(false);
+            this.tabControlBleConfig.ResumeLayout(false);
             this.tabBleNameReplace.ResumeLayout(false);
             this.tabBleNameReplace.PerformLayout();
             this.tabBleBlackList.ResumeLayout(false);
@@ -313,7 +314,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControlBleConfig;
         private System.Windows.Forms.TabPage tabBleNameReplace;
         private System.Windows.Forms.Button btnBleNameReplace;
         private System.Windows.Forms.TextBox txtBleReplace;

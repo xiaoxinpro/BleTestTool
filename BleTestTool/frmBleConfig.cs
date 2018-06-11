@@ -35,17 +35,8 @@ namespace BleTestTool
 
         private void frmBleConfig_Load(object sender, EventArgs e)
         {
-            Console.WriteLine("\r\nDicBleBlackListConfig");
-            foreach (KeyValuePair<string,string> item in bleConfig.DicBleBlackListConfig)
-            {
-                Console.WriteLine(item.Key + " : " + item.Value);
-            }
-
-            Console.WriteLine("\r\nDicBleNameReplaceConfig");
-            foreach (KeyValuePair<string, string> item in bleConfig.DicBleNameReplaceConfig)
-            {
-                Console.WriteLine(item.Key + " : " + item.Value);
-            }
+            //初始化配置操作
+            InitBleConfigProcess();
 
             //初始化列表
             InitBleNameReplaceList(listViewBleNameReplace);
@@ -130,6 +121,55 @@ namespace BleTestTool
 
         #endregion
 
+        #region 配置操作
+        private Dictionary<string, string> dicBleConfig;
+        private delegate void delegateSaveBleConfig();
+        private delegateSaveBleConfig SaveBleConfig;
+
+        /// <summary>
+        /// 初始化配置设定
+        /// </summary>
+        /// <param name="index"></param>
+        private void InitBleConfigProcess(int index = 0)
+        {
+            switch (index)
+            {
+                //蓝牙名称
+                case 0:
+                    dicBleConfig = bleConfig.DicBleNameReplaceConfig;
+                    SaveBleConfig = bleConfig.SaveBleNameReplaceConfig;
+                    break;
+                //蓝牙黑名单
+                case 1:
+                    dicBleConfig = bleConfig.DicBleBlackListConfig;
+                    SaveBleConfig = bleConfig.SaveBleBlackListConfig;
+                    break;
+                default:
+                    dicBleConfig = null;
+                    SaveBleConfig = null;
+                    break;
+            }
+
+            //输出当前界面配置
+            Console.WriteLine("\r\n输出当前界面配置：" + index);
+            foreach (KeyValuePair<string, string> item in dicBleConfig)
+            {
+                Console.WriteLine(item.Key + " : " + item.Value);
+            }
+        }
+
+        /// <summary>
+        /// 切换选项卡事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tabControlBleConfig_Selected(object sender, TabControlEventArgs e)
+        {
+            InitBleConfigProcess(e.TabPageIndex);
+        }
+
+        #endregion
+
         #region 表格操作
         /// <summary>
         /// 添加List数据
@@ -193,7 +233,31 @@ namespace BleTestTool
         {
             if (listView.Items.Count > index)
             {
+                dicBleConfig.Remove(listView.Items[index].Text);
+                SaveBleConfig();
                 listView.Items[index].Remove();
+            }
+        }
+
+        /// <summary>
+        /// 删除指定List数据
+        /// </summary>
+        /// <param name="listView">表格</param>
+        /// <param name="arrIndex">标号数组</param>
+        private void DeleteListData(ListView listView, int[] arrIndex)
+        {
+            List<int> listIndex = new List<int>(arrIndex);
+            listIndex.Distinct();   //去重
+            listIndex.Sort();       //升序排序
+            listIndex.Reverse();    //反转（从大到小）
+            if (listView != null && listView.Items.Count > listIndex[0])
+            {
+                foreach (int index in listIndex)
+                {
+                    dicBleConfig.Remove(listView.Items[index].Text);
+                    listView.Items[index].Remove();
+                }
+                SaveBleConfig();
             }
         }
 
@@ -211,6 +275,7 @@ namespace BleTestTool
                 {
                     for (int index = endIndex; index >= startIndex; index--)
                     {
+                        dicBleConfig.Remove(listView.Items[index].Text);
                         listView.Items[index].Remove();
                     }
                 }
@@ -218,17 +283,21 @@ namespace BleTestTool
                 {
                     for (int index = listView.Items.Count-1; index >= startIndex; index--)
                     {
+                        dicBleConfig.Remove(listView.Items[index].Text);
                         listView.Items[index].Remove();
                     }
                     for (int index = endIndex; index >= 0; index++)
                     {
+                        dicBleConfig.Remove(listView.Items[index].Text);
                         listView.Items[index].Remove();
                     }
                 }
                 else
                 {
+                    dicBleConfig.Remove(listView.Items[startIndex].Text);
                     listView.Items[startIndex].Remove();
                 }
+                SaveBleConfig();
             }
         }
 
@@ -240,6 +309,8 @@ namespace BleTestTool
         {
             if (listView != null)
             {
+                dicBleConfig.Clear();
+                SaveBleConfig();
                 listView.Items.Clear();
             }
         }
@@ -261,9 +332,19 @@ namespace BleTestTool
             ContextMenuStrip menuStrip = (ContextMenuStrip)sender;
             ListView listView = (ListView)menuStrip.SourceControl;
             listViewMenu = listView;
-            if (listView.SelectedItems.Count != 1)
+            if (listView.SelectedItems.Count < 1)
             {
                 e.Cancel = true;
+            }
+            else if (listView.SelectedItems.Count == 1)
+            {
+                toolStripMenuDeleteUpAll.Visible = true;
+                toolStripMenuDeleteDownAll.Visible = true;
+            }
+            else
+            {
+                toolStripMenuDeleteUpAll.Visible = false;
+                toolStripMenuDeleteDownAll.Visible = false;
             }
         }
 
@@ -329,9 +410,24 @@ namespace BleTestTool
         /// <param name="e"></param>
         private void toolStripMenuDelete_Click(object sender, EventArgs e)
         {
-            if (listViewMenu != null && listViewMenu.SelectedItems.Count == 1)
+            if (listViewMenu != null && listViewMenu.SelectedItems.Count > 0)
             {
-                DeleteListData(listViewMenu, listViewMenu.SelectedItems[0].Index);
+                if (listViewMenu.SelectedItems.Count == 1)
+                {
+                    DeleteListData(listViewMenu, listViewMenu.SelectedItems[0].Index);
+                }
+                else
+                {
+                    List<int> listIndex = new List<int>();
+                    foreach (ListViewItem item in listViewMenu.SelectedItems)
+                    {
+                        listIndex.Add(item.Index);
+                    }
+                    if (MessageBox.Show("请确认是否删除所有选中项？（不可恢复）", "确认删除",MessageBoxButtons.YesNo,MessageBoxIcon.Information) == DialogResult.Yes)
+                    {
+                        DeleteListData(listViewMenu, listIndex.ToArray());
+                    }
+                }
             }
         }
 
@@ -434,8 +530,8 @@ namespace BleTestTool
             ListView listView = (ListView)sender;
             if (listView.SelectedItems.Count > 0)
             {
-                bleConfig.DicBleNameReplaceConfig.Remove(listView.SelectedItems[0].Text);
-                bleConfig.SaveBleNameReplaceConfig();
+                //dicBleConfig.Remove(listView.SelectedItems[0].Text);
+                //SaveBleConfig();
                 DeleteListData(listView, listView.SelectedItems[0].Index);
             }
         }
@@ -559,16 +655,17 @@ namespace BleTestTool
             ListView listView = (ListView)sender;
             if (listView.SelectedItems.Count > 0)
             {
-                bleConfig.DicBleBlackListConfig.Remove(listView.SelectedItems[0].Text);
-                bleConfig.SaveBleBlackListConfig();
+                //dicBleConfig.Remove(listView.SelectedItems[0].Text);
+                //SaveBleConfig();
                 DeleteListData(listView, listView.SelectedItems[0].Index);
             }
         }
 
 
 
+
         #endregion
 
-        
+
     }
 }
