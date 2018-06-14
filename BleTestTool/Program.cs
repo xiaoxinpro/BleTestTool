@@ -65,7 +65,7 @@ namespace BleTestTool
 
             //判断DeviceTestLib.dll版本号
             Version verDeviceTestLib = new Version(FileVersionInfo.GetVersionInfo(strPathDeviceTestLib).FileVersion);
-            if (verDeviceTestLib < new Version("1.0.0.0"))
+            if (verDeviceTestLib < new Version("1.1.0.0"))
             {
                 message = "类库文件DeviceTestLib.dll版本过低，请安装最新版本。";
                 return false;
