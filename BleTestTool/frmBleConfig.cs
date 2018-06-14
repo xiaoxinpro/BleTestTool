@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace BleTestTool
@@ -34,17 +35,8 @@ namespace BleTestTool
 
         private void frmBleConfig_Load(object sender, EventArgs e)
         {
-            Console.WriteLine("\r\nDicBleBlackListConfig");
-            foreach (KeyValuePair<string,string> item in bleConfig.DicBleBlackListConfig)
-            {
-                Console.WriteLine(item.Key + " : " + item.Value);
-            }
-
-            Console.WriteLine("\r\nDicBleNameReplaceConfig");
-            foreach (KeyValuePair<string, string> item in bleConfig.DicBleNameReplaceConfig)
-            {
-                Console.WriteLine(item.Key + " : " + item.Value);
-            }
+            //初始化配置操作
+            InitBleConfigProcess();
 
             //初始化列表
             InitBleNameReplaceList(listViewBleNameReplace);
@@ -69,8 +61,11 @@ namespace BleTestTool
             listView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
             listView.View = View.Details;
 
+            //绑定菜单
+            listView.ContextMenuStrip = contextMenuListView;
+
             //创建列表头
-            listView.Columns.Add("蓝牙名称", 170, HorizontalAlignment.Left);
+            listView.Columns.Add("蓝牙名称", 165, HorizontalAlignment.Left);
             listView.Columns.Add("替换内容", 170, HorizontalAlignment.Left);
 
             //添加数据
@@ -101,9 +96,12 @@ namespace BleTestTool
             listView.HeaderStyle = ColumnHeaderStyle.Nonclickable;
             listView.View = View.Details;
 
+            //绑定菜单
+            listView.ContextMenuStrip = contextMenuListView;
+
             //创建列表头
-            listView.Columns.Add("蓝牙地址", 150, HorizontalAlignment.Left);
-            listView.Columns.Add("蓝牙备注", 200, HorizontalAlignment.Left);
+            listView.Columns.Add("蓝牙地址", 130, HorizontalAlignment.Left);
+            listView.Columns.Add("蓝牙备注", 205, HorizontalAlignment.Left);
 
             //添加数据
             listView.BeginUpdate();
@@ -119,6 +117,55 @@ namespace BleTestTool
             //添加下拉列表数据
             comboBleBlackList.Items.Clear();
             comboBleBlackList.Items.AddRange(serialBle.DicListBle.Keys.ToArray<string>());
+        }
+
+        #endregion
+
+        #region 配置操作
+        private Dictionary<string, string> dicBleConfig;
+        private delegate void delegateSaveBleConfig();
+        private delegateSaveBleConfig SaveBleConfig;
+
+        /// <summary>
+        /// 初始化配置设定
+        /// </summary>
+        /// <param name="index"></param>
+        private void InitBleConfigProcess(int index = 0)
+        {
+            switch (index)
+            {
+                //蓝牙名称
+                case 0:
+                    dicBleConfig = bleConfig.DicBleNameReplaceConfig;
+                    SaveBleConfig = bleConfig.SaveBleNameReplaceConfig;
+                    break;
+                //蓝牙黑名单
+                case 1:
+                    dicBleConfig = bleConfig.DicBleBlackListConfig;
+                    SaveBleConfig = bleConfig.SaveBleBlackListConfig;
+                    break;
+                default:
+                    dicBleConfig = null;
+                    SaveBleConfig = null;
+                    break;
+            }
+
+            //输出当前界面配置
+            Console.WriteLine("\r\n输出当前界面配置：" + index);
+            foreach (KeyValuePair<string, string> item in dicBleConfig)
+            {
+                Console.WriteLine(item.Key + " : " + item.Value);
+            }
+        }
+
+        /// <summary>
+        /// 切换选项卡事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tabControlBleConfig_Selected(object sender, TabControlEventArgs e)
+        {
+            InitBleConfigProcess(e.TabPageIndex);
         }
 
         #endregion
@@ -186,7 +233,252 @@ namespace BleTestTool
         {
             if (listView.Items.Count > index)
             {
+                dicBleConfig.Remove(listView.Items[index].Text);
+                SaveBleConfig();
                 listView.Items[index].Remove();
+            }
+        }
+
+        /// <summary>
+        /// 删除指定List数据
+        /// </summary>
+        /// <param name="listView">表格</param>
+        /// <param name="arrIndex">标号数组</param>
+        private void DeleteListData(ListView listView, int[] arrIndex)
+        {
+            List<int> listIndex = new List<int>(arrIndex);
+            listIndex.Distinct();   //去重
+            listIndex.Sort();       //升序排序
+            listIndex.Reverse();    //反转（从大到小）
+            if (listView != null && listView.Items.Count > listIndex[0])
+            {
+                foreach (int index in listIndex)
+                {
+                    dicBleConfig.Remove(listView.Items[index].Text);
+                    listView.Items[index].Remove();
+                }
+                SaveBleConfig();
+            }
+        }
+
+        /// <summary>
+        /// 删除指定范围的List数据
+        /// </summary>
+        /// <param name="listView">表格</param>
+        /// <param name="startIndex">起始标号</param>
+        /// <param name="endIndex">结束标号</param>
+        private void DeleteListData(ListView listView, int startIndex, int endIndex)
+        {
+            if (listView.Items.Count > startIndex && listView.Items.Count > endIndex)
+            {
+                if (startIndex < endIndex)
+                {
+                    for (int index = endIndex; index >= startIndex; index--)
+                    {
+                        dicBleConfig.Remove(listView.Items[index].Text);
+                        listView.Items[index].Remove();
+                    }
+                }
+                else if (startIndex > endIndex) 
+                {
+                    for (int index = listView.Items.Count-1; index >= startIndex; index--)
+                    {
+                        dicBleConfig.Remove(listView.Items[index].Text);
+                        listView.Items[index].Remove();
+                    }
+                    for (int index = endIndex; index >= 0; index++)
+                    {
+                        dicBleConfig.Remove(listView.Items[index].Text);
+                        listView.Items[index].Remove();
+                    }
+                }
+                else
+                {
+                    dicBleConfig.Remove(listView.Items[startIndex].Text);
+                    listView.Items[startIndex].Remove();
+                }
+                SaveBleConfig();
+            }
+        }
+
+        /// <summary>
+        /// 清空List数据
+        /// </summary>
+        /// <param name="listView">表格</param>
+        private void ClearListData(ListView listView)
+        {
+            if (listView != null)
+            {
+                dicBleConfig.Clear();
+                SaveBleConfig();
+                listView.Items.Clear();
+            }
+        }
+        #endregion
+
+        #region 列表右键菜单
+        /// <summary>
+        /// 列表右键菜单列表备份
+        /// </summary>
+        private ListView listViewMenu;
+
+        /// <summary>
+        /// 右键菜单显示前处理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void contextMenuListView_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ContextMenuStrip menuStrip = (ContextMenuStrip)sender;
+            ListView listView = (ListView)menuStrip.SourceControl;
+            listViewMenu = listView;
+            if (listView.SelectedItems.Count < 1)
+            {
+                e.Cancel = true;
+            }
+            else if (listView.SelectedItems.Count == 1)
+            {
+                toolStripMenuDeleteUpAll.Visible = true;
+                toolStripMenuDeleteDownAll.Visible = true;
+            }
+            else
+            {
+                toolStripMenuDeleteUpAll.Visible = false;
+                toolStripMenuDeleteDownAll.Visible = false;
+            }
+        }
+
+        /// <summary>
+        /// 输出ListView数据
+        /// </summary>
+        /// <param name="listView">表格</param>
+        /// <param name="startIndex">起始行</param>
+        /// <param name="endIndex">结束行</param>
+        /// <returns>返回输出字符串</returns>
+        private string OutputListViewData(ListView listView, int startIndex = 0, int endIndex = 10)
+        {
+            StringBuilder strData = new StringBuilder();
+            int length = 0;
+            if (listView.Items.Count > startIndex && listView.Items.Count > endIndex)
+            {
+                if (startIndex < endIndex)
+                {
+                    for (int i = startIndex; i <= endIndex; i++)
+                    {
+                        if (length++ > 10)
+                        {
+                            strData.AppendLine("\t......");
+                            break;
+                        }
+                        strData.AppendLine("    " + listView.Items[i].SubItems[0].Text + "：" + listView.Items[i].SubItems[1].Text);
+                    }
+                }
+                else if (startIndex > endIndex)
+                {
+                    for (int i = startIndex; i < listView.Items.Count; i++)
+                    {
+                        if (length++ > 10)
+                        {
+                            strData.AppendLine("\t......");
+                            break;
+                        }
+                        strData.AppendLine("    " + listView.Items[i].SubItems[0].Text + "：" + listView.Items[i].SubItems[1].Text);
+                    }
+                    for (int i = 0; i <= endIndex; i++)
+                    {
+                        if (length++ > 10)
+                        {
+                            strData.AppendLine("\t......");
+                            break;
+                        }
+                        strData.AppendLine("    " + listView.Items[i].SubItems[0].Text + "：" + listView.Items[i].SubItems[1].Text);
+                    }
+                }
+                else
+                {
+                    strData.AppendLine("    " + listView.Items[startIndex].SubItems[0].Text + "：" + listView.Items[startIndex].SubItems[1].Text);
+                }
+
+            }
+            return strData.ToString();
+        }
+
+        /// <summary>
+        /// 删除选中ListView项
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuDelete_Click(object sender, EventArgs e)
+        {
+            if (listViewMenu != null && listViewMenu.SelectedItems.Count > 0)
+            {
+                if (listViewMenu.SelectedItems.Count == 1)
+                {
+                    DeleteListData(listViewMenu, listViewMenu.SelectedItems[0].Index);
+                }
+                else
+                {
+                    List<int> listIndex = new List<int>();
+                    foreach (ListViewItem item in listViewMenu.SelectedItems)
+                    {
+                        listIndex.Add(item.Index);
+                    }
+                    if (MessageBox.Show("请确认是否删除所有选中项？（不可恢复）", "确认删除",MessageBoxButtons.YesNo,MessageBoxIcon.Information) == DialogResult.Yes)
+                    {
+                        DeleteListData(listViewMenu, listIndex.ToArray());
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 删除所有ListView项
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuDeleteAll_Click(object sender, EventArgs e)
+        {
+            if (listViewMenu != null)
+            {
+                string strMessage = "请确认是否要删除下列所有内容？\r\n" + OutputListViewData(listViewMenu, 0, listViewMenu.Items.Count - 1) + "请谨慎选择，删除后不可恢复！！！";
+                if (MessageBox.Show(strMessage, "确认删除", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    ClearListData(listViewMenu);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 删除以上所有内容
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuDeleteUpAll_Click(object sender, EventArgs e)
+        {
+            if (listViewMenu != null && listViewMenu.SelectedItems.Count == 1)
+            {
+                int index = listViewMenu.SelectedItems[0].Index;
+                string strMessage = "请确认是否要删除下列所有内容？\r\n" + OutputListViewData(listViewMenu, 0, index) + "请谨慎选择，删除后不可恢复！！！";
+                if (MessageBox.Show(strMessage, "确认删除", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    DeleteListData(listViewMenu, 0, index);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 删除以下所有内容
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuDeleteDownAll_Click(object sender, EventArgs e)
+        {
+            int startIndex = listViewMenu.SelectedItems[0].Index;
+            int endIndex = listViewMenu.Items.Count - 1;
+            string strMessage = "请确认是否要删除下列所有内容？\r\n" + OutputListViewData(listViewMenu, startIndex, endIndex) + "请谨慎选择，删除后不可恢复！！！";
+            if (MessageBox.Show(strMessage, "确认删除", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            {
+                DeleteListData(listViewMenu, startIndex, endIndex);
             }
         }
         #endregion
@@ -238,8 +530,8 @@ namespace BleTestTool
             ListView listView = (ListView)sender;
             if (listView.SelectedItems.Count > 0)
             {
-                bleConfig.DicBleNameReplaceConfig.Remove(listView.SelectedItems[0].Text);
-                bleConfig.SaveBleNameReplaceConfig();
+                //dicBleConfig.Remove(listView.SelectedItems[0].Text);
+                //SaveBleConfig();
                 DeleteListData(listView, listView.SelectedItems[0].Index);
             }
         }
@@ -363,14 +655,17 @@ namespace BleTestTool
             ListView listView = (ListView)sender;
             if (listView.SelectedItems.Count > 0)
             {
-                bleConfig.DicBleBlackListConfig.Remove(listView.SelectedItems[0].Text);
-                bleConfig.SaveBleBlackListConfig();
+                //dicBleConfig.Remove(listView.SelectedItems[0].Text);
+                //SaveBleConfig();
                 DeleteListData(listView, listView.SelectedItems[0].Index);
             }
         }
 
 
+
+
         #endregion
+
 
     }
 }

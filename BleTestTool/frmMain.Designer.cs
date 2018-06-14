@@ -460,10 +460,12 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.tabControl1);
+            this.splitContainer1.Panel1MinSize = 95;
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gbSerialLog);
+            this.splitContainer1.Panel2MinSize = 110;
             this.splitContainer1.Size = new System.Drawing.Size(509, 413);
             this.splitContainer1.SplitterDistance = 236;
             this.splitContainer1.TabIndex = 15;
@@ -649,6 +651,7 @@
             this.Text = "串口蓝牙测试工具";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
+            this.Shown += new System.EventHandler(this.frmMain_Shown);
             this.gbConfigCom.ResumeLayout(false);
             this.gbConfigCom.PerformLayout();
             this.gbSerialWrite.ResumeLayout(false);

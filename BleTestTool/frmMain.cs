@@ -34,9 +34,20 @@ namespace BleTestTool
         private Form _frmBleConfig;
 
         #region 初始化页面
-        public frmMain()
+        public frmMain(string[] args)
         {
             InitializeComponent();
+            if (args.Length == 1)
+            {
+                if (LoadDeviceLib(args[0]))
+                {
+                    btnLoadDeviceLib.Hide();
+                }
+                else
+                {
+                    this.Text = STR_TITLE;
+                }
+            }
         }
 
         /// <summary>
@@ -50,7 +61,6 @@ namespace BleTestTool
             GroupEnable(gbSerialWrite, false);
             serialBle = new SerialBle(toolComboBle, new SerialBle.DelegateBleSerialWrite(AddSerialWrite));
             serialBle.EventBleLog += OutputBleLog;
-            this.Text = STR_TITLE;
 
             //初始化配置
             appConfig = new AppConfig();
@@ -67,6 +77,21 @@ namespace BleTestTool
 
             //初始化串口助手
             initSerialPortHelper();
+
+        }
+
+        /// <summary>
+        /// 窗体第一次显示
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void frmMain_Shown(object sender, EventArgs e)
+        {
+            //加载Dll文件
+            if (btnLoadDeviceLib.Visible)
+            {
+                CallOnClick(btnLoadDeviceLib);
+            }
         }
 
         /// <summary>
@@ -85,6 +110,7 @@ namespace BleTestTool
         /// </summary>
         private void initSerialConfig()
         {
+            //实例化串口配置
             configCom = new ConfigCom(cbSerial);
             configCom.BindBaudRateObj(cbBaudRate);
             configCom.BindDataBitsObj(cbDataBits);
@@ -92,11 +118,15 @@ namespace BleTestTool
             configCom.BindParityObj(cbParity);
             configCom.BaudRate = 115200;
 
+            //初始化串口配置
             ConfigComType defConfig = GetSerialConfig();
             configCom.BaudRate = defConfig.BaudRate;
             configCom.DataBits = defConfig.DataBits;
             configCom.StopBits = defConfig.StopBits;
             configCom.Parity = defConfig.Parity;
+
+            //设置串口搜索默认值
+            configCom.SetSerialPortDefaultInfo("TI CC2540 USB CDC Serial Port");
         }
 
         /// <summary>
@@ -781,6 +811,11 @@ namespace BleTestTool
             }
         }
 
+        /// <summary>
+        /// GroupBox开关
+        /// </summary>
+        /// <param name="groupBox">GroupBox名称</param>
+        /// <param name="isEnable">开/关</param>
         private void GroupEnable(GroupBox groupBox, bool isEnable)
         {
             foreach (Control obj in groupBox.Controls)
@@ -789,6 +824,24 @@ namespace BleTestTool
             }
         }
 
+        /// <summary>
+        /// 调用按钮事件
+        /// </summary>
+        /// <param name="btn">按钮名称</param>
+        private void CallOnClick(Button btn)
+        {
+            //建立一个类型  
+            Type t = typeof(Button);
+            //参数对象  
+            object[] p = new object[1];
+            //产生方法  
+            MethodInfo m = t.GetMethod("OnClick", BindingFlags.NonPublic | BindingFlags.Instance);
+            //参数赋值。传入函数  
+            p[0] = EventArgs.Empty;
+            //调用  
+            m.Invoke(btn, p);
+            return;
+        }
 
         #endregion
 
@@ -868,6 +921,16 @@ namespace BleTestTool
         #endregion
 
         #region 外部驱动
+        /// <summary>
+        /// 加载驱动库错误
+        /// </summary>
+        private Exception errorLoadDeviceLib;
+
+        /// <summary>
+        /// 加载驱动库按钮事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnLoadDeviceLib_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -876,26 +939,43 @@ namespace BleTestTool
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string strPath = openFileDialog.FileName;
-                try
+                if (LoadDeviceLib(strPath))
                 {
-                    Assembly assembly = Assembly.LoadFile(strPath);
-                    Type type = assembly.GetType("DeviceTestLib.DeviceTestClass");
-                    deviceTest = System.Activator.CreateInstance(type) as DeviceTestLib.IDeviceTest;
-                    //绑定控件并初始化
-                    deviceTest.ToolCmdWrite = this.toolCmdWrite;
-                    deviceTest.ListViewSerialReceived = this.listViewSerialReceived;
-                    deviceTest.ListViewBleTest = this.listViewBleTest;
-                    deviceTest.LabelBleTestStatus = this.labTestStatus;
-                    deviceTest.EventAddCmdWrite += new DelegateAddCmdWrite(AddSerialWrite);
-                    deviceTest.InitDeviceTest();
                     ((Button)sender).Hide();
-                    this.Text = STR_TITLE + " - " + System.IO.Path.GetFileName(openFileDialog.FileName);
                 }
-                catch (Exception error)
+                else
                 {
-                    MessageBox.Show(error.Message, "加载失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(errorLoadDeviceLib.Message, "加载失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
 
+        /// <summary>
+        /// 加载驱动库方法
+        /// </summary>
+        /// <param name="strPath">驱动库路径</param>
+        /// <returns>返回是否加载成功</returns>
+        private bool LoadDeviceLib(string strPath)
+        {
+            try
+            {
+                Assembly assembly = Assembly.LoadFile(strPath);
+                Type type = assembly.GetType("DeviceTestLib.DeviceTestClass");
+                deviceTest = System.Activator.CreateInstance(type) as DeviceTestLib.IDeviceTest;
+                //绑定控件并初始化
+                deviceTest.ToolCmdWrite = this.toolCmdWrite;
+                deviceTest.ListViewSerialReceived = this.listViewSerialReceived;
+                deviceTest.ListViewBleTest = this.listViewBleTest;
+                deviceTest.LabelBleTestStatus = this.labTestStatus;
+                deviceTest.EventAddCmdWrite += new DelegateAddCmdWrite(AddSerialWrite);
+                deviceTest.InitDeviceTest();
+                this.Text = STR_TITLE + " - " + System.IO.Path.GetFileName(strPath.Replace(".dll",""));
+                return true;
+            }
+            catch (Exception error)
+            {
+                errorLoadDeviceLib = error;
+                return false;
             }
         }
         #endregion
