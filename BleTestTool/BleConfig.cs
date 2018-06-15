@@ -24,7 +24,18 @@ namespace BleTestTool
         #endregion
 
         #region 属性
-        public string BleConfigFilePath { get => _bleConfigFilePath; set => _bleConfigFilePath = value; }
+        public string BleConfigFilePath
+        {
+            get => _bleConfigFilePath;
+            set
+            {
+                if (!Directory.Exists(value))
+                {
+                    Directory.CreateDirectory(value);
+                }
+                _bleConfigFilePath = value;
+            }
+        }
         public Dictionary<string, string> DicBleBlackListConfig { get => _dicBleBlackListConfig; set => _dicBleBlackListConfig = value; }
         public Dictionary<string, string> DicBleNameReplaceConfig { get => _dicBleNameReplaceConfig; set => _dicBleNameReplaceConfig = value; }
         public Dictionary<string, string> DicBleNameFilterConfig { get => _dicBleNameFilterConfig; set => _dicBleNameFilterConfig = value; }
