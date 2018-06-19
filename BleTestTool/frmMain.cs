@@ -34,6 +34,12 @@ namespace BleTestTool
         private Form _frmBleConfig;
 
         #region 初始化页面
+        private string strBleConfigName = "Main";
+
+        /// <summary>
+        /// 主页入口
+        /// </summary>
+        /// <param name="args"></param>
         public frmMain(string[] args)
         {
             InitializeComponent();
@@ -64,12 +70,9 @@ namespace BleTestTool
 
             //初始化配置
             appConfig = new AppConfig();
-            bleConfig = new BleConfig();
 
-            //配置绑定
-            serialBle.DicBleBlackListConfig = bleConfig.DicBleBlackListConfig;
-            serialBle.DicBleNameReplaceConfig = bleConfig.DicBleNameReplaceConfig;
-            serialBle.DicBleNameFilterConfig = bleConfig.DicBleNameFilterConfig;
+            //初始化蓝牙配置
+            initBleConfig(strBleConfigName);
 
             //初始化串口配置控件
             initSerialConfig();
@@ -141,6 +144,23 @@ namespace BleTestTool
             serialPortHelper.SerialReceviedTimeInterval = 40;
             serialPortHelper.SerialWriteTimeInterval = 200;
             serialPortHelper.SerialReceviedLengthMax = 1024;
+        }
+
+        /// <summary>
+        /// 初始化Ble配置
+        /// </summary>
+        /// <param name="configName">配置名称</param>
+        private void initBleConfig(string configName = "Main")
+        {
+            string path = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase + @"BleConfig\" + configName + @"\";
+
+            //初始化配置
+            bleConfig = new BleConfig(path);
+
+            //配置绑定
+            serialBle.DicBleBlackListConfig = bleConfig.DicBleBlackListConfig;
+            serialBle.DicBleNameReplaceConfig = bleConfig.DicBleNameReplaceConfig;
+            serialBle.DicBleNameFilterConfig = bleConfig.DicBleNameFilterConfig;
         }
         #endregion
 
@@ -942,6 +962,7 @@ namespace BleTestTool
                 if (LoadDeviceLib(strPath))
                 {
                     ((Button)sender).Hide();
+                    initBleConfig(strBleConfigName);
                 }
                 else
                 {
@@ -962,6 +983,7 @@ namespace BleTestTool
                 Assembly assembly = Assembly.LoadFile(strPath);
                 Type type = assembly.GetType("DeviceTestLib.DeviceTestClass");
                 deviceTest = System.Activator.CreateInstance(type) as DeviceTestLib.IDeviceTest;
+
                 //绑定控件并初始化
                 deviceTest.ToolCmdWrite = this.toolCmdWrite;
                 deviceTest.ListViewSerialReceived = this.listViewSerialReceived;
@@ -969,7 +991,16 @@ namespace BleTestTool
                 deviceTest.LabelBleTestStatus = this.labTestStatus;
                 deviceTest.EventAddCmdWrite += new DelegateAddCmdWrite(AddSerialWrite);
                 deviceTest.InitDeviceTest();
-                this.Text = STR_TITLE + " - " + System.IO.Path.GetFileName(strPath.Replace(".dll",""));
+
+                //获取驱动名称
+                string strName = System.IO.Path.GetFileName(strPath.Replace(".dll", ""));
+
+                //修改窗体标题
+                this.Text = STR_TITLE + " - " + strName;
+
+                //初始化蓝牙配置
+                strBleConfigName = strName;
+
                 return true;
             }
             catch (Exception error)
