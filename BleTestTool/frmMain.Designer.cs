@@ -521,7 +521,7 @@
             this.tabBleTest.Location = new System.Drawing.Point(4, 26);
             this.tabBleTest.Name = "tabBleTest";
             this.tabBleTest.Padding = new System.Windows.Forms.Padding(3);
-            this.tabBleTest.Size = new System.Drawing.Size(495, 201);
+            this.tabBleTest.Size = new System.Drawing.Size(511, 220);
             this.tabBleTest.TabIndex = 1;
             this.tabBleTest.Text = "测试结果";
             this.tabBleTest.UseVisualStyleBackColor = true;
@@ -533,9 +533,9 @@
             this.labTestStatus.BackColor = System.Drawing.Color.Green;
             this.labTestStatus.Font = new System.Drawing.Font("微软雅黑", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labTestStatus.ForeColor = System.Drawing.Color.White;
-            this.labTestStatus.Location = new System.Drawing.Point(6, 157);
+            this.labTestStatus.Location = new System.Drawing.Point(6, 176);
             this.labTestStatus.Name = "labTestStatus";
-            this.labTestStatus.Size = new System.Drawing.Size(483, 41);
+            this.labTestStatus.Size = new System.Drawing.Size(499, 41);
             this.labTestStatus.TabIndex = 1;
             this.labTestStatus.Text = "PASS";
             this.labTestStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -547,7 +547,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewBleTest.Location = new System.Drawing.Point(6, 6);
             this.listViewBleTest.Name = "listViewBleTest";
-            this.listViewBleTest.Size = new System.Drawing.Size(483, 148);
+            this.listViewBleTest.Size = new System.Drawing.Size(499, 167);
             this.listViewBleTest.TabIndex = 0;
             this.listViewBleTest.UseCompatibleStateImageBehavior = false;
             // 
@@ -665,15 +665,17 @@
             // toolStripStatusLabelDriverVersion
             // 
             this.toolStripStatusLabelDriverVersion.Name = "toolStripStatusLabelDriverVersion";
-            this.toolStripStatusLabelDriverVersion.Size = new System.Drawing.Size(59, 20);
+            this.toolStripStatusLabelDriverVersion.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toolStripStatusLabelDriverVersion.Size = new System.Drawing.Size(69, 20);
             this.toolStripStatusLabelDriverVersion.Text = "V1.1.1.0";
+            this.toolStripStatusLabelDriverVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toolStripStatusLabelBleStatus
             // 
             this.toolStripStatusLabelBleStatus.AutoSize = false;
             this.toolStripStatusLabelBleStatus.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)));
             this.toolStripStatusLabelBleStatus.Name = "toolStripStatusLabelBleStatus";
-            this.toolStripStatusLabelBleStatus.Size = new System.Drawing.Size(351, 20);
+            this.toolStripStatusLabelBleStatus.Size = new System.Drawing.Size(341, 20);
             this.toolStripStatusLabelBleStatus.Spring = true;
             this.toolStripStatusLabelBleStatus.Text = "蓝牙状态";
             // 
