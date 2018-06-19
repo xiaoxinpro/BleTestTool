@@ -75,6 +75,12 @@
             this.chkShowWrite = new System.Windows.Forms.CheckBox();
             this.btnLogClear = new System.Windows.Forms.Button();
             this.txtDataReceived = new System.Windows.Forms.TextBox();
+            this.statusStripMain = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabelDriverName = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelDriverVersion = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelBleStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelTime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.timerStatus = new System.Windows.Forms.Timer(this.components);
             this.gbConfigCom.SuspendLayout();
             this.gbSerialWrite.SuspendLayout();
             this.toolBleWrite.SuspendLayout();
@@ -85,6 +91,7 @@
             this.tabSerialReceived.SuspendLayout();
             this.tabBleTest.SuspendLayout();
             this.gbSerialLog.SuspendLayout();
+            this.statusStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbConfigCom
@@ -273,7 +280,7 @@
             this.gbSerialWrite.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.gbSerialWrite.Location = new System.Drawing.Point(174, 12);
             this.gbSerialWrite.Name = "gbSerialWrite";
-            this.gbSerialWrite.Size = new System.Drawing.Size(503, 121);
+            this.gbSerialWrite.Size = new System.Drawing.Size(519, 121);
             this.gbSerialWrite.TabIndex = 10;
             this.gbSerialWrite.TabStop = false;
             this.gbSerialWrite.Text = "发送数据";
@@ -284,7 +291,7 @@
             this.toolCmdWrite.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolCmdWrite.Location = new System.Drawing.Point(3, 93);
             this.toolCmdWrite.Name = "toolCmdWrite";
-            this.toolCmdWrite.Size = new System.Drawing.Size(497, 25);
+            this.toolCmdWrite.Size = new System.Drawing.Size(513, 25);
             this.toolCmdWrite.TabIndex = 10;
             this.toolCmdWrite.Text = "toolStrip1";
             // 
@@ -302,7 +309,7 @@
             this.toolBtnBleResite});
             this.toolBleWrite.Location = new System.Drawing.Point(3, 23);
             this.toolBleWrite.Name = "toolBleWrite";
-            this.toolBleWrite.Size = new System.Drawing.Size(497, 25);
+            this.toolBleWrite.Size = new System.Drawing.Size(513, 25);
             this.toolBleWrite.TabIndex = 9;
             this.toolBleWrite.Text = "toolStrip1";
             this.toolBleWrite.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolBleWrite_ItemClicked);
@@ -374,7 +381,7 @@
             this.rioString.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rioString.AutoSize = true;
             this.rioString.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.rioString.Location = new System.Drawing.Point(365, 61);
+            this.rioString.Location = new System.Drawing.Point(381, 61);
             this.rioString.Name = "rioString";
             this.rioString.Size = new System.Drawing.Size(62, 21);
             this.rioString.TabIndex = 7;
@@ -387,7 +394,7 @@
             this.rioHex.AutoSize = true;
             this.rioHex.Checked = true;
             this.rioHex.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.rioHex.Location = new System.Drawing.Point(311, 61);
+            this.rioHex.Location = new System.Drawing.Point(327, 61);
             this.rioHex.Name = "rioHex";
             this.rioHex.Size = new System.Drawing.Size(48, 21);
             this.rioHex.TabIndex = 6;
@@ -398,7 +405,7 @@
             // btnSerialWrite
             // 
             this.btnSerialWrite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSerialWrite.Location = new System.Drawing.Point(433, 58);
+            this.btnSerialWrite.Location = new System.Drawing.Point(449, 58);
             this.btnSerialWrite.Name = "btnSerialWrite";
             this.btnSerialWrite.Size = new System.Drawing.Size(64, 27);
             this.btnSerialWrite.TabIndex = 1;
@@ -412,7 +419,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSerialWrite.Location = new System.Drawing.Point(7, 58);
             this.txtSerialWrite.Name = "txtSerialWrite";
-            this.txtSerialWrite.Size = new System.Drawing.Size(298, 27);
+            this.txtSerialWrite.Size = new System.Drawing.Size(314, 27);
             this.txtSerialWrite.TabIndex = 0;
             // 
             // labBleStatus
@@ -424,7 +431,7 @@
             this.labBleStatus.ForeColor = System.Drawing.Color.Blue;
             this.labBleStatus.Location = new System.Drawing.Point(174, 136);
             this.labBleStatus.Name = "labBleStatus";
-            this.labBleStatus.Size = new System.Drawing.Size(503, 28);
+            this.labBleStatus.Size = new System.Drawing.Size(519, 28);
             this.labBleStatus.TabIndex = 12;
             this.labBleStatus.Text = "蓝牙状态";
             this.labBleStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -466,8 +473,8 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gbSerialLog);
             this.splitContainer1.Panel2MinSize = 110;
-            this.splitContainer1.Size = new System.Drawing.Size(509, 413);
-            this.splitContainer1.SplitterDistance = 236;
+            this.splitContainer1.Size = new System.Drawing.Size(525, 447);
+            this.splitContainer1.SplitterDistance = 255;
             this.splitContainer1.TabIndex = 15;
             // 
             // tabControl1
@@ -481,7 +488,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(503, 231);
+            this.tabControl1.Size = new System.Drawing.Size(519, 250);
             this.tabControl1.TabIndex = 14;
             // 
             // tabSerialReceived
@@ -490,7 +497,7 @@
             this.tabSerialReceived.Location = new System.Drawing.Point(4, 26);
             this.tabSerialReceived.Name = "tabSerialReceived";
             this.tabSerialReceived.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSerialReceived.Size = new System.Drawing.Size(495, 201);
+            this.tabSerialReceived.Size = new System.Drawing.Size(511, 220);
             this.tabSerialReceived.TabIndex = 0;
             this.tabSerialReceived.Text = "接收数据解析";
             this.tabSerialReceived.UseVisualStyleBackColor = true;
@@ -503,7 +510,7 @@
             this.listViewSerialReceived.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.listViewSerialReceived.Location = new System.Drawing.Point(6, 6);
             this.listViewSerialReceived.Name = "listViewSerialReceived";
-            this.listViewSerialReceived.Size = new System.Drawing.Size(483, 189);
+            this.listViewSerialReceived.Size = new System.Drawing.Size(499, 208);
             this.listViewSerialReceived.TabIndex = 1;
             this.listViewSerialReceived.UseCompatibleStateImageBehavior = false;
             // 
@@ -558,7 +565,7 @@
             this.gbSerialLog.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.gbSerialLog.Location = new System.Drawing.Point(3, 3);
             this.gbSerialLog.Name = "gbSerialLog";
-            this.gbSerialLog.Size = new System.Drawing.Size(503, 167);
+            this.gbSerialLog.Size = new System.Drawing.Size(519, 182);
             this.gbSerialLog.TabIndex = 10;
             this.gbSerialLog.TabStop = false;
             this.gbSerialLog.Text = "输出日志";
@@ -567,7 +574,7 @@
             // 
             this.chkLogHex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkLogHex.AutoSize = true;
-            this.chkLogHex.Location = new System.Drawing.Point(289, 136);
+            this.chkLogHex.Location = new System.Drawing.Point(289, 151);
             this.chkLogHex.Name = "chkLogHex";
             this.chkLogHex.Size = new System.Drawing.Size(76, 24);
             this.chkLogHex.TabIndex = 5;
@@ -579,7 +586,7 @@
             // 
             this.chkShowError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkShowError.AutoSize = true;
-            this.chkShowError.Location = new System.Drawing.Point(101, 136);
+            this.chkShowError.Location = new System.Drawing.Point(101, 151);
             this.chkShowError.Name = "chkShowError";
             this.chkShowError.Size = new System.Drawing.Size(88, 24);
             this.chkShowError.TabIndex = 4;
@@ -591,7 +598,7 @@
             // 
             this.chkShowTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkShowTime.AutoSize = true;
-            this.chkShowTime.Location = new System.Drawing.Point(195, 136);
+            this.chkShowTime.Location = new System.Drawing.Point(195, 151);
             this.chkShowTime.Name = "chkShowTime";
             this.chkShowTime.Size = new System.Drawing.Size(88, 24);
             this.chkShowTime.TabIndex = 3;
@@ -603,7 +610,7 @@
             // 
             this.chkShowWrite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkShowWrite.AutoSize = true;
-            this.chkShowWrite.Location = new System.Drawing.Point(7, 136);
+            this.chkShowWrite.Location = new System.Drawing.Point(7, 151);
             this.chkShowWrite.Name = "chkShowWrite";
             this.chkShowWrite.Size = new System.Drawing.Size(88, 24);
             this.chkShowWrite.TabIndex = 2;
@@ -614,7 +621,7 @@
             // btnLogClear
             // 
             this.btnLogClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLogClear.Location = new System.Drawing.Point(433, 134);
+            this.btnLogClear.Location = new System.Drawing.Point(449, 149);
             this.btnLogClear.Name = "btnLogClear";
             this.btnLogClear.Size = new System.Drawing.Size(64, 27);
             this.btnLogClear.TabIndex = 1;
@@ -632,20 +639,69 @@
             this.txtDataReceived.Multiline = true;
             this.txtDataReceived.Name = "txtDataReceived";
             this.txtDataReceived.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDataReceived.Size = new System.Drawing.Size(490, 102);
+            this.txtDataReceived.Size = new System.Drawing.Size(506, 117);
             this.txtDataReceived.TabIndex = 0;
+            // 
+            // statusStripMain
+            // 
+            this.statusStripMain.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabelDriverName,
+            this.toolStripStatusLabelDriverVersion,
+            this.toolStripStatusLabelBleStatus,
+            this.toolStripStatusLabelTime});
+            this.statusStripMain.Location = new System.Drawing.Point(0, 617);
+            this.statusStripMain.Name = "statusStripMain";
+            this.statusStripMain.Size = new System.Drawing.Size(704, 25);
+            this.statusStripMain.TabIndex = 16;
+            this.statusStripMain.Text = "状态栏";
+            // 
+            // toolStripStatusLabelDriverName
+            // 
+            this.toolStripStatusLabelDriverName.Name = "toolStripStatusLabelDriverName";
+            this.toolStripStatusLabelDriverName.Size = new System.Drawing.Size(79, 20);
+            this.toolStripStatusLabelDriverName.Text = "待加载驱动";
+            // 
+            // toolStripStatusLabelDriverVersion
+            // 
+            this.toolStripStatusLabelDriverVersion.Name = "toolStripStatusLabelDriverVersion";
+            this.toolStripStatusLabelDriverVersion.Size = new System.Drawing.Size(59, 20);
+            this.toolStripStatusLabelDriverVersion.Text = "V1.1.1.0";
+            // 
+            // toolStripStatusLabelBleStatus
+            // 
+            this.toolStripStatusLabelBleStatus.AutoSize = false;
+            this.toolStripStatusLabelBleStatus.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)));
+            this.toolStripStatusLabelBleStatus.Name = "toolStripStatusLabelBleStatus";
+            this.toolStripStatusLabelBleStatus.Size = new System.Drawing.Size(351, 20);
+            this.toolStripStatusLabelBleStatus.Spring = true;
+            this.toolStripStatusLabelBleStatus.Text = "蓝牙状态";
+            // 
+            // toolStripStatusLabelTime
+            // 
+            this.toolStripStatusLabelTime.AutoSize = false;
+            this.toolStripStatusLabelTime.Name = "toolStripStatusLabelTime";
+            this.toolStripStatusLabelTime.Size = new System.Drawing.Size(200, 20);
+            this.toolStripStatusLabelTime.Text = "2018-6-19 星期二 12:45:42";
+            this.toolStripStatusLabelTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // timerStatus
+            // 
+            this.timerStatus.Enabled = true;
+            this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(688, 582);
+            this.ClientSize = new System.Drawing.Size(704, 642);
+            this.Controls.Add(this.statusStripMain);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.btnLoadDeviceLib);
             this.Controls.Add(this.labBleStatus);
             this.Controls.Add(this.gbSerialWrite);
             this.Controls.Add(this.gbConfigCom);
-            this.MinimumSize = new System.Drawing.Size(685, 616);
+            this.MinimumSize = new System.Drawing.Size(720, 640);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "串口蓝牙测试工具";
@@ -666,7 +722,10 @@
             this.tabBleTest.ResumeLayout(false);
             this.gbSerialLog.ResumeLayout(false);
             this.gbSerialLog.PerformLayout();
+            this.statusStripMain.ResumeLayout(false);
+            this.statusStripMain.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -717,6 +776,12 @@
         private System.Windows.Forms.CheckBox chkShowWrite;
         private System.Windows.Forms.Button btnLogClear;
         private System.Windows.Forms.TextBox txtDataReceived;
+        private System.Windows.Forms.StatusStrip statusStripMain;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelDriverName;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelDriverVersion;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelBleStatus;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelTime;
+        private System.Windows.Forms.Timer timerStatus;
     }
 }
 

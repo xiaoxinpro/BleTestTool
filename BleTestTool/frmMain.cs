@@ -10,7 +10,7 @@ namespace BleTestTool
 {
     public partial class frmMain : Form
     {
-        private const string STR_TITLE = "串口蓝牙测试工具";
+        private string STR_TITLE = "串口蓝牙测试工具";
 
         //定义AppConfig类
         private AppConfig appConfig;
@@ -43,16 +43,19 @@ namespace BleTestTool
         public frmMain(string[] args)
         {
             InitializeComponent();
-            if (args.Length == 1)
+
+            //版本号显示
+            STR_TITLE += @" V" + Application.ProductVersion.ToString();
+
+            //读取命令行参数
+            if (args.Length == 1 && LoadDeviceLib(args[0]))
             {
-                if (LoadDeviceLib(args[0]))
-                {
-                    btnLoadDeviceLib.Hide();
-                }
-                else
-                {
-                    this.Text = STR_TITLE;
-                }
+                btnLoadDeviceLib.Hide();
+            }
+            else
+            {
+                this.Text = STR_TITLE;
+                toolStripStatusLabelDriverVersion.Text = @"V" + Application.ProductVersion.ToString();
             }
         }
 
@@ -995,8 +998,10 @@ namespace BleTestTool
                 //获取驱动名称
                 string strName = System.IO.Path.GetFileName(strPath.Replace(".dll", ""));
 
-                //修改窗体标题
+                //修改窗体UI
                 this.Text = STR_TITLE + " - " + strName;
+                toolStripStatusLabelDriverName.Text = strName;
+                toolStripStatusLabelDriverVersion.Text = "V" + assembly.GetName().Version.ToString();
 
                 //初始化蓝牙配置
                 strBleConfigName = strName;
@@ -1011,6 +1016,13 @@ namespace BleTestTool
         }
         #endregion
 
+        #region 状态栏
+        private void timerStatus_Tick(object sender, EventArgs e)
+        {
+            toolStripStatusLabelBleStatus.Text = labBleStatus.Text;
+            toolStripStatusLabelTime.Text = DateTime.Now.ToString();
+        }
+        #endregion
     }
 
     #region 枚举
