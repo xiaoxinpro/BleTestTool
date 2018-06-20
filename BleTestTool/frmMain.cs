@@ -308,6 +308,7 @@ namespace BleTestTool
             {
                 Console.WriteLine("蓝牙日志" + strLog);
                 labBleStatus.Text = (strLog);
+                ClearListViewSerialReceviedValue(); //蓝牙状态改变，清空驱动界面
             }
         }
         #endregion
