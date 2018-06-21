@@ -52,8 +52,6 @@
             this.toolBtnBleFind = new System.Windows.Forms.ToolStripButton();
             this.toolComboBle = new System.Windows.Forms.ToolStripComboBox();
             this.toolBtnBleLink = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparatorBle2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolBtnBleResite = new System.Windows.Forms.ToolStripButton();
             this.rioString = new System.Windows.Forms.RadioButton();
             this.rioHex = new System.Windows.Forms.RadioButton();
             this.btnSerialWrite = new System.Windows.Forms.Button();
@@ -304,9 +302,7 @@
             this.toolStripSeparatorBle1,
             this.toolBtnBleFind,
             this.toolComboBle,
-            this.toolBtnBleLink,
-            this.toolStripSeparatorBle2,
-            this.toolBtnBleResite});
+            this.toolBtnBleLink});
             this.toolBleWrite.Location = new System.Drawing.Point(3, 23);
             this.toolBleWrite.Name = "toolBleWrite";
             this.toolBleWrite.Size = new System.Drawing.Size(513, 25);
@@ -360,21 +356,6 @@
             this.toolBtnBleLink.Size = new System.Drawing.Size(36, 22);
             this.toolBtnBleLink.Tag = "2";
             this.toolBtnBleLink.Text = "连接";
-            // 
-            // toolStripSeparatorBle2
-            // 
-            this.toolStripSeparatorBle2.Name = "toolStripSeparatorBle2";
-            this.toolStripSeparatorBle2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolBtnBleResite
-            // 
-            this.toolBtnBleResite.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolBtnBleResite.Image = ((System.Drawing.Image)(resources.GetObject("toolBtnBleResite.Image")));
-            this.toolBtnBleResite.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolBtnBleResite.Name = "toolBtnBleResite";
-            this.toolBtnBleResite.Size = new System.Drawing.Size(60, 21);
-            this.toolBtnBleResite.Tag = "3";
-            this.toolBtnBleResite.Text = "重启蓝牙";
             // 
             // rioString
             // 
@@ -757,8 +738,6 @@
         private System.Windows.Forms.ToolStripButton toolBtnBleFind;
         private System.Windows.Forms.ToolStripComboBox toolComboBle;
         private System.Windows.Forms.ToolStripButton toolBtnBleLink;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparatorBle2;
-        private System.Windows.Forms.ToolStripButton toolBtnBleResite;
         private System.Windows.Forms.Label labBleStatus;
         private System.Windows.Forms.ImageList imageListStatus;
         private System.Windows.Forms.Button btnBleConfig;
