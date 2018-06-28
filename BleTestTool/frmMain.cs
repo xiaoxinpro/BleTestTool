@@ -132,7 +132,7 @@ namespace BleTestTool
             configCom.Parity = defConfig.Parity;
 
             //设置串口搜索默认值
-            configCom.SetSerialPortDefaultInfo("TI CC2540 USB CDC Serial Port");
+            configCom.SetSerialPortDefaultInfo("USB 串行设备"); //TI CC2540 USB CDC Serial Port
         }
 
         /// <summary>
