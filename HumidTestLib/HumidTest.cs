@@ -195,8 +195,8 @@ namespace DeviceTestLib
         /// </summary>
         private void InitListViewSerialReceived(ListView listView)
         {
-            string[] arrListName = { "温度", "湿度", "加湿方式", "雾量/湿度", "亮度", "色温", "报警音开关", "报警状态", "加湿定时", "灯光定时", "小夜灯" };
-            string[] arrListMark = { "℃", "%", "雾量控制/湿度控制", "%", "%", "白光、黄光、白黄光", "报警音开关", "正常状态、断水报警", "分钟", "分钟", "小夜灯开关" };
+            string[] arrListName = { "湿度", "温度", "加湿方式", "雾量/湿度", "亮度", "色温", "报警音开关", "报警状态", "加湿定时", "灯光定时", "小夜灯" };
+            string[] arrListMark = { "%", "℃", "雾量控制/湿度控制", "%", "%", "白光、黄光、白黄光", "报警音开关", "正常状态、断水报警", "分钟", "分钟", "小夜灯开关" };
             //基本属性设置
             listView.FullRowSelect = true;
             listView.GridLines = true;
