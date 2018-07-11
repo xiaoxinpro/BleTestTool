@@ -11,13 +11,8 @@ namespace BleTestTool
     {
         #region 字段
         private enumBleCmd _serialBleCmd;
-        private enumBleStatus _serialBleStatus = enumBleStatus.Stop;
-        private ToolStripComboBox _comboBle;
         private System.Timers.Timer _timBleWrite;
-        private Dictionary<string, string> _dicBleBlackListConfig;
-        private Dictionary<string, string> _dicBleNameReplaceConfig;
-        private Dictionary<string, string> _dicBleNameFilterConfig;
-        private Dictionary<string, string> _dicListBle;
+        private string _bakBleLinkData = "";
         #endregion
 
         #region 构造函数
@@ -43,12 +38,14 @@ namespace BleTestTool
         #endregion
 
         #region 属性
-        public enumBleStatus SerialBleStatus { get => _serialBleStatus;}
-        public ToolStripComboBox ComboBle { get => _comboBle; set => _comboBle = value; }
-        public Dictionary<string, string> DicBleBlackListConfig { get => _dicBleBlackListConfig; set => _dicBleBlackListConfig = value; }
-        public Dictionary<string, string> DicBleNameReplaceConfig { get => _dicBleNameReplaceConfig; set => _dicBleNameReplaceConfig = value; }
-        public Dictionary<string, string> DicBleNameFilterConfig { get => _dicBleNameFilterConfig; set => _dicBleNameFilterConfig = value; }
-        public Dictionary<string, string> DicListBle { get => _dicListBle; set => _dicListBle = value; }
+        public bool IsAutoReLink = false;
+        public int TimeAutoReLink = 100;
+        public enumBleStatus SerialBleStatus { get; private set; } = enumBleStatus.Stop;
+        public ToolStripComboBox ComboBle { get; set; }
+        public Dictionary<string, string> DicBleBlackListConfig { get; set; }
+        public Dictionary<string, string> DicBleNameReplaceConfig { get; set; }
+        public Dictionary<string, string> DicBleNameFilterConfig { get; set; }
+        public Dictionary<string, string> DicListBle { get; set; }
         #endregion
 
         #region 事件
@@ -112,6 +109,7 @@ namespace BleTestTool
                             setSerialBleStatus(enumBleStatus.Link);
                             //listBleCmd.Add("AT+CONN" + ComboBle.SelectedIndex);
                             listBleCmd.Add("AT+CON" + DicListBle[ComboBle.SelectedItem.ToString()]);
+                            _bakBleLinkData = ComboBle.SelectedItem.ToString();
                         }
                     }
                     else
@@ -124,6 +122,14 @@ namespace BleTestTool
                     setSerialBleStatus(enumBleStatus.Stop);
                     listBleCmd.Add("AT");
                     listBleCmd.Add("AT+RESET");
+                    break;
+                case enumBleCmd.ReLink:
+                    if (ComboBle.Items.Count > 0 && DicListBle.ContainsKey(_bakBleLinkData))
+                    {
+                        ComboBle.SelectedText = _bakBleLinkData;
+                        setSerialBleStatus(enumBleStatus.Link);
+                        listBleCmd.Add("AT+CON" + DicListBle[_bakBleLinkData]);
+                    }
                     break;
                 default:
                     break;
@@ -173,6 +179,17 @@ namespace BleTestTool
                     ComboBle.Items.AddRange(DicListBle.Keys.ToArray<string>());
                     ComboBle.SelectedIndex = 0;
                     EventBleLog("蓝牙搜索完成");
+                    if (IsAutoReLink)
+                    {
+                        if (DicListBle.ContainsKey(_bakBleLinkData))
+                        {
+                            WriteBleCmd(enumBleCmd.ReLink);
+                        }
+                        else
+                        {
+                            WriteBleCmd(enumBleCmd.Find);
+                        }
+                    }
                 }
                 else
                 {
@@ -260,7 +277,7 @@ namespace BleTestTool
         /// <param name="status">蓝牙状态枚举</param>
         private void setSerialBleStatus(enumBleStatus status)
         {
-            this._serialBleStatus = status;
+            this.SerialBleStatus = status;
         }
 
         /// <summary>
@@ -341,7 +358,8 @@ namespace BleTestTool
         Init = 0,   //初始化
         Find = 1,   //搜索蓝牙
         Link = 2,   //连接蓝牙
-        Reset = 3   //重启蓝牙
+        Reset = 3,   //重启蓝牙
+        ReLink = 12,   //重新连接蓝牙
     }
 
     /// <summary>
