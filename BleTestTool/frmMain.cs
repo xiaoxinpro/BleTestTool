@@ -176,45 +176,48 @@ namespace BleTestTool
         /// <param name="arrData">接收数据数组</param>
         private void SerialPortDataReceivedProcess(byte[] arrData)
         {
-            if (chkShowWrite.Checked)
+            this.Invoke(new Action(() =>
             {
-                txtDataReceived.AppendText("[接收]");
-            }
-            if (chkShowTime.Checked)
-            {
-                txtDataReceived.AppendText("[" + DateTime.Now.ToString() + "] ");
-            }
-            if (!SerialData.IsBytesToString(arrData))
-            {
-                Console.WriteLine("接收数据：" + SerialData.ToHexString(arrData));
-                txtDataReceived.AppendText(SerialData.ToHexString(arrData) + "\r\n");
-                try
+                if (chkShowWrite.Checked)
                 {
-                    deviceTest.BytesReceviedDataProcess(arrData);
-                    OutputBleLog("连接蓝牙成功");
+                    txtDataReceived.AppendText("[接收]");
                 }
-                catch (Exception)
+                if (chkShowTime.Checked)
                 {
-
+                    txtDataReceived.AppendText("[" + DateTime.Now.ToString() + "] ");
                 }
-            }
-            else
-            {
-                string strData = SerialData.ToString(arrData);
-                if (chkLogHex.Checked)
+                if (!SerialData.IsBytesToString(arrData))
                 {
+                    Console.WriteLine("接收数据：" + SerialData.ToHexString(arrData));
                     txtDataReceived.AppendText(SerialData.ToHexString(arrData) + "\r\n");
+                    try
+                    {
+                        deviceTest.BytesReceviedDataProcess(arrData);
+                        OutputBleLog("连接蓝牙成功");
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                 }
                 else
                 {
-                    txtDataReceived.AppendText(strData + "\r\n");
+                    string strData = SerialData.ToString(arrData);
+                    if (chkLogHex.Checked)
+                    {
+                        txtDataReceived.AppendText(SerialData.ToHexString(arrData) + "\r\n");
+                    }
+                    else
+                    {
+                        txtDataReceived.AppendText(strData + "\r\n");
+                    }
+                    Console.WriteLine("接收数据：" + strData);
+                    if (strData.IndexOf("OK") >= 0)
+                    {
+                        serialBle.ReceiveSerialBle(strData);
+                    }
                 }
-                Console.WriteLine("接收数据：" + strData);
-                if (strData.IndexOf("OK") >= 0)
-                {
-                    serialBle.ReceiveSerialBle(strData);
-                }
-            }
+            }));
 
         }
 
