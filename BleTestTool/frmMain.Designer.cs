@@ -79,6 +79,9 @@
             this.toolStripStatusLabelBleStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkBleAutoReLink = new System.Windows.Forms.CheckBox();
+            this.numBleAutoReLink = new System.Windows.Forms.NumericUpDown();
             this.gbConfigCom.SuspendLayout();
             this.gbSerialWrite.SuspendLayout();
             this.toolBleWrite.SuspendLayout();
@@ -90,6 +93,8 @@
             this.tabBleTest.SuspendLayout();
             this.gbSerialLog.SuspendLayout();
             this.statusStripMain.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBleAutoReLink)).BeginInit();
             this.SuspendLayout();
             // 
             // gbConfigCom
@@ -428,7 +433,7 @@
             // btnLoadDeviceLib
             // 
             this.btnLoadDeviceLib.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnLoadDeviceLib.Location = new System.Drawing.Point(11, 318);
+            this.btnLoadDeviceLib.Location = new System.Drawing.Point(11, 575);
             this.btnLoadDeviceLib.Name = "btnLoadDeviceLib";
             this.btnLoadDeviceLib.Size = new System.Drawing.Size(148, 39);
             this.btnLoadDeviceLib.TabIndex = 14;
@@ -673,11 +678,60 @@
             this.timerStatus.Enabled = true;
             this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.numBleAutoReLink);
+            this.groupBox1.Controls.Add(this.chkBleAutoReLink);
+            this.groupBox1.Font = new System.Drawing.Font("微软雅黑", 11F);
+            this.groupBox1.Location = new System.Drawing.Point(11, 317);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(148, 103);
+            this.groupBox1.TabIndex = 17;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "蓝牙功能";
+            // 
+            // chkBleAutoReLink
+            // 
+            this.chkBleAutoReLink.AutoSize = true;
+            this.chkBleAutoReLink.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.chkBleAutoReLink.Location = new System.Drawing.Point(8, 27);
+            this.chkBleAutoReLink.Name = "chkBleAutoReLink";
+            this.chkBleAutoReLink.Size = new System.Drawing.Size(75, 21);
+            this.chkBleAutoReLink.TabIndex = 0;
+            this.chkBleAutoReLink.Text = "断线重连";
+            this.chkBleAutoReLink.UseVisualStyleBackColor = true;
+            this.chkBleAutoReLink.CheckedChanged += new System.EventHandler(this.chkBleAutoReLink_CheckedChanged);
+            // 
+            // numBleAutoReLink
+            // 
+            this.numBleAutoReLink.Enabled = false;
+            this.numBleAutoReLink.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.numBleAutoReLink.Location = new System.Drawing.Point(81, 25);
+            this.numBleAutoReLink.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numBleAutoReLink.Minimum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.numBleAutoReLink.Name = "numBleAutoReLink";
+            this.numBleAutoReLink.Size = new System.Drawing.Size(58, 23);
+            this.numBleAutoReLink.TabIndex = 3;
+            this.numBleAutoReLink.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(704, 642);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStripMain);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.btnLoadDeviceLib);
@@ -707,6 +761,9 @@
             this.gbSerialLog.PerformLayout();
             this.statusStripMain.ResumeLayout(false);
             this.statusStripMain.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBleAutoReLink)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -763,6 +820,9 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelBleStatus;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelTime;
         private System.Windows.Forms.Timer timerStatus;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.NumericUpDown numBleAutoReLink;
+        private System.Windows.Forms.CheckBox chkBleAutoReLink;
     }
 }
 

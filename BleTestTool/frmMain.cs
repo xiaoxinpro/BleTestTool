@@ -133,6 +133,7 @@ namespace BleTestTool
 
             //设置串口搜索默认值
             configCom.SetSerialPortDefaultInfo("USB 串行设备"); //TI CC2540 USB CDC Serial Port
+            configCom.AddSerialPortDefaultInfo("TI CC2540 USB CDC Serial Port");
         }
 
         /// <summary>
@@ -259,19 +260,22 @@ namespace BleTestTool
 
             if (chkShowWrite.Checked)
             {
-                txtDataReceived.AppendText("[发送]");
-                if (chkShowTime.Checked)
+                this.Invoke(new Action(() =>
                 {
-                    txtDataReceived.AppendText("[" + DateTime.Now.ToString() + "] ");
-                }
-                if (chkLogHex.Checked || !SerialData.IsBytesToString(arrData))
-                {
-                    txtDataReceived.AppendText(SerialData.ToHexString(arrData) + "\r\n");
-                }
-                else
-                {
-                    txtDataReceived.AppendText(SerialData.ToString(arrData) + "\r\n");
-                }
+                    txtDataReceived.AppendText("[发送]");
+                    if (chkShowTime.Checked)
+                    {
+                        txtDataReceived.AppendText("[" + DateTime.Now.ToString() + "] ");
+                    }
+                    if (chkLogHex.Checked || !SerialData.IsBytesToString(arrData))
+                    {
+                        txtDataReceived.AppendText(SerialData.ToHexString(arrData) + "\r\n");
+                    }
+                    else
+                    {
+                        txtDataReceived.AppendText(SerialData.ToString(arrData) + "\r\n");
+                    }
+                }));
             }
 
         }
@@ -1023,6 +1027,21 @@ namespace BleTestTool
             toolStripStatusLabelBleStatus.Text = labBleStatus.Text;
             toolStripStatusLabelTime.Text = DateTime.Now.ToString();
         }
+        #endregion
+
+        #region 蓝牙功能
+        /// <summary>
+        /// 蓝牙自动重连开关
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chkBleAutoReLink_CheckedChanged(object sender, EventArgs e)
+        {
+            numBleAutoReLink.Enabled = !chkBleAutoReLink.Checked;
+            serialBle.IsAutoReLink = chkBleAutoReLink.Checked;
+            serialBle.TimeAutoReLink = Convert.ToInt32(numBleAutoReLink.Value);
+        }
+
         #endregion
     }
 
