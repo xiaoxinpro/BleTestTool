@@ -179,7 +179,7 @@ namespace BleTestTool
                     ComboBle.Items.AddRange(DicListBle.Keys.ToArray<string>());
                     ComboBle.SelectedIndex = 0;
                     EventBleLog("蓝牙搜索完成");
-                    if (IsAutoReLink)
+                    if (IsAutoReLink && (_bakBleLinkData != ""))
                     {
                         if (DicListBle.ContainsKey(_bakBleLinkData))
                         {
