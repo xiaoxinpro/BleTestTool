@@ -126,9 +126,8 @@ namespace BleTestTool
                 case enumBleCmd.ReLink:
                     if (ComboBle.Items.Count > 0 && DicListBle.ContainsKey(_bakBleLinkData))
                     {
-                        ComboBle.SelectedText = _bakBleLinkData;
-                        setSerialBleStatus(enumBleStatus.Link);
-                        listBleCmd.Add("AT+CON" + DicListBle[_bakBleLinkData]);
+                        ComboBle.SelectedIndex = ComboBle.Items.IndexOf(_bakBleLinkData);
+                        return GetBleCmd(enumBleCmd.Link);
                     }
                     break;
                 default:
