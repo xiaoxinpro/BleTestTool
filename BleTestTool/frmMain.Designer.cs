@@ -432,8 +432,9 @@
             // 
             // btnLoadDeviceLib
             // 
+            this.btnLoadDeviceLib.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnLoadDeviceLib.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnLoadDeviceLib.Location = new System.Drawing.Point(11, 575);
+            this.btnLoadDeviceLib.Location = new System.Drawing.Point(11, 566);
             this.btnLoadDeviceLib.Name = "btnLoadDeviceLib";
             this.btnLoadDeviceLib.Size = new System.Drawing.Size(148, 39);
             this.btnLoadDeviceLib.TabIndex = 14;
