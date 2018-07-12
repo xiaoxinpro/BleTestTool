@@ -686,7 +686,7 @@
             this.groupBox1.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.groupBox1.Location = new System.Drawing.Point(11, 317);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(148, 103);
+            this.groupBox1.Size = new System.Drawing.Size(148, 62);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "蓝牙功能";
@@ -705,7 +705,6 @@
             // 
             // numBleAutoReLink
             // 
-            this.numBleAutoReLink.Enabled = false;
             this.numBleAutoReLink.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.numBleAutoReLink.Location = new System.Drawing.Point(81, 25);
             this.numBleAutoReLink.Maximum = new decimal(new int[] {
@@ -726,6 +725,7 @@
             0,
             0,
             0});
+            this.numBleAutoReLink.Visible = false;
             // 
             // frmMain
             // 
