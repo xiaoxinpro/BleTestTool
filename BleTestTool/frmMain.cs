@@ -3,6 +3,7 @@ using SerialPortHelperLib;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -32,6 +33,9 @@ namespace BleTestTool
 
         //定义蓝牙配置窗体
         private Form _frmBleConfig;
+
+        //定义蓝牙连接测试类
+        private SerialBleLinkTest bleLinkTest;
 
         #region 初始化页面
         private string strBleConfigName = "Main";
@@ -84,6 +88,8 @@ namespace BleTestTool
             //初始化串口助手
             initSerialPortHelper();
 
+            //初始化蓝牙连接测试
+            initBleLinkTest();
         }
 
         /// <summary>
@@ -166,6 +172,14 @@ namespace BleTestTool
             serialBle.DicBleNameReplaceConfig = bleConfig.DicBleNameReplaceConfig;
             serialBle.DicBleNameFilterConfig = bleConfig.DicBleNameFilterConfig;
         }
+
+        /// <summary>
+        /// 初始化蓝牙连接测试
+        /// </summary>
+        private void initBleLinkTest()
+        {
+            bleLinkTest = new SerialBleLinkTest(serialBle, labelBleLinkTestCount);
+        }
         #endregion
 
         #region 串口事件
@@ -193,6 +207,7 @@ namespace BleTestTool
                     try
                     {
                         deviceTest.BytesReceviedDataProcess(arrData);
+                        bleLinkTest.SerialData(arrData);
                         OutputBleLog("连接蓝牙成功");
                     }
                     catch (Exception)
@@ -255,10 +270,18 @@ namespace BleTestTool
         /// <param name="arrData">byte数组数据</param>
         private void AddSerialWrite(byte[] arrData)
         {
-            if (arrData.Length < 1 || !serialPortHelper.IsOpen)
+            try
+            {
+                if (arrData.Length < 1 || !serialPortHelper.IsOpen)
+                {
+                    return;
+                }
+            }
+            catch (Exception)
             {
                 return;
             }
+
             serialPortHelper.Write(arrData);
 
             if (chkShowWrite.Checked)
@@ -1046,6 +1069,91 @@ namespace BleTestTool
         }
 
         #endregion
+
+        #region 蓝牙连接测试
+        /// <summary>
+        /// 测试开关
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chkBleLinkTest_CheckedChanged(object sender, EventArgs e)
+        {
+            numBleLinkInterval.Enabled = !chkBleLinkTest.Checked;
+            numBleLinkCount.Enabled = !chkBleLinkTest.Checked;
+            btnBleLinkLog.Enabled = !chkBleLinkTest.Checked;
+
+            if (chkBleLinkTest.Checked)
+            {
+                //开启测试
+                chkBleAutoReLink.Checked = true;
+                bleLinkTest.StartTest(txtBlelinkLogPath.Text, Convert.ToInt32(numBleLinkInterval.Value),Convert.ToInt32(numBleLinkCount.Value));
+            }
+            else
+            {
+                //关闭测试
+                chkBleAutoReLink.Checked = false;
+                bleLinkTest.StopTest();
+            }
+
+            chkBleAutoReLink.Enabled = !chkBleLinkTest.Checked;
+        }
+
+        /// <summary>
+        /// 选择输出日志目录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnBleLinkLog_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+
+            //设置文件类型 
+            sfd.Filter = "日志文件（*.log）|*.log|文本文件（*.txt）|*.txt";
+
+            //设置默认文件类型显示顺序 
+            sfd.FilterIndex = 1;
+
+            //保存对话框是否记忆上次打开的目录 
+            sfd.RestoreDirectory = true;
+
+            //点了保存按钮进入 
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                string localFilePath = sfd.FileName.ToString(); //获得文件路径 
+                string fileNameExt = localFilePath.Substring(localFilePath.LastIndexOf("\\") + 1); //获取文件名，不带路径
+                Console.WriteLine("localFilePath = " + localFilePath + "\r\n fileNameExt = " + fileNameExt);
+                
+                if (File.Exists(localFilePath))
+                {
+                    try
+                    {
+                        File.Delete(localFilePath);
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show(err.Message, "文件被替换", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                try
+                {
+                    StreamWriter sw = File.CreateText(localFilePath);
+                    sw.WriteLine("创建日志文件【" + this.Text + "】 - " + DateTime.Now.ToLongDateString() + " " +  DateTime.Now.ToLongTimeString()); // 写入Hello World
+                    sw.Close(); //关闭文件
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show(err.Message, "文件被写入", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                txtBlelinkLogPath.Text = localFilePath;
+            }
+        }
+
+        #endregion
+
     }
 
     #region 枚举
