@@ -23,6 +23,7 @@ namespace BleTestTool
         {
             ComboBle = comboBox;
             DicListBle = new Dictionary<string, string>();
+            DicListBleRssi = new Dictionary<string, int>();
             initTimBleWrite();
         }
 
@@ -45,7 +46,8 @@ namespace BleTestTool
         public Dictionary<string, string> DicBleBlackListConfig { get; set; }
         public Dictionary<string, string> DicBleNameReplaceConfig { get; set; }
         public Dictionary<string, string> DicBleNameFilterConfig { get; set; }
-        public Dictionary<string, string> DicListBle { get; set; }
+        public Dictionary<string, string> DicListBle { get; private set; }
+        public Dictionary<string, int> DicListBleRssi { get; private set; }
         #endregion
 
         #region 事件
@@ -159,6 +161,7 @@ namespace BleTestTool
                 //开启搜索蓝牙
                 setSerialBleStatus(enumBleStatus.Find);
                 DicListBle.Clear();
+                DicListBleRssi.Clear();
                 ComboBle.Items.Clear();
                 ComboBle.Enabled = false;
                 EventBleLog("蓝牙搜索中");
@@ -206,6 +209,7 @@ namespace BleTestTool
                 {
                     Int32 cnt = arrBleData[i].Length;
                     string strMac = "";
+                    Int32 numRSSI = 0;
                     if (cnt >= 12)
                     {
                         if (arrBleData[i].IndexOf("OK+DIS") == 0)
@@ -216,12 +220,25 @@ namespace BleTestTool
                         {
                             strMac = arrBleData[i].Substring(0, 12);
                         }
+                        cnt = arrBleData[i].IndexOf("OK+RSSI:");
+                        if (cnt > 0)
+                        {
+                            try
+                            {
+                                numRSSI = Convert.ToInt32(arrBleData[i].Substring(cnt + 8, 4));
+                                DicListBleRssi.Add(strMac, Convert.ToInt32(numRSSI));
+                            }
+                            catch (Exception err)
+                            {
+                                Console.WriteLine("RSSI:" + err.Message);
+                            }
+                        }
                         cnt = arrBleData[i].IndexOf("OK+NAME:");
                         if (cnt >= 0)
                         {
                             string strName = arrBleData[i].Substring(cnt + 8);
-                            addListBle(strMac, strName);
-                            Console.WriteLine("搜索蓝牙:" + strName + ":" + strMac);
+                            addListBle(strMac, strName, numRSSI);
+                            Console.WriteLine("搜索蓝牙:" + strName + ":" + strMac + ":" + numRSSI.ToString());
                         }
                     }
                 }
@@ -293,7 +310,7 @@ namespace BleTestTool
         /// </summary>
         /// <param name="mac">Mac地址</param>
         /// <param name="name">蓝牙名称</param>
-        private void addListBle(string mac,string name)
+        private void addListBle(string mac, string name, Int32 rssi = 0)
         {
             AppConfig appConfig = new AppConfig();
             if (appConfig.GetConfig("BleNameFilter") == "True" && DicBleNameFilterConfig.Count > 0)
@@ -327,7 +344,15 @@ namespace BleTestTool
                     }
                 }
             }
-            string strBleData = name + ":" + mac;
+            string strBleData;
+            if (rssi < 0)
+            {
+                strBleData = name + ":" + mac + " (" + rssi + ")";
+            }
+            else
+            {
+                strBleData = name + ":" + mac;
+            }
             DicListBle.Add(strBleData, mac);
         }
         #endregion
