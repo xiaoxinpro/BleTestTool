@@ -66,7 +66,7 @@ namespace BleTestTool
 
             //创建列表头
             listView.Columns.Add("蓝牙名称", 165, HorizontalAlignment.Left);
-            listView.Columns.Add("替换内容", 170, HorizontalAlignment.Left);
+            listView.Columns.Add("替换内容", 230, HorizontalAlignment.Left);
 
             //添加数据
             listView.BeginUpdate();
@@ -100,8 +100,8 @@ namespace BleTestTool
             listView.ContextMenuStrip = contextMenuListView;
 
             //创建列表头
-            listView.Columns.Add("蓝牙地址", 130, HorizontalAlignment.Left);
-            listView.Columns.Add("蓝牙备注", 205, HorizontalAlignment.Left);
+            listView.Columns.Add("蓝牙地址", 125, HorizontalAlignment.Left);
+            listView.Columns.Add("蓝牙备注", 270, HorizontalAlignment.Left);
 
             //添加数据
             listView.BeginUpdate();

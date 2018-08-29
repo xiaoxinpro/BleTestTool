@@ -65,7 +65,7 @@
             this.tabControlBleConfig.Location = new System.Drawing.Point(12, 12);
             this.tabControlBleConfig.Name = "tabControlBleConfig";
             this.tabControlBleConfig.SelectedIndex = 0;
-            this.tabControlBleConfig.Size = new System.Drawing.Size(373, 385);
+            this.tabControlBleConfig.Size = new System.Drawing.Size(440, 458);
             this.tabControlBleConfig.TabIndex = 2;
             this.tabControlBleConfig.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlBleConfig_Selected);
             // 
@@ -81,7 +81,7 @@
             this.tabBleNameReplace.Location = new System.Drawing.Point(4, 30);
             this.tabBleNameReplace.Name = "tabBleNameReplace";
             this.tabBleNameReplace.Padding = new System.Windows.Forms.Padding(3);
-            this.tabBleNameReplace.Size = new System.Drawing.Size(365, 351);
+            this.tabBleNameReplace.Size = new System.Drawing.Size(432, 424);
             this.tabBleNameReplace.TabIndex = 0;
             this.tabBleNameReplace.Text = "蓝牙名称";
             this.tabBleNameReplace.UseVisualStyleBackColor = true;
@@ -90,7 +90,7 @@
             // 
             this.checkBleNameFilter.AutoSize = true;
             this.checkBleNameFilter.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.checkBleNameFilter.Location = new System.Drawing.Point(277, 13);
+            this.checkBleNameFilter.Location = new System.Drawing.Point(342, 14);
             this.checkBleNameFilter.Name = "checkBleNameFilter";
             this.checkBleNameFilter.Size = new System.Drawing.Size(84, 24);
             this.checkBleNameFilter.TabIndex = 12;
@@ -101,7 +101,7 @@
             // btnBleNameReplace
             // 
             this.btnBleNameReplace.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.btnBleNameReplace.Location = new System.Drawing.Point(277, 44);
+            this.btnBleNameReplace.Location = new System.Drawing.Point(342, 45);
             this.btnBleNameReplace.Name = "btnBleNameReplace";
             this.btnBleNameReplace.Size = new System.Drawing.Size(84, 25);
             this.btnBleNameReplace.TabIndex = 11;
@@ -114,7 +114,7 @@
             this.txtBleReplace.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.txtBleReplace.Location = new System.Drawing.Point(89, 44);
             this.txtBleReplace.Name = "txtBleReplace";
-            this.txtBleReplace.Size = new System.Drawing.Size(182, 25);
+            this.txtBleReplace.Size = new System.Drawing.Size(247, 25);
             this.txtBleReplace.TabIndex = 10;
             // 
             // txtBleName
@@ -122,7 +122,7 @@
             this.txtBleName.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.txtBleName.Location = new System.Drawing.Point(89, 13);
             this.txtBleName.Name = "txtBleName";
-            this.txtBleName.Size = new System.Drawing.Size(182, 25);
+            this.txtBleName.Size = new System.Drawing.Size(247, 25);
             this.txtBleName.TabIndex = 9;
             // 
             // label2
@@ -147,7 +147,7 @@
             // 
             this.listViewBleNameReplace.Location = new System.Drawing.Point(5, 75);
             this.listViewBleNameReplace.Name = "listViewBleNameReplace";
-            this.listViewBleNameReplace.Size = new System.Drawing.Size(356, 270);
+            this.listViewBleNameReplace.Size = new System.Drawing.Size(421, 343);
             this.listViewBleNameReplace.TabIndex = 6;
             this.listViewBleNameReplace.UseCompatibleStateImageBehavior = false;
             this.listViewBleNameReplace.View = System.Windows.Forms.View.Details;
@@ -167,7 +167,7 @@
             this.tabBleBlackList.Location = new System.Drawing.Point(4, 30);
             this.tabBleBlackList.Name = "tabBleBlackList";
             this.tabBleBlackList.Padding = new System.Windows.Forms.Padding(3);
-            this.tabBleBlackList.Size = new System.Drawing.Size(365, 351);
+            this.tabBleBlackList.Size = new System.Drawing.Size(432, 424);
             this.tabBleBlackList.TabIndex = 1;
             this.tabBleBlackList.Text = "蓝牙黑名单";
             this.tabBleBlackList.UseVisualStyleBackColor = true;
@@ -175,7 +175,7 @@
             // btnBleBlackListAll
             // 
             this.btnBleBlackListAll.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.btnBleBlackListAll.Location = new System.Drawing.Point(277, 13);
+            this.btnBleBlackListAll.Location = new System.Drawing.Point(342, 13);
             this.btnBleBlackListAll.Name = "btnBleBlackListAll";
             this.btnBleBlackListAll.Size = new System.Drawing.Size(84, 25);
             this.btnBleBlackListAll.TabIndex = 19;
@@ -189,14 +189,14 @@
             this.comboBleBlackList.FormattingEnabled = true;
             this.comboBleBlackList.Location = new System.Drawing.Point(89, 13);
             this.comboBleBlackList.Name = "comboBleBlackList";
-            this.comboBleBlackList.Size = new System.Drawing.Size(182, 25);
+            this.comboBleBlackList.Size = new System.Drawing.Size(247, 25);
             this.comboBleBlackList.TabIndex = 18;
             this.comboBleBlackList.SelectedIndexChanged += new System.EventHandler(this.comboBleBlackList_SelectedIndexChanged);
             // 
             // btnBleBlackList
             // 
             this.btnBleBlackList.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.btnBleBlackList.Location = new System.Drawing.Point(277, 44);
+            this.btnBleBlackList.Location = new System.Drawing.Point(342, 44);
             this.btnBleBlackList.Name = "btnBleBlackList";
             this.btnBleBlackList.Size = new System.Drawing.Size(84, 25);
             this.btnBleBlackList.TabIndex = 17;
@@ -209,7 +209,7 @@
             this.txtBleBlackList.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.txtBleBlackList.Location = new System.Drawing.Point(89, 44);
             this.txtBleBlackList.Name = "txtBleBlackList";
-            this.txtBleBlackList.Size = new System.Drawing.Size(182, 25);
+            this.txtBleBlackList.Size = new System.Drawing.Size(247, 25);
             this.txtBleBlackList.TabIndex = 16;
             // 
             // label3
@@ -232,9 +232,10 @@
             // 
             // listViewBleBlackList
             // 
+            this.listViewBleBlackList.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.listViewBleBlackList.Location = new System.Drawing.Point(5, 75);
             this.listViewBleBlackList.Name = "listViewBleBlackList";
-            this.listViewBleBlackList.Size = new System.Drawing.Size(356, 270);
+            this.listViewBleBlackList.Size = new System.Drawing.Size(421, 343);
             this.listViewBleBlackList.TabIndex = 12;
             this.listViewBleBlackList.UseCompatibleStateImageBehavior = false;
             this.listViewBleBlackList.View = System.Windows.Forms.View.Details;
@@ -291,7 +292,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(398, 405);
+            this.ClientSize = new System.Drawing.Size(464, 482);
             this.Controls.Add(this.tabControlBleConfig);
             this.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
