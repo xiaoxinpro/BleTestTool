@@ -61,6 +61,9 @@ namespace BleTestTool
                 this.Text = STR_TITLE;
                 toolStripStatusLabelDriverVersion.Text = @"V" + Application.ProductVersion.ToString();
             }
+
+            //开启窗体快捷键
+            this.KeyPreview = true;
         }
 
         /// <summary>
@@ -344,6 +347,34 @@ namespace BleTestTool
         #endregion
 
         #region 控件
+        /// <summary>
+        /// 窗体快捷键事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void frmMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            Console.WriteLine("触发按钮：" + e.KeyCode.ToString());
+            if (e.KeyCode == Keys.F1)
+            {
+                CallOnClick(btnBleConfig);
+            }
+            else if (e.KeyCode == Keys.F2)
+            {
+                serialBle.WriteBleCmd((enumBleCmd)Convert.ToInt32(toolBtnBleInit.Tag));
+                ClearListViewSerialReceviedValue();
+            }
+            else if (e.KeyCode == Keys.F3)
+            {
+                serialBle.WriteBleCmd((enumBleCmd)Convert.ToInt32(toolBtnBleFind.Tag));
+                ClearListViewSerialReceviedValue();
+            }
+            else if (e.KeyCode == Keys.F4)
+            {
+                serialBle.WriteBleCmd((enumBleCmd)Convert.ToInt32(toolBtnBleLink.Tag));
+                ClearListViewSerialReceviedValue();
+            }
+        }
         /// <summary>
         /// 打开/关闭串口按钮
         /// </summary>
@@ -896,7 +927,6 @@ namespace BleTestTool
             m.Invoke(btn, p);
             return;
         }
-
         #endregion
 
         #region 配置方法
