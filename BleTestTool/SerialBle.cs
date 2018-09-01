@@ -138,8 +138,20 @@ namespace BleTestTool
             return listBleCmd.ToArray();
         }
 
+        /// <summary>
+        /// 发送蓝牙命令
+        /// </summary>
+        /// <param name="cmd">蓝牙命令</param>
         public void WriteBleCmd(enumBleCmd cmd)
         {
+            //安全性检验
+            if (SerialBleStatus == enumBleStatus.Stop)
+            {
+                //Console.WriteLine("串口未开启，无法发生命令。");
+                return;
+            }
+
+            //发送蓝牙命令
             string[] arrCmdData = this.GetBleCmd(cmd);
             if (EventBleSerialWrite != null)
             {
@@ -147,6 +159,10 @@ namespace BleTestTool
             }
         }
 
+        /// <summary>
+        /// 接收蓝牙串口数据
+        /// </summary>
+        /// <param name="strBleData"></param>
         public void ReceiveSerialBle(string strBleData)
         {
             //过滤
