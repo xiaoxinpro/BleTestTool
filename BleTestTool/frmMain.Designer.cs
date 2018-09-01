@@ -83,15 +83,15 @@
             this.numBleAutoReLink = new System.Windows.Forms.NumericUpDown();
             this.chkBleAutoReLink = new System.Windows.Forms.CheckBox();
             this.gbBleLinkTest = new System.Windows.Forms.GroupBox();
-            this.chkBleLinkTest = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.btnBleLinkLog = new System.Windows.Forms.Button();
-            this.txtBlelinkLogPath = new System.Windows.Forms.Label();
-            this.numBleLinkInterval = new System.Windows.Forms.NumericUpDown();
-            this.numBleLinkCount = new System.Windows.Forms.NumericUpDown();
             this.labelBleLinkTestCount = new System.Windows.Forms.Label();
+            this.numBleLinkCount = new System.Windows.Forms.NumericUpDown();
+            this.numBleLinkInterval = new System.Windows.Forms.NumericUpDown();
+            this.txtBlelinkLogPath = new System.Windows.Forms.Label();
+            this.btnBleLinkLog = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.chkBleLinkTest = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.gbConfigCom.SuspendLayout();
             this.gbSerialWrite.SuspendLayout();
             this.toolBleWrite.SuspendLayout();
@@ -106,8 +106,8 @@
             this.gbBleFuction.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBleAutoReLink)).BeginInit();
             this.gbBleLinkTest.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numBleLinkInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBleLinkCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBleLinkInterval)).BeginInit();
             this.SuspendLayout();
             // 
             // gbConfigCom
@@ -759,91 +759,16 @@
             this.gbBleLinkTest.TabStop = false;
             this.gbBleLinkTest.Text = "蓝牙连接测试";
             // 
-            // chkBleLinkTest
+            // labelBleLinkTestCount
             // 
-            this.chkBleLinkTest.AutoSize = true;
-            this.chkBleLinkTest.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.chkBleLinkTest.Location = new System.Drawing.Point(8, 26);
-            this.chkBleLinkTest.Name = "chkBleLinkTest";
-            this.chkBleLinkTest.Size = new System.Drawing.Size(75, 21);
-            this.chkBleLinkTest.TabIndex = 0;
-            this.chkBleLinkTest.Text = "开启测试";
-            this.chkBleLinkTest.UseVisualStyleBackColor = true;
-            this.chkBleLinkTest.CheckedChanged += new System.EventHandler(this.chkBleLinkTest_CheckedChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.label1.Location = new System.Drawing.Point(6, 55);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(140, 17);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "测试间隔：               秒";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.label7.Location = new System.Drawing.Point(6, 84);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(140, 17);
-            this.label7.TabIndex = 2;
-            this.label7.Text = "有效数据量：            个";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.label8.Location = new System.Drawing.Point(6, 114);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(68, 17);
-            this.label8.TabIndex = 3;
-            this.label8.Text = "日志输出：";
-            // 
-            // btnBleLinkLog
-            // 
-            this.btnBleLinkLog.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.btnBleLinkLog.Location = new System.Drawing.Point(79, 111);
-            this.btnBleLinkLog.Name = "btnBleLinkLog";
-            this.btnBleLinkLog.Size = new System.Drawing.Size(60, 23);
-            this.btnBleLinkLog.TabIndex = 4;
-            this.btnBleLinkLog.Text = "选择";
-            this.btnBleLinkLog.UseVisualStyleBackColor = true;
-            this.btnBleLinkLog.Click += new System.EventHandler(this.btnBleLinkLog_Click);
-            // 
-            // txtBlelinkLogPath
-            // 
-            this.txtBlelinkLogPath.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.txtBlelinkLogPath.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.txtBlelinkLogPath.Location = new System.Drawing.Point(8, 137);
-            this.txtBlelinkLogPath.Name = "txtBlelinkLogPath";
-            this.txtBlelinkLogPath.Size = new System.Drawing.Size(131, 19);
-            this.txtBlelinkLogPath.TabIndex = 5;
-            this.txtBlelinkLogPath.Text = "目录";
-            // 
-            // numBleLinkInterval
-            // 
-            this.numBleLinkInterval.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.numBleLinkInterval.Location = new System.Drawing.Point(79, 53);
-            this.numBleLinkInterval.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.numBleLinkInterval.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numBleLinkInterval.Name = "numBleLinkInterval";
-            this.numBleLinkInterval.Size = new System.Drawing.Size(46, 23);
-            this.numBleLinkInterval.TabIndex = 6;
-            this.numBleLinkInterval.Value = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
+            this.labelBleLinkTestCount.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.labelBleLinkTestCount.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelBleLinkTestCount.Location = new System.Drawing.Point(79, 26);
+            this.labelBleLinkTestCount.Name = "labelBleLinkTestCount";
+            this.labelBleLinkTestCount.Size = new System.Drawing.Size(60, 19);
+            this.labelBleLinkTestCount.TabIndex = 8;
+            this.labelBleLinkTestCount.Text = "0";
+            this.labelBleLinkTestCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // numBleLinkCount
             // 
@@ -868,16 +793,91 @@
             0,
             0});
             // 
-            // labelBleLinkTestCount
+            // numBleLinkInterval
             // 
-            this.labelBleLinkTestCount.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelBleLinkTestCount.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelBleLinkTestCount.Location = new System.Drawing.Point(79, 26);
-            this.labelBleLinkTestCount.Name = "labelBleLinkTestCount";
-            this.labelBleLinkTestCount.Size = new System.Drawing.Size(60, 19);
-            this.labelBleLinkTestCount.TabIndex = 8;
-            this.labelBleLinkTestCount.Text = "0";
-            this.labelBleLinkTestCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.numBleLinkInterval.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.numBleLinkInterval.Location = new System.Drawing.Point(79, 53);
+            this.numBleLinkInterval.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numBleLinkInterval.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numBleLinkInterval.Name = "numBleLinkInterval";
+            this.numBleLinkInterval.Size = new System.Drawing.Size(46, 23);
+            this.numBleLinkInterval.TabIndex = 6;
+            this.numBleLinkInterval.Value = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            // 
+            // txtBlelinkLogPath
+            // 
+            this.txtBlelinkLogPath.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.txtBlelinkLogPath.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.txtBlelinkLogPath.Location = new System.Drawing.Point(8, 137);
+            this.txtBlelinkLogPath.Name = "txtBlelinkLogPath";
+            this.txtBlelinkLogPath.Size = new System.Drawing.Size(131, 19);
+            this.txtBlelinkLogPath.TabIndex = 5;
+            this.txtBlelinkLogPath.Text = "目录";
+            // 
+            // btnBleLinkLog
+            // 
+            this.btnBleLinkLog.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.btnBleLinkLog.Location = new System.Drawing.Point(79, 111);
+            this.btnBleLinkLog.Name = "btnBleLinkLog";
+            this.btnBleLinkLog.Size = new System.Drawing.Size(60, 23);
+            this.btnBleLinkLog.TabIndex = 4;
+            this.btnBleLinkLog.Text = "选择";
+            this.btnBleLinkLog.UseVisualStyleBackColor = true;
+            this.btnBleLinkLog.Click += new System.EventHandler(this.btnBleLinkLog_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.label8.Location = new System.Drawing.Point(6, 114);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(68, 17);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "日志输出：";
+            // 
+            // chkBleLinkTest
+            // 
+            this.chkBleLinkTest.AutoSize = true;
+            this.chkBleLinkTest.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.chkBleLinkTest.Location = new System.Drawing.Point(8, 26);
+            this.chkBleLinkTest.Name = "chkBleLinkTest";
+            this.chkBleLinkTest.Size = new System.Drawing.Size(75, 21);
+            this.chkBleLinkTest.TabIndex = 0;
+            this.chkBleLinkTest.Text = "开启测试";
+            this.chkBleLinkTest.UseVisualStyleBackColor = true;
+            this.chkBleLinkTest.CheckedChanged += new System.EventHandler(this.chkBleLinkTest_CheckedChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.label7.Location = new System.Drawing.Point(6, 84);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(140, 17);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "有效数据量：            个";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.label1.Location = new System.Drawing.Point(6, 55);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(140, 17);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "测试间隔：               秒";
             // 
             // frmMain
             // 
@@ -892,13 +892,14 @@
             this.Controls.Add(this.labBleStatus);
             this.Controls.Add(this.gbSerialWrite);
             this.Controls.Add(this.gbConfigCom);
-            this.MinimumSize = new System.Drawing.Size(720, 640);
+            this.MinimumSize = new System.Drawing.Size(720, 680);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "串口蓝牙测试工具";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.Shown += new System.EventHandler(this.frmMain_Shown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyDown);
             this.gbConfigCom.ResumeLayout(false);
             this.gbConfigCom.PerformLayout();
             this.gbSerialWrite.ResumeLayout(false);
@@ -920,8 +921,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numBleAutoReLink)).EndInit();
             this.gbBleLinkTest.ResumeLayout(false);
             this.gbBleLinkTest.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numBleLinkInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBleLinkCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBleLinkInterval)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
