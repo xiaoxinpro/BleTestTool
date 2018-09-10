@@ -12,8 +12,6 @@ BleTestTool需要引用以下类库：
 
 外部驱动[DeviceTestLib](https://github.com/xiaoxinpro/BleTestTool/tree/master/DeviceTestLib)类库【[下载类库DLL](https://raw.githubusercontent.com/xiaoxinpro/BleTestTool/master/BleTestTool/bin/Debug/DeviceTestLib.dll)】
 
-下载测试版：[BleTestTool.exe](https://raw.githubusercontent.com/xiaoxinpro/BleTestTool/dev/BleTestTool/bin/Debug/BleTestTool.exe)
-
-下载稳定版：[BleTestTool.exe](https://raw.githubusercontent.com/xiaoxinpro/BleTestTool/master/BleTestTool/bin/Debug/BleTestTool.exe)
+下载开发版：[BleTestTool.exe](https://raw.githubusercontent.com/xiaoxinpro/BleTestTool/master/BleTestTool/bin/Debug/BleTestTool.exe)
 
 下载正式版：[BleTestTool](https://github.com/xiaoxinpro/BleTestTool/releases) (推荐)
