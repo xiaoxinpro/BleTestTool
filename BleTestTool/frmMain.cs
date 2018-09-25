@@ -55,6 +55,8 @@ namespace BleTestTool
             if (args.Length == 1 && LoadDeviceLib(args[0]))
             {
                 btnLoadDeviceLib.Hide();
+                gbBleLinkTest.Hide();
+                gbBleFuction.Hide();
             }
             else
             {
