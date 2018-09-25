@@ -145,11 +145,11 @@ namespace BleTestTool
         public void WriteBleCmd(enumBleCmd cmd)
         {
             //安全性检验
-            if (SerialBleStatus == enumBleStatus.Stop)
-            {
-                //Console.WriteLine("串口未开启，无法发生命令。");
-                return;
-            }
+            //if (SerialBleStatus == enumBleStatus.Stop)
+            //{
+            //    //Console.WriteLine("串口未开启，无法发生命令。");
+            //    return;
+            //}
 
             //发送蓝牙命令
             string[] arrCmdData = this.GetBleCmd(cmd);
@@ -194,7 +194,7 @@ namespace BleTestTool
                 {
                     setSerialBleStatus(enumBleStatus.Ready);
                     ComboBle.Enabled = true;
-                    ComboBle.Items.AddRange(DicListBle.Keys.ToArray<string>());
+                    ComboBle.Items.AddRange(LinqDictionary(DicListBleRssi, DicListBle));
                     ComboBle.SelectedIndex = 0;
                     EventBleLog("蓝牙搜索完成");
                     if (IsAutoReLink && (_bakBleLinkData != ""))
@@ -370,6 +370,30 @@ namespace BleTestTool
                 strBleData = name + ":" + mac;
             }
             DicListBle.Add(strBleData, mac);
+        }
+
+        private string[] LinqDictionary(Dictionary<string, int> dic, Dictionary<string, string> dicListBle)
+        {
+            string[] arrayName = new string[dic.Count];
+            int[] arrayValue = new int[dic.Count];
+            dic.Keys.CopyTo(arrayName, 0);
+            dic.Values.CopyTo(arrayValue, 0);
+            Array.Sort(arrayValue, arrayName);//会根据arrayValue的值进行升序排序，arrayName对应的会进行位置调整
+            Array.Reverse(arrayValue);//这是为了降序
+            Array.Reverse(arrayName);
+            IDictionary<string, string> dicSorted = new Dictionary<string, string>();
+            for (int i = 0; i < arrayName.Length; i++)
+            {
+                foreach (KeyValuePair<string, string> kvp in dicListBle)
+                {
+                    if (kvp.Value == arrayName[i])
+                    {
+                        dicSorted.Add(kvp.Key, kvp.Value);
+                        break;
+                    }
+                }
+            }
+            return dicSorted.Keys.ToArray();
         }
         #endregion
 
