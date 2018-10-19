@@ -49,7 +49,7 @@ namespace BleTestTool
 
             //判断SerialPortHelperLib.dll版本号
             Version verSerialPortHelperLib = new Version(FileVersionInfo.GetVersionInfo(strPathSerialPortHelperLib).FileVersion);
-            if (verSerialPortHelperLib < new Version("18.7.4.2"))
+            if (verSerialPortHelperLib < new Version("18.10.17.0"))
             {
                 message = "类库文件SerialPortHelperLib.dll版本过低，请安装最新版本。";
                 return false;
