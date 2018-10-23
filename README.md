@@ -15,3 +15,6 @@ BleTestTool需要引用以下类库：
 下载开发版：[BleTestTool.exe](https://raw.githubusercontent.com/xiaoxinpro/BleTestTool/master/BleTestTool/bin/Debug/BleTestTool.exe)
 
 下载正式版：[BleTestTool](https://github.com/xiaoxinpro/BleTestTool/releases) (推荐)
+
+## 主界面
+![](https://github.com/xiaoxinpro/BleTestTool/raw/master/image.png)
