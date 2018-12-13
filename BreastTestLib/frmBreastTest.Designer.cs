@@ -38,13 +38,15 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripBtnOpenFan = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripComboElect = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripBtnOpenElect = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripBtnOpenHot = new System.Windows.Forms.ToolStripButton();
             this.toolStripBtnCloseHot = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripBtnStop = new System.Windows.Forms.ToolStripButton();
-            this.toolStripComboElect = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripBtnOpenElect = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripBtnOFF = new System.Windows.Forms.ToolStripButton();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.toolCmdWrite.SuspendLayout();
@@ -113,10 +115,12 @@
             this.toolStripComboElect,
             this.toolStripBtnOpenElect,
             this.toolStripSeparator2,
+            this.toolStripBtnStop,
+            this.toolStripSeparator3,
             this.toolStripBtnOpenHot,
             this.toolStripBtnCloseHot,
-            this.toolStripSeparator3,
-            this.toolStripBtnStop});
+            this.toolStripSeparator4,
+            this.toolStripBtnOFF});
             this.toolCmdWrite.Location = new System.Drawing.Point(3, 72);
             this.toolCmdWrite.Name = "toolCmdWrite";
             this.toolCmdWrite.Size = new System.Drawing.Size(720, 25);
@@ -142,6 +146,33 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripComboElect
+            // 
+            this.toolStripComboElect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolStripComboElect.DropDownWidth = 75;
+            this.toolStripComboElect.Items.AddRange(new object[] {
+            "1档",
+            "2档",
+            "3档",
+            "4档",
+            "5档",
+            "6档",
+            "7档",
+            "8档",
+            "9档",
+            "10档"});
+            this.toolStripComboElect.Name = "toolStripComboElect";
+            this.toolStripComboElect.Size = new System.Drawing.Size(75, 25);
+            // 
+            // toolStripBtnOpenElect
+            // 
+            this.toolStripBtnOpenElect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripBtnOpenElect.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnOpenElect.Image")));
+            this.toolStripBtnOpenElect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnOpenElect.Name = "toolStripBtnOpenElect";
+            this.toolStripBtnOpenElect.Size = new System.Drawing.Size(60, 22);
+            this.toolStripBtnOpenElect.Text = "开启电疗";
             // 
             // toolStripSeparator2
             // 
@@ -180,32 +211,19 @@
             this.toolStripBtnStop.Size = new System.Drawing.Size(36, 22);
             this.toolStripBtnStop.Text = "停止";
             // 
-            // toolStripComboElect
+            // toolStripSeparator4
             // 
-            this.toolStripComboElect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.toolStripComboElect.DropDownWidth = 75;
-            this.toolStripComboElect.Items.AddRange(new object[] {
-            "1档",
-            "2档",
-            "3档",
-            "4档",
-            "5档",
-            "6档",
-            "7档",
-            "8档",
-            "9档",
-            "10档"});
-            this.toolStripComboElect.Name = "toolStripComboElect";
-            this.toolStripComboElect.Size = new System.Drawing.Size(75, 25);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripBtnOpenElect
+            // toolStripBtnOFF
             // 
-            this.toolStripBtnOpenElect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripBtnOpenElect.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnOpenElect.Image")));
-            this.toolStripBtnOpenElect.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripBtnOpenElect.Name = "toolStripBtnOpenElect";
-            this.toolStripBtnOpenElect.Size = new System.Drawing.Size(60, 22);
-            this.toolStripBtnOpenElect.Text = "开启电疗";
+            this.toolStripBtnOFF.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripBtnOFF.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnOFF.Image")));
+            this.toolStripBtnOFF.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnOFF.Name = "toolStripBtnOFF";
+            this.toolStripBtnOFF.Size = new System.Drawing.Size(36, 22);
+            this.toolStripBtnOFF.Text = "关机";
             // 
             // frmBreastTest
             // 
@@ -243,5 +261,7 @@
         private System.Windows.Forms.ToolStripButton toolStripBtnStop;
         private System.Windows.Forms.ToolStripButton toolStripBtnOpenElect;
         public System.Windows.Forms.ToolStripComboBox toolStripComboElect;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripButton toolStripBtnOFF;
     }
 }
