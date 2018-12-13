@@ -304,6 +304,15 @@ namespace DeviceTestLib
                         buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = 0x00;
                         EventAddCmdWrite(CheckWriteData(buffer));
                         break;
+                    case "toolStripBtnOFF":
+                        //关机
+                        buffer[Convert.ToInt32(enumSerialWriteFormat.Cmd)] = 0x05;
+                        buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = 0x00;
+                        EventAddCmdWrite(CheckWriteData((byte[])buffer.Clone()));
+                        buffer[Convert.ToInt32(enumSerialWriteFormat.Cmd)] = 0x07;
+                        buffer[Convert.ToInt32(enumSerialWriteFormat.Data)] = 0x00;
+                        EventAddCmdWrite(CheckWriteData((byte[])buffer.Clone()));
+                        break;
                     default:
                         break;
                 }
