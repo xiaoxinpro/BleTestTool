@@ -49,6 +49,7 @@ namespace DeviceTestLib
         {
             int data = 0;
             string str = "";
+            bool isTestMode = false;
             Dictionary<string, string> dicTestData = new Dictionary<string, string>();
 
             if (arrData.Length == 13)
@@ -78,20 +79,45 @@ namespace DeviceTestLib
                     }
                     else
                     {
-                        EditListViewSerialReceviedValue(0, "非测试模式");
+                        isTestMode = false;
+                        switch (data)
+                        {
+                            case 0x00:
+                                EditListViewSerialReceviedValue(0, "关机");
+                                break;
+                            case 0x01:
+                                EditListViewSerialReceviedValue(0, "运行");
+                                break;
+                            case 0x02:
+                                EditListViewSerialReceviedValue(0, "暂停");
+                                break;
+                            case 0x03:
+                                EditListViewSerialReceviedValue(0, "运行完成");
+                                break;
+                            default:
+                                EditListViewSerialReceviedValue(0, "非测试模式");
+                                break;
+                        }
                     }
 
                     //模式处理
-                    int modeData = data & 0x0F;
-                    string[] arrModeData = { "自动", "加热测试", "电机测试", "制冷测试", "正脉冲测试", "负脉冲测试", "皮肤接触检测", "皮肤水份检测", "关机" };
-                    if (modeData <= 0x07)
+                    if (isTestMode)
                     {
-                        dicTestData["Mode"] = arrModeData[modeData];
-                        EditListViewSerialReceviedValue(1, arrModeData[modeData]);
+                        int modeData = data & 0x0F;
+                        string[] arrModeData = { "自动", "加热测试", "电机测试", "制冷测试", "正脉冲测试", "负脉冲测试", "皮肤接触检测", "皮肤水份检测", "关机" };
+                        if (modeData <= 0x07)
+                        {
+                            dicTestData["Mode"] = arrModeData[modeData];
+                            EditListViewSerialReceviedValue(1, arrModeData[modeData]);
+                        }
+                        else
+                        {
+                            EditListViewSerialReceviedValue(1, "关机");
+                        }
                     }
                     else
                     {
-                        EditListViewSerialReceviedValue(1, "关机");
+                        EditListViewSerialReceviedValue(1, "");
                     }
                 }
 
@@ -109,7 +135,60 @@ namespace DeviceTestLib
                 }
                 else
                 {
-                    EditListViewSerialReceviedValue(2, "未知:0x" + data.ToString("X2"));
+                    int adjustData = data & 0x07;
+                    int modeData = (data & 0xF8) >> 3;
+                    if (adjustData > 0)
+                    {
+                        switch (adjustData)
+                        {
+                            case 0x01:
+                                EditListViewSerialReceviedValue(2, "弱");
+                                break;
+                            case 0x02:
+                                EditListViewSerialReceviedValue(2, "中");
+                                break;
+                            case 0x04:
+                                EditListViewSerialReceviedValue(2, "强");
+                                break;
+                            default:
+                                EditListViewSerialReceviedValue(2, "未知：0x" + adjustData);
+                                break;
+                        }
+                        switch (modeData)
+                        {
+                            case 0x01:
+                                EditListViewSerialReceviedValue(1, "温热清洁");
+                                break;
+                            case 0x02:
+                                EditListViewSerialReceviedValue(1, "温热导入");
+                                break;
+                            case 0x10:
+                                EditListViewSerialReceviedValue(1, "RF射频");
+                                break;
+                            default:
+                                EditListViewSerialReceviedValue(1, "关机");
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        EditListViewSerialReceviedValue(2, "");
+                        switch (modeData)
+                        {
+                            case 0x01:
+                                EditListViewSerialReceviedValue(1, "皮肤检测");
+                                break;
+                            case 0x04:
+                                EditListViewSerialReceviedValue(1, "冷肤.背面");
+                                break;
+                            case 0x08:
+                                EditListViewSerialReceviedValue(1, "热敷.背面");
+                                break;
+                            default:
+                                EditListViewSerialReceviedValue(1, "关机");
+                                break;
+                        }
+                    }
                 }
 
                 //时长处理
@@ -260,8 +339,8 @@ namespace DeviceTestLib
         /// </summary>
         private void InitListViewSerialReceived(ListView listView)
         {
-            string[] arrListName = { "状态", "模式", "皮肤接触", "时长", "加热温度", "皮肤检测参数", "环境温度", "电池状态" };
-            string[] arrListMark = { "设备工作状态", "设备当前运行的测试项目", "检测皮肤是否接触电极片", "当前模式运行的时长（秒）", "当前加热片的温度（℃）", "皮肤检测参数", "当前环境温度（℃）", "当前电池电量状态" };
+            string[] arrListName = { "状态", "模式", "皮肤接触", "时长", "前面温度", "皮肤检测参数", "背面温度", "电池状态" };
+            string[] arrListMark = { "设备工作状态", "设备当前运行的测试项目", "检测皮肤是否接触电极片", "当前模式运行的时长（秒）", "当前正面加热片的温度（℃）", "皮肤检测参数", "当前背面制冷片温度（℃）", "当前电池电量状态" };
             //基本属性设置
             listView.FullRowSelect = true;
             listView.GridLines = true;
