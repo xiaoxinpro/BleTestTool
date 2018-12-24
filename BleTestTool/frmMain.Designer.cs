@@ -702,7 +702,7 @@
             this.gbBleFuction.Size = new System.Drawing.Size(148, 62);
             this.gbBleFuction.TabIndex = 17;
             this.gbBleFuction.TabStop = false;
-            this.gbBleFuction.Text = "蓝牙功能";
+            this.gbBleFuction.Text = "蓝牙连接选项";
             // 
             // numBleAutoReLink
             // 
