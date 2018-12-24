@@ -447,7 +447,7 @@
             // 
             this.btnLoadDeviceLib.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnLoadDeviceLib.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnLoadDeviceLib.Location = new System.Drawing.Point(11, 566);
+            this.btnLoadDeviceLib.Location = new System.Drawing.Point(11, 586);
             this.btnLoadDeviceLib.Name = "btnLoadDeviceLib";
             this.btnLoadDeviceLib.Size = new System.Drawing.Size(148, 39);
             this.btnLoadDeviceLib.TabIndex = 14;
@@ -473,8 +473,8 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gbSerialLog);
             this.splitContainer1.Panel2MinSize = 110;
-            this.splitContainer1.Size = new System.Drawing.Size(525, 447);
-            this.splitContainer1.SplitterDistance = 255;
+            this.splitContainer1.Size = new System.Drawing.Size(525, 467);
+            this.splitContainer1.SplitterDistance = 265;
             this.splitContainer1.TabIndex = 15;
             // 
             // tabControl1
@@ -488,7 +488,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(519, 250);
+            this.tabControl1.Size = new System.Drawing.Size(519, 258);
             this.tabControl1.TabIndex = 14;
             // 
             // tabSerialReceived
@@ -497,7 +497,7 @@
             this.tabSerialReceived.Location = new System.Drawing.Point(4, 26);
             this.tabSerialReceived.Name = "tabSerialReceived";
             this.tabSerialReceived.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSerialReceived.Size = new System.Drawing.Size(511, 220);
+            this.tabSerialReceived.Size = new System.Drawing.Size(511, 228);
             this.tabSerialReceived.TabIndex = 0;
             this.tabSerialReceived.Text = "接收数据解析";
             this.tabSerialReceived.UseVisualStyleBackColor = true;
@@ -510,7 +510,7 @@
             this.listViewSerialReceived.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.listViewSerialReceived.Location = new System.Drawing.Point(6, 6);
             this.listViewSerialReceived.Name = "listViewSerialReceived";
-            this.listViewSerialReceived.Size = new System.Drawing.Size(499, 208);
+            this.listViewSerialReceived.Size = new System.Drawing.Size(499, 220);
             this.listViewSerialReceived.TabIndex = 1;
             this.listViewSerialReceived.UseCompatibleStateImageBehavior = false;
             // 
@@ -565,7 +565,7 @@
             this.gbSerialLog.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.gbSerialLog.Location = new System.Drawing.Point(3, 3);
             this.gbSerialLog.Name = "gbSerialLog";
-            this.gbSerialLog.Size = new System.Drawing.Size(519, 182);
+            this.gbSerialLog.Size = new System.Drawing.Size(519, 190);
             this.gbSerialLog.TabIndex = 10;
             this.gbSerialLog.TabStop = false;
             this.gbSerialLog.Text = "输出日志";
@@ -574,7 +574,7 @@
             // 
             this.chkLogHex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkLogHex.AutoSize = true;
-            this.chkLogHex.Location = new System.Drawing.Point(289, 151);
+            this.chkLogHex.Location = new System.Drawing.Point(289, 159);
             this.chkLogHex.Name = "chkLogHex";
             this.chkLogHex.Size = new System.Drawing.Size(76, 24);
             this.chkLogHex.TabIndex = 5;
@@ -586,7 +586,7 @@
             // 
             this.chkShowError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkShowError.AutoSize = true;
-            this.chkShowError.Location = new System.Drawing.Point(101, 151);
+            this.chkShowError.Location = new System.Drawing.Point(101, 159);
             this.chkShowError.Name = "chkShowError";
             this.chkShowError.Size = new System.Drawing.Size(88, 24);
             this.chkShowError.TabIndex = 4;
@@ -598,7 +598,7 @@
             // 
             this.chkShowTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkShowTime.AutoSize = true;
-            this.chkShowTime.Location = new System.Drawing.Point(195, 151);
+            this.chkShowTime.Location = new System.Drawing.Point(195, 159);
             this.chkShowTime.Name = "chkShowTime";
             this.chkShowTime.Size = new System.Drawing.Size(88, 24);
             this.chkShowTime.TabIndex = 3;
@@ -610,7 +610,7 @@
             // 
             this.chkShowWrite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkShowWrite.AutoSize = true;
-            this.chkShowWrite.Location = new System.Drawing.Point(7, 151);
+            this.chkShowWrite.Location = new System.Drawing.Point(7, 159);
             this.chkShowWrite.Name = "chkShowWrite";
             this.chkShowWrite.Size = new System.Drawing.Size(88, 24);
             this.chkShowWrite.TabIndex = 2;
@@ -621,7 +621,7 @@
             // btnLogClear
             // 
             this.btnLogClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLogClear.Location = new System.Drawing.Point(449, 149);
+            this.btnLogClear.Location = new System.Drawing.Point(449, 157);
             this.btnLogClear.Name = "btnLogClear";
             this.btnLogClear.Size = new System.Drawing.Size(64, 27);
             this.btnLogClear.TabIndex = 1;
@@ -639,7 +639,7 @@
             this.txtDataReceived.Multiline = true;
             this.txtDataReceived.Name = "txtDataReceived";
             this.txtDataReceived.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDataReceived.Size = new System.Drawing.Size(506, 117);
+            this.txtDataReceived.Size = new System.Drawing.Size(506, 125);
             this.txtDataReceived.TabIndex = 0;
             // 
             // statusStripMain
@@ -650,7 +650,7 @@
             this.toolStripStatusLabelDriverVersion,
             this.toolStripStatusLabelBleStatus,
             this.toolStripStatusLabelTime});
-            this.statusStripMain.Location = new System.Drawing.Point(0, 617);
+            this.statusStripMain.Location = new System.Drawing.Point(0, 637);
             this.statusStripMain.Name = "statusStripMain";
             this.statusStripMain.Size = new System.Drawing.Size(704, 25);
             this.statusStripMain.TabIndex = 16;
@@ -699,7 +699,7 @@
             this.gbBleFuction.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.gbBleFuction.Location = new System.Drawing.Point(11, 317);
             this.gbBleFuction.Name = "gbBleFuction";
-            this.gbBleFuction.Size = new System.Drawing.Size(148, 62);
+            this.gbBleFuction.Size = new System.Drawing.Size(148, 61);
             this.gbBleFuction.TabIndex = 17;
             this.gbBleFuction.TabStop = false;
             this.gbBleFuction.Text = "蓝牙连接选项";
@@ -707,7 +707,7 @@
             // numBleAutoReLink
             // 
             this.numBleAutoReLink.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.numBleAutoReLink.Location = new System.Drawing.Point(81, 25);
+            this.numBleAutoReLink.Location = new System.Drawing.Point(89, 26);
             this.numBleAutoReLink.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -719,7 +719,7 @@
             0,
             0});
             this.numBleAutoReLink.Name = "numBleAutoReLink";
-            this.numBleAutoReLink.Size = new System.Drawing.Size(58, 23);
+            this.numBleAutoReLink.Size = new System.Drawing.Size(50, 23);
             this.numBleAutoReLink.TabIndex = 3;
             this.numBleAutoReLink.Value = new decimal(new int[] {
             100,
@@ -732,7 +732,7 @@
             // 
             this.chkBleAutoReLink.AutoSize = true;
             this.chkBleAutoReLink.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.chkBleAutoReLink.Location = new System.Drawing.Point(8, 27);
+            this.chkBleAutoReLink.Location = new System.Drawing.Point(18, 27);
             this.chkBleAutoReLink.Name = "chkBleAutoReLink";
             this.chkBleAutoReLink.Size = new System.Drawing.Size(75, 21);
             this.chkBleAutoReLink.TabIndex = 0;
@@ -752,7 +752,7 @@
             this.gbBleLinkTest.Controls.Add(this.label7);
             this.gbBleLinkTest.Controls.Add(this.label1);
             this.gbBleLinkTest.Font = new System.Drawing.Font("微软雅黑", 11F);
-            this.gbBleLinkTest.Location = new System.Drawing.Point(11, 386);
+            this.gbBleLinkTest.Location = new System.Drawing.Point(11, 384);
             this.gbBleLinkTest.Name = "gbBleLinkTest";
             this.gbBleLinkTest.Size = new System.Drawing.Size(148, 174);
             this.gbBleLinkTest.TabIndex = 18;
@@ -883,7 +883,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(704, 642);
+            this.ClientSize = new System.Drawing.Size(704, 662);
             this.Controls.Add(this.gbBleLinkTest);
             this.Controls.Add(this.gbBleFuction);
             this.Controls.Add(this.statusStripMain);
@@ -892,7 +892,7 @@
             this.Controls.Add(this.labBleStatus);
             this.Controls.Add(this.gbSerialWrite);
             this.Controls.Add(this.gbConfigCom);
-            this.MinimumSize = new System.Drawing.Size(720, 680);
+            this.MinimumSize = new System.Drawing.Size(720, 700);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "串口蓝牙测试工具";
