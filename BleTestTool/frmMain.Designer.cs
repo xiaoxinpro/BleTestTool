@@ -92,6 +92,7 @@
             this.chkBleLinkTest = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.chkBleAutoLink = new System.Windows.Forms.CheckBox();
             this.gbConfigCom.SuspendLayout();
             this.gbSerialWrite.SuspendLayout();
             this.toolBleWrite.SuspendLayout();
@@ -695,11 +696,12 @@
             // gbBleFuction
             // 
             this.gbBleFuction.Controls.Add(this.numBleAutoReLink);
+            this.gbBleFuction.Controls.Add(this.chkBleAutoLink);
             this.gbBleFuction.Controls.Add(this.chkBleAutoReLink);
             this.gbBleFuction.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.gbBleFuction.Location = new System.Drawing.Point(11, 317);
             this.gbBleFuction.Name = "gbBleFuction";
-            this.gbBleFuction.Size = new System.Drawing.Size(148, 61);
+            this.gbBleFuction.Size = new System.Drawing.Size(148, 84);
             this.gbBleFuction.TabIndex = 17;
             this.gbBleFuction.TabStop = false;
             this.gbBleFuction.Text = "蓝牙连接选项";
@@ -707,7 +709,7 @@
             // numBleAutoReLink
             // 
             this.numBleAutoReLink.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.numBleAutoReLink.Location = new System.Drawing.Point(89, 26);
+            this.numBleAutoReLink.Location = new System.Drawing.Point(89, 52);
             this.numBleAutoReLink.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -732,7 +734,7 @@
             // 
             this.chkBleAutoReLink.AutoSize = true;
             this.chkBleAutoReLink.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.chkBleAutoReLink.Location = new System.Drawing.Point(18, 27);
+            this.chkBleAutoReLink.Location = new System.Drawing.Point(18, 53);
             this.chkBleAutoReLink.Name = "chkBleAutoReLink";
             this.chkBleAutoReLink.Size = new System.Drawing.Size(75, 21);
             this.chkBleAutoReLink.TabIndex = 0;
@@ -752,9 +754,9 @@
             this.gbBleLinkTest.Controls.Add(this.label7);
             this.gbBleLinkTest.Controls.Add(this.label1);
             this.gbBleLinkTest.Font = new System.Drawing.Font("微软雅黑", 11F);
-            this.gbBleLinkTest.Location = new System.Drawing.Point(11, 384);
+            this.gbBleLinkTest.Location = new System.Drawing.Point(11, 407);
             this.gbBleLinkTest.Name = "gbBleLinkTest";
-            this.gbBleLinkTest.Size = new System.Drawing.Size(148, 174);
+            this.gbBleLinkTest.Size = new System.Drawing.Size(148, 166);
             this.gbBleLinkTest.TabIndex = 18;
             this.gbBleLinkTest.TabStop = false;
             this.gbBleLinkTest.Text = "蓝牙连接测试";
@@ -879,6 +881,18 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "测试间隔：               秒";
             // 
+            // chkBleAutoLink
+            // 
+            this.chkBleAutoLink.AutoSize = true;
+            this.chkBleAutoLink.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.chkBleAutoLink.Location = new System.Drawing.Point(18, 26);
+            this.chkBleAutoLink.Name = "chkBleAutoLink";
+            this.chkBleAutoLink.Size = new System.Drawing.Size(99, 21);
+            this.chkBleAutoLink.TabIndex = 0;
+            this.chkBleAutoLink.Text = "自动连接蓝牙";
+            this.chkBleAutoLink.UseVisualStyleBackColor = true;
+            this.chkBleAutoLink.CheckedChanged += new System.EventHandler(this.chkBleAutoReLink_CheckedChanged);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -992,6 +1006,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chkBleLinkTest;
         private System.Windows.Forms.Label labelBleLinkTestCount;
+        private System.Windows.Forms.CheckBox chkBleAutoLink;
     }
 }
 
