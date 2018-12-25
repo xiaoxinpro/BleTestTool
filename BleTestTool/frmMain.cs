@@ -1096,6 +1096,7 @@ namespace BleTestTool
         private void chkBleAutoLink_CheckedChanged(object sender, EventArgs e)
         {
             chkBleAutoReLink.Checked = false;
+            serialBle.IsAutoLink = chkBleAutoLink.Checked;
         }
 
         /// <summary>

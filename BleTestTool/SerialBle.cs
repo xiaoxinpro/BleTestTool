@@ -39,6 +39,7 @@ namespace BleTestTool
         #endregion
 
         #region 属性
+        public bool IsAutoLink = false;
         public bool IsAutoReLink = false;
         public int TimeAutoReLink = 100;
         public enumBleStatus SerialBleStatus { get; private set; } = enumBleStatus.Stop;
@@ -207,6 +208,10 @@ namespace BleTestTool
                         {
                             WriteBleCmd(enumBleCmd.Find);
                         }
+                    }
+                    else if (IsAutoLink)
+                    {
+                        WriteBleCmd(enumBleCmd.Link);
                     }
                 }
                 else
