@@ -1095,7 +1095,10 @@ namespace BleTestTool
         /// <param name="e"></param>
         private void chkBleAutoLink_CheckedChanged(object sender, EventArgs e)
         {
-            chkBleAutoReLink.Checked = false;
+            if (chkBleAutoReLink.Checked)
+            {
+                chkBleAutoReLink.Checked = false;
+            }
             serialBle.IsAutoLink = chkBleAutoLink.Checked;
         }
 
@@ -1106,7 +1109,10 @@ namespace BleTestTool
         /// <param name="e"></param>
         private void chkBleAutoReLink_CheckedChanged(object sender, EventArgs e)
         {
-            chkBleAutoLink.Checked = false;
+            if (chkBleAutoLink.Checked)
+            {
+                chkBleAutoLink.Checked = false;
+            }
             numBleAutoReLink.Enabled = !chkBleAutoReLink.Checked;
             serialBle.IsAutoReLink = chkBleAutoReLink.Checked;
             serialBle.TimeAutoReLink = Convert.ToInt32(numBleAutoReLink.Value);
