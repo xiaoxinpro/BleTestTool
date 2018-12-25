@@ -891,7 +891,7 @@
             this.chkBleAutoLink.TabIndex = 0;
             this.chkBleAutoLink.Text = "自动连接蓝牙";
             this.chkBleAutoLink.UseVisualStyleBackColor = true;
-            this.chkBleAutoLink.CheckedChanged += new System.EventHandler(this.chkBleAutoReLink_CheckedChanged);
+            this.chkBleAutoLink.CheckedChanged += new System.EventHandler(this.chkBleAutoLink_CheckedChanged);
             // 
             // frmMain
             // 

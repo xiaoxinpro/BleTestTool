@@ -1087,7 +1087,17 @@ namespace BleTestTool
         }
         #endregion
 
-        #region 蓝牙功能
+        #region 蓝牙连接选项
+        /// <summary>
+        /// 自动连接蓝牙开关
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chkBleAutoLink_CheckedChanged(object sender, EventArgs e)
+        {
+            chkBleAutoReLink.Checked = false;
+        }
+
         /// <summary>
         /// 蓝牙自动重连开关
         /// </summary>
@@ -1095,6 +1105,7 @@ namespace BleTestTool
         /// <param name="e"></param>
         private void chkBleAutoReLink_CheckedChanged(object sender, EventArgs e)
         {
+            chkBleAutoLink.Checked = false;
             numBleAutoReLink.Enabled = !chkBleAutoReLink.Checked;
             serialBle.IsAutoReLink = chkBleAutoReLink.Checked;
             serialBle.TimeAutoReLink = Convert.ToInt32(numBleAutoReLink.Value);
